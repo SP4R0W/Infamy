@@ -1,0 +1,697 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://src/Game/assets/StaminaBar.png" type="Texture" id=1]
+[ext_resource path="res://src/Game/assets/ammo.png" type="Texture" id=2]
+[ext_resource path="res://src/Game/assets/bg.jpg" type="Texture" id=3]
+[ext_resource path="res://src/Game/assets/ArmorBar.png" type="Texture" id=4]
+[ext_resource path="res://src/Game/assets/HpBar.png" type="Texture" id=5]
+[ext_resource path="res://src/Game/assets/medic.png" type="Texture" id=6]
+[ext_resource path="res://src/Menus/Lobby/assets/map.png" type="Texture" id=7]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://src/Game/Preplanning.gd" type="Script" id=9]
+[ext_resource path="res://src/Game/GameScene.gd" type="Script" id=10]
+[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=11]
+[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=12]
+[ext_resource path="res://src/Game/GameUI.gd" type="Script" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 84
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource( 10 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="Preplanning" type="Panel" parent="Control/CanvasLayer"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 9 )
+
+[node name="Background" type="TextureRect" parent="Control/CanvasLayer/Preplanning"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+
+[node name="Map" type="TextureRect" parent="Control/CanvasLayer/Preplanning"]
+margin_left = 128.0
+margin_top = 624.0
+margin_right = 1584.0
+margin_bottom = 1480.0
+texture = ExtResource( 7 )
+expand = true
+
+[node name="Buttons" type="HBoxContainer" parent="Control/CanvasLayer/Preplanning"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2056.0
+margin_top = -680.0
+margin_right = -156.0
+margin_bottom = -555.0
+custom_constants/separation = 100
+
+[node name="Plan" type="Button" parent="Control/CanvasLayer/Preplanning/Buttons"]
+margin_right = 400.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 400, 100 )
+custom_fonts/font = ExtResource( 12 )
+text = "Bain's Plan"
+
+[node name="Assets" type="Button" parent="Control/CanvasLayer/Preplanning/Buttons"]
+margin_left = 500.0
+margin_right = 900.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 400, 125 )
+custom_fonts/font = ExtResource( 12 )
+text = "Assets"
+
+[node name="Gear" type="Button" parent="Control/CanvasLayer/Preplanning/Buttons"]
+margin_left = 1000.0
+margin_right = 1400.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 400, 100 )
+custom_fonts/font = ExtResource( 12 )
+text = "Gear"
+
+[node name="Music" type="Button" parent="Control/CanvasLayer/Preplanning/Buttons"]
+margin_left = 1500.0
+margin_right = 1900.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 400, 125 )
+custom_fonts/font = ExtResource( 12 )
+text = "Music"
+
+[node name="Plan" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2064.0
+margin_top = -504.0
+margin_right = 5.0
+margin_bottom = 504.0
+
+[node name="Heist_title" type="Label" parent="Control/CanvasLayer/Preplanning/Plan"]
+margin_right = 2069.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "Downtown Hit: Very Hard"
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Plan"]
+margin_top = 235.0
+margin_right = 2069.0
+margin_bottom = 265.0
+custom_constants/separation = 30
+
+[node name="Heist_plan" type="Label" parent="Control/CanvasLayer/Preplanning/Plan"]
+margin_top = 269.0
+margin_right = 2069.0
+margin_bottom = 924.0
+custom_fonts/font = SubResource( 1 )
+text = "Like I said, this is a simple bank heist. You go in, look around, take out the security and open up that vault. Now, the place has cameras and security guards, so it's not THAT simple, but shouldn't be a problem for you. Try not to sound the alarm, I heard that the cops have way more men located in here, specifically to respond to people like us. So don't do anything stupid. Let's roll. "
+autowrap = true
+
+[node name="Assets" type="Panel" parent="Control/CanvasLayer/Preplanning"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2064.0
+margin_top = -504.0
+margin_right = -912.0
+margin_bottom = 400.0
+
+[node name="Asset_info" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning/Assets"]
+margin_right = 1152.0
+margin_bottom = 526.0
+
+[node name="Name" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info"]
+margin_right = 1152.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "Assets:"
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info"]
+margin_top = 235.0
+margin_right = 1152.0
+margin_bottom = 265.0
+custom_constants/separation = 30
+
+[node name="Favours" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info"]
+margin_top = 269.0
+margin_right = 1152.0
+margin_bottom = 360.0
+custom_fonts/font = ExtResource( 12 )
+text = "Available favours: 10/10"
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info"]
+margin_top = 364.0
+margin_right = 1152.0
+margin_bottom = 394.0
+custom_constants/separation = 30
+
+[node name="Asset_list" type="ScrollContainer" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info"]
+margin_top = 398.0
+margin_right = 1152.0
+margin_bottom = 526.0
+rect_min_size = Vector2( 1152, 128 )
+scroll_vertical_enabled = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info/Asset_list"]
+margin_right = 1152.0
+margin_bottom = 128.0
+rect_min_size = Vector2( 1152, 128 )
+custom_constants/separation = 100
+
+[node name="TextureButton" type="TextureButton" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info/Asset_list/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 6 )
+
+[node name="TextureButton2" type="TextureButton" parent="Control/CanvasLayer/Preplanning/Assets/Asset_info/Asset_list/HBoxContainer"]
+margin_left = 228.0
+margin_right = 356.0
+margin_bottom = 128.0
+texture_normal = ExtResource( 2 )
+
+[node name="Asset_desc" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning/Assets"]
+margin_left = 1185.0
+margin_right = 2049.0
+margin_bottom = 970.0
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_right = 864.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 12 )
+text = "Medic Bag"
+align = 1
+valign = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 95.0
+margin_right = 864.0
+margin_bottom = 125.0
+custom_constants/separation = 30
+
+[node name="Desc" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 129.0
+margin_right = 864.0
+margin_bottom = 408.0
+custom_fonts/font = ExtResource( 12 )
+text = "A small bag containing 2 first aid kits, ready to be refilled or used right there."
+valign = 1
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 412.0
+margin_right = 864.0
+margin_bottom = 442.0
+custom_constants/separation = 30
+
+[node name="Price" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 446.0
+margin_right = 864.0
+margin_bottom = 537.0
+custom_fonts/font = ExtResource( 12 )
+text = "Price: 2 Favours"
+valign = 1
+autowrap = true
+
+[node name="Price2" type="Label" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 541.0
+margin_right = 864.0
+margin_bottom = 632.0
+custom_fonts/font = ExtResource( 12 )
+text = "Used: 0/2"
+valign = 1
+autowrap = true
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 636.0
+margin_right = 864.0
+margin_bottom = 666.0
+custom_constants/separation = 30
+
+[node name="Locations" type="ItemList" parent="Control/CanvasLayer/Preplanning/Assets/Asset_desc"]
+margin_top = 670.0
+margin_right = 864.0
+margin_bottom = 970.0
+rect_min_size = Vector2( 0, 300 )
+custom_fonts/font = ExtResource( 12 )
+items = [ "Lobby - Free", null, false, "Security Room - Used", null, false ]
+allow_reselect = true
+
+[node name="Gear" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2064.0
+margin_top = -504.0
+margin_right = 5.0
+margin_bottom = 504.0
+
+[node name="Name" type="Label" parent="Control/CanvasLayer/Preplanning/Gear"]
+margin_right = 2069.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "Your loadouts:"
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Gear"]
+margin_top = 235.0
+margin_right = 2069.0
+margin_bottom = 265.0
+custom_constants/separation = 30
+
+[node name="Description" type="Label" parent="Control/CanvasLayer/Preplanning/Gear"]
+margin_top = 269.0
+margin_right = 2069.0
+margin_bottom = 924.0
+custom_fonts/font = SubResource( 1 )
+text = "Like I said, this is a simple bank heist. You go in, look around, take out the security and open up that vault. Now, the place has cameras and security guards, so it's not THAT simple, but shouldn't be a problem for you. Try not to sound the alarm, I heard that the cops have way more men located in here, specifically to respond to people like us. So don't do anything stupid. Let's roll. "
+autowrap = true
+
+[node name="Music" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning"]
+visible = false
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -2064.0
+margin_top = -504.0
+margin_right = 5.0
+margin_bottom = 504.0
+
+[node name="Name" type="Label" parent="Control/CanvasLayer/Preplanning/Music"]
+margin_right = 2069.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "In-game track:"
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Preplanning/Music"]
+margin_top = 235.0
+margin_right = 2069.0
+margin_bottom = 265.0
+custom_constants/separation = 30
+
+[node name="Description" type="Label" parent="Control/CanvasLayer/Preplanning/Music"]
+margin_top = 269.0
+margin_right = 2069.0
+margin_bottom = 924.0
+custom_fonts/font = SubResource( 1 )
+text = "Like I said, this is a simple bank heist. You go in, look around, take out the security and open up that vault. Now, the place has cameras and security guards, so it's not THAT simple, but shouldn't be a problem for you. Try not to sound the alarm, I heard that the cops have way more men located in here, specifically to respond to people like us. So don't do anything stupid. Let's roll. "
+autowrap = true
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Preplanning"]
+margin_left = 496.0
+margin_top = 456.0
+margin_right = 1235.0
+margin_bottom = 596.0
+custom_fonts/font = SubResource( 2 )
+text = "Blueprint map:"
+
+[node name="GameUI" type="Panel" parent="Control/CanvasLayer"]
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 13 )
+
+[node name="Objective" type="PanelContainer" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_left = 64.0
+margin_top = 56.0
+margin_right = 881.0
+margin_bottom = 161.0
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/GameUI/Objective"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 810.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 12 )
+text = "Objective: Enter the bank"
+
+[node name="Status" type="Panel" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -192.0
+margin_top = 28.0
+margin_right = 192.0
+margin_bottom = 264.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/GameUI/Status"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -1.0
+
+[node name="Timer" type="Label" parent="Control/CanvasLayer/GameUI/Status/VBoxContainer"]
+margin_right = 384.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 12 )
+text = "99:99:99"
+align = 1
+valign = 1
+
+[node name="Status" type="Label" parent="Control/CanvasLayer/GameUI/Status/VBoxContainer"]
+margin_top = 95.0
+margin_right = 384.0
+margin_bottom = 163.0
+custom_fonts/font = SubResource( 3 )
+text = "Normal"
+align = 1
+valign = 1
+
+[node name="Carry" type="Label" parent="Control/CanvasLayer/GameUI/Status/VBoxContainer"]
+margin_top = 167.0
+margin_right = 384.0
+margin_bottom = 235.0
+custom_fonts/font = SubResource( 4 )
+text = "Bag: None"
+align = 1
+valign = 1
+
+[node name="Counters" type="PanelContainer" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -352.0
+margin_top = 56.0
+margin_right = -115.0
+margin_bottom = 161.0
+
+[node name="VBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/Counters"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 230.0
+margin_bottom = 98.0
+custom_constants/separation = 25
+
+[node name="Hostage" type="Label" parent="Control/CanvasLayer/GameUI/Counters/VBoxContainer"]
+margin_right = 101.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 12 )
+text = "H:0"
+align = 1
+valign = 1
+
+[node name="Kills" type="Label" parent="Control/CanvasLayer/GameUI/Counters/VBoxContainer"]
+margin_left = 126.0
+margin_right = 223.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 12 )
+text = "K:0"
+align = 1
+valign = 1
+
+[node name="Inventory" type="Panel" parent="Control/CanvasLayer/GameUI"]
+margin_left = 2960.0
+margin_top = 1488.0
+margin_right = 3792.0
+margin_bottom = 1600.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/Inventory"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -398.0
+margin_top = -48.0
+margin_right = 398.0
+margin_bottom = 48.0
+
+[node name="Item1" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_right = 96.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item2" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 100.0
+margin_right = 196.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item3" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 200.0
+margin_right = 296.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item4" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 300.0
+margin_right = 396.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item5" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 400.0
+margin_right = 496.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item6" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 500.0
+margin_right = 596.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item7" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 600.0
+margin_right = 696.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Item8" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
+margin_left = 700.0
+margin_right = 796.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 96, 96 )
+expand = true
+
+[node name="Player" type="Panel" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_left = 2960.0
+margin_top = 1616.0
+margin_right = 3792.0
+margin_bottom = 2128.0
+
+[node name="Weapon1" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_right = 416.0
+margin_bottom = 119.0
+custom_fonts/font = SubResource( 5 )
+text = "Minigun"
+align = 1
+valign = 1
+
+[node name="Ammo1" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_top = 112.0
+margin_right = 416.0
+margin_bottom = 180.0
+custom_fonts/font = SubResource( 6 )
+text = "1000/1000"
+align = 1
+valign = 1
+
+[node name="Weapon2" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 416.0
+margin_right = 832.0
+margin_bottom = 119.0
+custom_fonts/font = SubResource( 5 )
+text = "Minigun"
+align = 1
+valign = 1
+
+[node name="Ammo2" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 416.0
+margin_top = 112.0
+margin_right = 832.0
+margin_bottom = 180.0
+custom_fonts/font = SubResource( 6 )
+text = "1000/1000"
+align = 1
+valign = 1
+
+[node name="Item1_amount" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 112.0
+margin_top = 192.0
+margin_right = 163.0
+margin_bottom = 260.0
+custom_fonts/font = SubResource( 6 )
+text = "2x"
+
+[node name="Item1" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 192.0
+margin_top = 184.0
+margin_right = 264.0
+margin_bottom = 256.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="Item2_amount" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 560.0
+margin_top = 192.0
+margin_right = 611.0
+margin_bottom = 260.0
+custom_fonts/font = SubResource( 6 )
+text = "2x"
+
+[node name="Item2" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 640.0
+margin_top = 192.0
+margin_right = 704.0
+margin_bottom = 256.0
+texture = ExtResource( 2 )
+expand = true
+
+[node name="H" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 25.0
+margin_top = 264.0
+margin_right = 85.0
+margin_bottom = 355.0
+custom_fonts/font = SubResource( 7 )
+text = "H:"
+
+[node name="Health_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 110.0
+margin_top = 300.0
+margin_right = 234.0
+margin_bottom = 305.0
+rect_scale = Vector2( 5.5, 5 )
+value = 100.0
+texture_progress = ExtResource( 5 )
+
+[node name="A" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 25.0
+margin_top = 336.0
+margin_right = 85.0
+margin_bottom = 427.0
+custom_fonts/font = SubResource( 7 )
+text = "A:"
+
+[node name="Armor_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 110.0
+margin_top = 372.0
+margin_right = 234.0
+margin_bottom = 377.0
+rect_scale = Vector2( 5.5, 5 )
+value = 100.0
+texture_progress = ExtResource( 4 )
+
+[node name="S" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 25.0
+margin_top = 408.0
+margin_right = 79.0
+margin_bottom = 499.0
+custom_fonts/font = SubResource( 7 )
+text = "S:"
+
+[node name="Stamina_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
+margin_left = 110.0
+margin_top = 444.0
+margin_right = 234.0
+margin_bottom = 449.0
+rect_scale = Vector2( 5.5, 5 )
+value = 100.0
+texture_progress = ExtResource( 1 )
+
+[node name="Heist_success" type="Panel" parent="Control/CanvasLayer"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Heist_fail" type="Panel" parent="Control/CanvasLayer"]
+visible = false
+self_modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Start_btn" type="Button" parent="Control/CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -250.0
+margin_top = -490.0
+margin_right = 250.0
+margin_bottom = -365.0
+custom_fonts/font = ExtResource( 12 )
+text = "Start Heist"
+
+[node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -250.0
+margin_top = -290.0
+margin_right = 250.0
+margin_bottom = -165.0
+custom_fonts/font = ExtResource( 12 )
+text = "Back to Menu"
+
+[connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Plan" to="Control/CanvasLayer/Preplanning" method="_on_Plan_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Assets" to="Control/CanvasLayer/Preplanning" method="_on_Assets_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Gear" to="Control/CanvasLayer/Preplanning" method="_on_Gear_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Music" to="Control/CanvasLayer/Preplanning" method="_on_Music_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Start_btn" to="." method="_on_Start_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Menu_btn" to="." method="_on_Menu_btn_pressed"]

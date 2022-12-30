@@ -1,0 +1,288 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/Menus/Lobby/assets/map.png" type="Texture" id=3]
+[ext_resource path="res://src/Menus/Lobby/Lobby.gd" type="Script" id=4]
+[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=5]
+[ext_resource path="res://src/Menus/Lobby/assets/location.png" type="Texture" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 200
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 72
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 84
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 42
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="Lobby" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -1919.0
+margin_right = 1920.0
+margin_bottom = 420.0
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/VBoxContainer"]
+margin_right = 3839.0
+margin_bottom = 280.0
+custom_fonts/font = SubResource( 1 )
+text = "//CRIME.NET VER. 1.0.0.0//"
+align = 1
+valign = 1
+
+[node name="Map" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -60.0
+margin_top = -540.0
+margin_right = 1860.0
+margin_bottom = 540.0
+texture = ExtResource( 3 )
+
+[node name="Browser_panel" type="Panel" parent="Control/CanvasLayer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 50.0
+margin_top = -630.0
+margin_right = 1789.0
+margin_bottom = 631.0
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Browser_panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -869.5
+margin_right = 869.5
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 1 )
+text = "Select a heist:"
+align = 1
+valign = 1
+
+[node name="HeistList" type="ItemList" parent="Control/CanvasLayer/Browser_panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -519.5
+margin_top = -375.0
+margin_right = 519.5
+margin_bottom = 375.0
+custom_fonts/font = SubResource( 9 )
+items = [ "Busy Street", null, false, "Cristalli Abbaglianti", null, false, "Downtown Hit", null, false ]
+allow_reselect = true
+auto_height = true
+same_column_width = true
+
+[node name="Heist_panel" type="Panel" parent="Control/CanvasLayer"]
+visible = false
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 50.0
+margin_top = -620.0
+margin_right = 1789.0
+margin_bottom = 660.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Heist_panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -869.5
+margin_top = -630.5
+margin_right = 869.5
+margin_bottom = 630.5
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_right = 1739.0
+margin_bottom = 119.0
+custom_fonts/font = SubResource( 2 )
+text = "Heist title:"
+align = 1
+valign = 1
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 123.0
+margin_right = 1739.0
+margin_bottom = 153.0
+custom_constants/separation = 30
+
+[node name="Description" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 157.0
+margin_right = 1739.0
+margin_bottom = 296.0
+custom_fonts/font = SubResource( 3 )
+text = "A small bank downtown. Mediocre security, but lots of stuff in its vault, because their transport \"miraculously\" couldn't visit them. You in?"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 300.0
+margin_right = 1739.0
+margin_bottom = 330.0
+custom_constants/separation = 30
+
+[node name="Plan" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 334.0
+margin_right = 1739.0
+margin_bottom = 709.0
+custom_fonts/font = SubResource( 4 )
+text = "Plan:
+- Scout the area
+- Find the vault
+- Open the vault
+- Secure loot
+- Escape"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 713.0
+margin_right = 1739.0
+margin_bottom = 743.0
+custom_constants/separation = 30
+
+[node name="Total" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 747.0
+margin_right = 1739.0
+margin_bottom = 838.0
+custom_fonts/font = SubResource( 5 )
+text = "Potential rewards: 100,000$ & 3000 XP"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 842.0
+margin_right = 1739.0
+margin_bottom = 872.0
+custom_constants/separation = 30
+
+[node name="Difficulty" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 876.0
+margin_right = 1739.0
+margin_bottom = 936.0
+custom_fonts/font = SubResource( 4 )
+text = "Selected difficulty:"
+align = 1
+valign = 1
+autowrap = true
+
+[node name="Difficulty_selector" type="OptionButton" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 940.0
+margin_right = 1739.0
+margin_bottom = 1014.0
+custom_fonts/font = SubResource( 6 )
+text = "Easy"
+align = 1
+items = [ "Easy", null, false, 0, null, "Normal", null, false, 1, null, "Hard", null, false, 2, null, "Very Hard", null, false, 3, null ]
+selected = 0
+
+[node name="HSeparator5" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1018.0
+margin_right = 1739.0
+margin_bottom = 1048.0
+custom_constants/separation = 30
+
+[node name="PlayButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1052.0
+margin_right = 1739.0
+margin_bottom = 1126.0
+custom_fonts/font = SubResource( 7 )
+text = "Play"
+
+[node name="HSeparator6" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1130.0
+margin_right = 1739.0
+margin_bottom = 1160.0
+custom_constants/separation = 30
+
+[node name="BackButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1164.0
+margin_right = 1739.0
+margin_bottom = 1238.0
+custom_fonts/font = SubResource( 8 )
+text = "Back"
+
+[node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -250.0
+margin_top = -260.0
+margin_right = 250.0
+margin_bottom = -110.0
+custom_fonts/font = ExtResource( 5 )
+text = "Main Menu"
+
+[node name="Marker" type="TextureRect" parent="Control/CanvasLayer"]
+margin_left = 3368.0
+margin_top = 1208.0
+margin_right = 3432.0
+margin_bottom = 1272.0
+texture = ExtResource( 6 )
+
+[connection signal="item_activated" from="Control/CanvasLayer/Browser_panel/HeistList" to="." method="_on_HeistList_item_activated"]
+[connection signal="item_selected" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Difficulty_selector" to="." method="_on_Difficulty_selector_item_selected"]
+[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Menu_btn" to="." method="_on_Menu_btn_pressed"]

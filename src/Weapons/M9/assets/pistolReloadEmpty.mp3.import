@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pistolReloadEmpty.mp3-6bc51de28008b4b4e614a40fbcf360e8.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3"
+dest_files=[ "res://.import/pistolReloadEmpty.mp3-6bc51de28008b4b4e614a40fbcf360e8.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

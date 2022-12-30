@@ -1,0 +1,43 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Weapons/M9/assets/m9.png" type="Texture" id=2]
+[ext_resource path="res://src/Weapons/M9/M9.gd" type="Script" id=3]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=5]
+[ext_resource path="res://src/Weapons/M9/assets/pistolShootDry.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 224, 120 )
+
+[node name="M9" instance=ExtResource( 1 )]
+scale = Vector2( 0.3, 0.3 )
+script = ExtResource( 3 )
+base_firerate = 100.0
+base_empty_reload_time = 1.5
+cam_shake_intensity = 0.5
+base_mag_size = 8
+base_ammo_count = 80
+base_accuracy = 60
+base_concealment = 8
+weapon_position = Vector2( 185, 115 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="MeleeShape" parent="." index="1"]
+position = Vector2( -8, 0 )
+shape = SubResource( 1 )
+
+[node name="Fire" parent="." index="5"]
+stream = ExtResource( 5 )
+
+[node name="Fire_dry" parent="." index="6"]
+stream = ExtResource( 6 )
+
+[node name="Reload_sound" parent="." index="7"]
+stream = ExtResource( 7 )
+
+[node name="Reload_empty" parent="." index="8"]
+stream = ExtResource( 4 )

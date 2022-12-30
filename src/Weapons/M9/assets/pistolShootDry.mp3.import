@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pistolShootDry.mp3-a987dd6ec52c5c15f83ddfba2c6862c2.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/M9/assets/pistolShootDry.mp3"
+dest_files=[ "res://.import/pistolShootDry.mp3-a987dd6ec52c5c15f83ddfba2c6862c2.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

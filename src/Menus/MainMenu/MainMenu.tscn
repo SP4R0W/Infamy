@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=3]
+[ext_resource path="res://src/Menus/MainMenu/MainMenu.gd" type="Script" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="Title_panel" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = -824.0
+margin_top = -830.0
+margin_right = -100.0
+margin_bottom = -300.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Title_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 717.0
+margin_bottom = 523.0
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
+margin_right = 710.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 1 )
+text = "INFAMY"
+align = 1
+valign = 1
+
+[node name="Level" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
+margin_top = 235.0
+margin_right = 710.0
+margin_bottom = 326.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Level: 100"
+align = 1
+valign = 1
+
+[node name="Money" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
+margin_top = 330.0
+margin_right = 710.0
+margin_bottom = 421.0
+custom_colors/font_color = Color( 0.254902, 1, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Money: 100,000,000$"
+align = 1
+valign = 1
+
+[node name="XP" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
+margin_top = 425.0
+margin_right = 710.0
+margin_bottom = 516.0
+custom_colors/font_color = Color( 0.101961, 0.662745, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "XP: 100,000/100,000"
+align = 1
+valign = 1
+
+[node name="Option_panel" type="Panel" parent="Control/CanvasLayer"]
+margin_left = 3013.0
+margin_top = 815.0
+margin_right = 3737.0
+margin_bottom = 1825.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Option_panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -305.0
+margin_top = -458.0
+margin_right = 305.0
+margin_bottom = 458.0
+custom_constants/separation = 20
+
+[node name="Online_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_right = 610.0
+margin_bottom = 97.0
+custom_fonts/font = ExtResource( 3 )
+text = "Play"
+
+[node name="Tutorial_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 117.0
+margin_right = 610.0
+margin_bottom = 214.0
+custom_fonts/font = ExtResource( 3 )
+text = "Tutorial"
+
+[node name="Inventory_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 234.0
+margin_right = 610.0
+margin_bottom = 331.0
+custom_fonts/font = ExtResource( 3 )
+text = "Inventory"
+
+[node name="Skills_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 351.0
+margin_right = 610.0
+margin_bottom = 448.0
+custom_fonts/font = ExtResource( 3 )
+text = "Skills"
+
+[node name="Help_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 468.0
+margin_right = 610.0
+margin_bottom = 565.0
+custom_fonts/font = ExtResource( 3 )
+text = "Help"
+
+[node name="Settings_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 585.0
+margin_right = 610.0
+margin_bottom = 682.0
+custom_fonts/font = ExtResource( 3 )
+text = "Settings"
+
+[node name="Credits_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 702.0
+margin_right = 610.0
+margin_bottom = 799.0
+custom_fonts/font = ExtResource( 3 )
+text = "Credits"
+
+[node name="Exit_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
+margin_top = 819.0
+margin_right = 610.0
+margin_bottom = 916.0
+custom_fonts/font = ExtResource( 3 )
+text = "Exit"
+
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Online_btn" to="." method="_on_Online_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Exit_btn" to="." method="_on_Exit_btn_pressed"]

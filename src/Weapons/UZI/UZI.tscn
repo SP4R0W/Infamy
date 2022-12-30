@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Weapons/assets/UZI/uzi.png" type="Texture" id=2]
+[ext_resource path="res://src/Weapons/UZI/UZI.gd" type="Script" id=3]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=5]
+[ext_resource path="res://src/Weapons/M9/assets/pistolShootDry.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 113.5, 44 )
+
+[node name="UZI" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+base_firerate = 800.0
+base_empty_reload_time = 1.5
+cam_shake_intensity = 0.85
+base_mag_size = 30
+base_ammo_count = 210
+base_accuracy = 20
+base_concealment = 5
+weapon_position = Vector2( 160, 100 )
+animation = "heavy"
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 2 )
+
+[node name="MeleeShape" parent="." index="1"]
+position = Vector2( 33.5, 0 )
+shape = SubResource( 1 )
+
+[node name="Fire" parent="." index="5"]
+stream = ExtResource( 5 )
+
+[node name="Fire_dry" parent="." index="6"]
+stream = ExtResource( 6 )
+
+[node name="Reload_sound" parent="." index="7"]
+stream = ExtResource( 7 )
+
+[node name="Reload_empty" parent="." index="8"]
+stream = ExtResource( 4 )

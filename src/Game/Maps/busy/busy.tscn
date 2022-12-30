@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=1]
+
+[node name="busy" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 1140.0
+margin_top = 1010.0
+margin_right = 2575.0
+margin_bottom = 1241.0
+custom_fonts/font = ExtResource( 1 )
+text = "This is busy level."
