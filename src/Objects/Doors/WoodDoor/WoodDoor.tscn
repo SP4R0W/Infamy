@@ -26,8 +26,10 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
-[node name="Wood_door" type="StaticBody2D"]
-collision_layer = 16384
+[node name="Wood_door" type="StaticBody2D" groups=["wood_door"]]
+z_index = 5
+collision_layer = 20480
+collision_mask = 0
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -40,6 +42,7 @@ visible = false
 shape = SubResource( 1 )
 
 [node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
+visible = false
 collision_layer = 8
 collision_mask = 0
 

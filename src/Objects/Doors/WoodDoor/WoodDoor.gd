@@ -1,16 +1,24 @@
 extends StaticBody2D
 
-signal object_interacted(object)
+signal object_interaction_started(object,action)
+signal object_interaction_aborted(object,action)
+signal object_interaction_finished(object,action)
 
 export var disguises_needed = ["employee","guard"]
+export var is_broken: bool = false
+export var can_interact: bool = true
 
 var has_focus: bool = false
 
 var is_closed: bool = true
 
-var original_rotation = rotation_degrees
+var original_rotation: float
+
+var action = "open"
 
 func _ready():
+	original_rotation = $Sprite.rotation_degrees
+	
 	$Interaction_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 
@@ -22,31 +30,42 @@ func show_panel():
 func hide_panel():
 	has_focus = false
 	$Interaction_panel.hide()
+	
+func destroy_door():
+	is_broken = true
+	can_interact = false
+	
+	if (is_equal_approx(original_rotation,90)):
+		$Sprite.rotation_degrees = 0
+	elif (is_equal_approx(original_rotation,0)):
+		$Sprite.rotation_degrees = 90
+				
+	set_collision_layer_bit(12,false)
+	get_tree().call_group("Detection","add_exception",self)
+	get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 
 func _process(delta):
-	if (has_focus):
+	if (has_focus && can_interact):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
 				
-				$Interaction_timer.wait_time = 1
+				emit_signal("object_interaction_started",self.name,self.action)
+				
+				$Interaction_timer.wait_time = .5
 				$Interaction_timer.start()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
-				
-				if (!disguises_needed.has(Game.player_disguise)):
-					Game.player_status = Game.player_statuses.SUSPICIOUS
 		else:
 			if (Game.player_is_interacting):
+				emit_signal("object_interaction_aborted",self.name,self.action)
+				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
-				
-				if (Game.player_disguise != "normal"):
-					Game.player_status = Game.player_statuses.DISGUISED
-				else:
-					Game.player_status = Game.player_statuses.NORMAL
+	else:
+		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	
 		$Interaction_panel/VBoxContainer/Interaction_progress.value = (($Interaction_timer.wait_time - $Interaction_timer.time_left) / $Interaction_timer.wait_time) * 100
@@ -59,26 +78,27 @@ func _on_Interaction_timer_timeout():
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
-		if (Game.player_disguise != "normal"):
-			Game.player_status = Game.player_statuses.DISGUISED
-		else:
-			Game.player_status = Game.player_statuses.NORMAL
-			
-		emit_signal("object_interacted",self.name)
+		emit_signal("object_interaction_finished",self.name,self.action)
 		
 		if (is_closed):
 			is_closed = false
 			
 			$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Close"
-			if (original_rotation == 90):
+			
+			if (is_equal_approx(original_rotation,90)):
 				$Sprite.rotation_degrees = 0
-			elif (original_rotation == 0):
+			elif (is_equal_approx(original_rotation,0)):
 				$Sprite.rotation_degrees = 90
 				
-			$Door_collision.disabled = true
+			set_collision_layer_bit(12,false)
+			get_tree().call_group("Detection","add_exception",self)
+			get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 		else:
+			is_closed = true
 			$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Open"
 			
 			$Sprite.rotation_degrees = original_rotation
 				
-			$Door_collision.disabled = false
+			set_collision_layer_bit(12,true)
+			get_tree().call_group("Detection","remove_exception",self)
+			get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)

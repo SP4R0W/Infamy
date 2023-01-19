@@ -15,12 +15,18 @@ _global_script_classes=[ {
 "path": "res://src/Game/GameScene.gd"
 }, {
 "base": "Node2D",
+"class": "NPC",
+"language": "GDScript",
+"path": "res://src/NPCs/NPC.gd"
+}, {
+"base": "Node2D",
 "class": "Weapon",
 "language": "GDScript",
 "path": "res://src/Weapons/Weapons.gd"
 } ]
 _global_script_class_icons={
 "GameScene": "",
+"NPC": "",
 "Weapon": ""
 }
 
@@ -167,6 +173,10 @@ sprint={
 2d_physics/layer_14="object"
 2d_physics/layer_15="door"
 2d_physics/layer_16="glass"
+
+[mono]
+
+project/assembly_name="Infamy"
 
 [physics]
 

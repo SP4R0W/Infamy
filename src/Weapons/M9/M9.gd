@@ -1,6 +1,8 @@
 extends Weapon
 
 func _ready():
+	$MeleeShape.disabled = true
+	
 	firerate = 60/base_firerate
 	reload_time = base_reload_time
 	empty_reload_time = base_empty_reload_time
@@ -47,20 +49,27 @@ func shoot() -> void:
 func reload() -> void:
 	if (current_mag_size != mag_size):
 		if (current_mag_size > 0 && current_ammo_count > 0):
+			var actual_reload_duration = base_reload_time / reload_time 
 			Game.player_is_reloading = true
 			
 			reload_timer.wait_time = reload_time
 			reload_timer.start()
 			
-			reload_sound.pitch_scale = base_reload_time / reload_time 
+			anim_player.play("reload",-1,actual_reload_duration)
+			print(anim_player.is_playing())
+			
+			reload_sound.pitch_scale = actual_reload_duration
 			reload_sound.play()
 		elif (current_mag_size == 0 && current_ammo_count > 0):
+			var actual_reload_duration = base_empty_reload_time / empty_reload_time 
 			Game.player_is_reloading = true
 			
 			reload_timer.wait_time = empty_reload_time
 			reload_timer.start()
 			
-			reload_empty_sound.pitch_scale = base_empty_reload_time / empty_reload_time 
+			anim_player.play("reload",-1,actual_reload_duration)
+			
+			reload_empty_sound.pitch_scale = actual_reload_duration
 			reload_empty_sound.play()	
 		else:
 			if (firerate_timer.time_left <= 0):
@@ -87,3 +96,13 @@ func reload_finish() -> void:
 	Game.player_is_reloading = false
 	
 	.reload_finish()
+
+func melee() -> void:
+	Game.player_is_meleing = true
+	
+	anim_player.play("melee")
+	
+	yield(anim_player,"animation_finished")
+	
+	Game.player_is_meleing = false	
+	.melee()

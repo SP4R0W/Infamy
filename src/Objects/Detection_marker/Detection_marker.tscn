@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/Objects/Detection_marker/alert.png" type="Texture" id=1]
+[ext_resource path="res://src/Objects/Detection_marker/question.png" type="Texture" id=2]
+[ext_resource path="res://src/Objects/Detection_marker/Detection_marker.gd" type="Script" id=3]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "alert",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "question",
+"speed": 5.0
+} ]
+
+[node name="Marker" type="Node2D"]
+scale = Vector2( 2, 2 )
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "alert"

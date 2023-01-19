@@ -1,8 +1,9 @@
 extends Sprite
 
-signal object_pickup(object)
+signal object_interaction_finished(object,action)
 
 var has_focus: bool = false
+export var can_interact: bool = true
 
 func _ready():
 	$Interaction_panel.hide()
@@ -20,7 +21,7 @@ func _process(delta):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.add_player_inventory_item("b_keycard")
-				emit_signal("object_pickup",self.name)
+				emit_signal("object_interaction_finished",self.name,"pickup")
 				
 				queue_free()
 				

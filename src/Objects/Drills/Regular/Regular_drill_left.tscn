@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/Objects/Drills/Regular/Regular_drill_down.tscn" type="PackedScene" id=1]
+
+[node name="Regular_drill_left" instance=ExtResource( 1 )]
+
+[node name="Sprite" parent="." index="0"]
+rotation = 1.5708
+
+[node name="Interaction_hitbox" parent="." index="1"]
+rotation = 1.5708

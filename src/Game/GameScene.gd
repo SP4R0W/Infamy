@@ -25,6 +25,7 @@ func start_game() -> void:
 	show_gameui()
 	
 	Game.game_process = true
+	Game.map.update_objective(1)
 
 func _on_Start_btn_pressed() -> void:
 	start_game()

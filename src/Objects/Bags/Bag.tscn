@@ -31,11 +31,12 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
-[node name="Bag" type="AnimatedSprite"]
+[node name="Bag" type="AnimatedSprite" groups=["bags"]]
+z_index = 5
 frames = SubResource( 1 )
 script = ExtResource( 3 )
 
-[node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["bags", "detectable", "interactable"]]
 collision_layer = 8
 collision_mask = 0
 

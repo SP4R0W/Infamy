@@ -1,0 +1,157 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/Objects/PC/PC.gd" type="Script" id=2]
+[ext_resource path="res://src/Objects/PC/pc.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 80, 24 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "Hacking"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "Hacking", "Hacking.", "Hacking..", "Hacking..." ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:text")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ "Hacking" ]
+}
+
+[sub_resource type="DynamicFont" id=4]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="PC" type="Sprite"]
+texture = ExtResource( 3 )
+script = ExtResource( 2 )
+
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_hitbox"]
+position = Vector2( 0, 24 )
+shape = SubResource( 1 )
+
+[node name="Interaction_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Hack_timer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="Hacking_panel" type="PanelContainer" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -170.0
+margin_top = -168.0
+margin_right = 54.0
+margin_bottom = -48.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Hacking_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 217.0
+margin_bottom = 113.0
+
+[node name="Title" type="Label" parent="Hacking_panel/VBoxContainer"]
+margin_right = 210.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+text = "PC"
+align = 1
+
+[node name="Action" type="Label" parent="Hacking_panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 210.0
+margin_bottom = 73.0
+custom_fonts/font = SubResource( 3 )
+text = "Hacking"
+align = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hacking_panel/VBoxContainer/Action"]
+anims/Hacking = SubResource( 5 )
+anims/RESET = SubResource( 6 )
+
+[node name="Interaction_progress" type="ProgressBar" parent="Hacking_panel/VBoxContainer"]
+margin_top = 77.0
+margin_right = 210.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 4 )
+step = 1.0
+rounded = true
+
+[node name="Interaction_panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -170.0
+margin_top = -168.0
+margin_right = 54.0
+margin_bottom = -48.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 217.0
+margin_bottom = 113.0
+
+[node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_right = 210.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+text = "PC"
+align = 1
+
+[node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 210.0
+margin_bottom = 73.0
+custom_fonts/font = SubResource( 3 )
+text = "Hold [F] to Hack"
+align = 1
+
+[node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
+margin_top = 77.0
+margin_right = 210.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 4 )
+step = 1.0
+rounded = true
+
+[connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="timeout" from="Hack_timer" to="." method="_on_Hack_timer_timeout"]

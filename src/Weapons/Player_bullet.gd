@@ -15,9 +15,11 @@ func _ready():
 func _physics_process(delta) -> void:
 	if (look_once):
 		var real_accuracy = ((100-accuracy)/100)
-		spread = rand_range(-real_accuracy/2,real_accuracy/2)
-		print(spread)
-		
+		if (Game.player.velocity == Vector2.ZERO):
+			spread = rand_range(-real_accuracy/2,real_accuracy/2)
+		else:
+			spread = rand_range(-real_accuracy,real_accuracy)
+
 		look_once = false
 		look_at(get_global_mouse_position())
 		
@@ -37,5 +39,8 @@ func _on_Bullet_area_entered(area):
 func _on_Bullet_body_entered(body):
 	if (body.is_in_group("glass")):
 		body.destroy()
+		
+	if (body.is_in_group("wood_door")):
+		body.destroy_door()
 	
 	kill()

@@ -1,0 +1,148 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/NPCs/NPC.gd" type="Script" id=1]
+[ext_resource path="res://src/Objects/Detection_marker/Detection_marker.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://src/Player/assets/guard_stand.png" type="Texture" id=4]
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 91.43
+height = 274.283
+
+[sub_resource type="DynamicFont" id=1]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 76, 96 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="NPC" type="Node2D" groups=["Detection", "npc"]]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 0.35, 0.35 )
+frames = SubResource( 5 )
+
+[node name="Raycasts" type="Node2D" parent="AnimatedSprite"]
+
+[node name="Hitbox" type="Area2D" parent="AnimatedSprite"]
+visible = false
+collision_layer = 4
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Hitbox"]
+position = Vector2( -4, 0 )
+shape = SubResource( 6 )
+
+[node name="Detect" type="Area2D" parent="AnimatedSprite"]
+collision_layer = 256
+collision_mask = 32777
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite/Detect"]
+position = Vector2( 22.8571, 0 )
+polygon = PoolVector2Array( 68.5714, -68.5714, 1828.57, -1645.71, 1828.57, 1645.71, 68.5714, 68.5714 )
+
+[node name="Marker" parent="." instance=ExtResource( 2 )]
+position = Vector2( 0, -150 )
+z_index = 10
+
+[node name="AnimatedSprite" parent="Marker" index="0"]
+position = Vector2( 0, -9 )
+
+[node name="Detection_bar" type="ProgressBar" parent="."]
+margin_left = -104.0
+margin_top = -96.0
+margin_right = 106.0
+margin_bottom = -73.0
+custom_fonts/font = SubResource( 1 )
+step = 1.0
+rounded = true
+
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["detectable", "interactable", "npc"]]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_hitbox"]
+position = Vector2( -4, 0 )
+shape = SubResource( 2 )
+
+[node name="Detection_timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Alert_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Interaction_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Interaction_panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -112.0
+margin_top = -280.0
+margin_right = 112.0
+margin_bottom = -114.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 217.0
+margin_bottom = 159.0
+
+[node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_right = 210.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 3 )
+text = "NPC"
+align = 1
+
+[node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 210.0
+margin_bottom = 125.0
+custom_fonts/font = SubResource( 4 )
+text = "Hold [F] to Tie
+Hold [X] to Interrogate
+Hold [C] to Bag"
+align = 1
+
+[node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
+margin_top = 129.0
+margin_right = 210.0
+margin_bottom = 152.0
+custom_fonts/font = SubResource( 1 )
+step = 1.0
+rounded = true
+
+[connection signal="area_entered" from="AnimatedSprite/Hitbox" to="." method="_on_Hitbox_area_entered"]
+[connection signal="area_entered" from="AnimatedSprite/Detect" to="." method="_on_Detect_area_entered"]
+[connection signal="area_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_area_exited"]
+[connection signal="body_entered" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_entered"]
+[connection signal="body_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_exited"]
+[connection signal="timeout" from="Detection_timer" to="." method="_on_Detection_timer_timeout"]
+[connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+
+[editable path="Marker"]

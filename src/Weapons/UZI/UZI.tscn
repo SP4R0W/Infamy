@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/Weapons/assets/UZI/uzi.png" type="Texture" id=2]
@@ -10,6 +10,76 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 113.5, 44 )
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeleeShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.5 ),
+"transitions": PoolRealArray( 0.35, 1, 0.15, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0, -75.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MeleeShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -85.0, -85.0, 0.0 ]
+}
 
 [node name="UZI" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
@@ -30,6 +100,12 @@ texture = ExtResource( 2 )
 [node name="MeleeShape" parent="." index="1"]
 position = Vector2( 33.5, 0 )
 shape = SubResource( 1 )
+disabled = true
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/RESET = SubResource( 2 )
+anims/melee = SubResource( 3 )
+anims/reload = SubResource( 4 )
 
 [node name="Fire" parent="." index="5"]
 stream = ExtResource( 5 )

@@ -1,0 +1,80 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/Objects/Phone/telephone.png" type="Texture" id=2]
+[ext_resource path="res://src/Objects/Phone/Phone.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 80, 64 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="Phone" type="Sprite"]
+z_index = 5
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_hitbox"]
+visible = false
+shape = SubResource( 5 )
+
+[node name="Interaction_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Interaction_panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -176.0
+margin_top = -216.0
+margin_right = 48.0
+margin_bottom = -76.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 217.0
+margin_bottom = 133.0
+
+[node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_right = 210.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+text = "Phone"
+align = 1
+
+[node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 210.0
+margin_bottom = 99.0
+custom_fonts/font = SubResource( 3 )
+text = "Hold [F] to Call Manager (requires phone number)"
+align = 1
+autowrap = true
+
+[node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
+margin_top = 103.0
+margin_right = 210.0
+margin_bottom = 126.0
+custom_fonts/font = SubResource( 4 )
+step = 1.0
+rounded = true
+
+[connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]

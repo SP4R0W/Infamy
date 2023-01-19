@@ -3,9 +3,9 @@ class_name Weapon
 
 var bullet_scene = preload("res://src/Weapons/Player_bullet.tscn")
 
-export (float, 1,1000,1) var base_firerate = 1
-export (float, 0.1,10,0.1) var base_reload_time = 1
-export (float, 0.1,10.0,0.1) var base_empty_reload_time = 1
+export (float, 1,1000,1) var base_firerate = 1.0
+export (float, 0.1,10,0.1) var base_reload_time = 1.0
+export (float, 0.1,10.0,0.1) var base_empty_reload_time = 1.0
 export (float, 0.1,1000.0,0.1) var base_damage = 0.1
 export (float, 0.1,1,0.05) var cam_shake_intensity = 0.1
 

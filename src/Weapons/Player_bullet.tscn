@@ -6,10 +6,10 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 2.5, 10 )
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" groups=["plr_bullets"]]
 scale = Vector2( 2, 1 )
 collision_layer = 64
-collision_mask = 61444
+collision_mask = 53252
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]

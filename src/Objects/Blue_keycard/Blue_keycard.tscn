@@ -19,6 +19,7 @@ use_filter = true
 font_data = ExtResource( 3 )
 
 [node name="Keycard_blue" type="Sprite"]
+z_index = 5
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 

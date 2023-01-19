@@ -1,11 +1,11 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/Game/assets/StaminaBar.png" type="Texture" id=1]
-[ext_resource path="res://src/Game/assets/ammo.png" type="Texture" id=2]
+[ext_resource path="res://src/Equipment/ammo.png" type="Texture" id=2]
 [ext_resource path="res://src/Game/assets/bg.jpg" type="Texture" id=3]
 [ext_resource path="res://src/Game/assets/ArmorBar.png" type="Texture" id=4]
 [ext_resource path="res://src/Game/assets/HpBar.png" type="Texture" id=5]
-[ext_resource path="res://src/Game/assets/medic.png" type="Texture" id=6]
+[ext_resource path="res://src/Equipment/medic.png" type="Texture" id=6]
 [ext_resource path="res://src/Menus/Lobby/assets/map.png" type="Texture" id=7]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=8]
 [ext_resource path="res://src/Game/Preplanning.gd" type="Script" id=9]
@@ -13,6 +13,8 @@
 [ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=11]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=12]
 [ext_resource path="res://src/Game/GameUI.gd" type="Script" id=13]
+[ext_resource path="res://src/Game/assets/green_effect.png" type="Texture" id=14]
+[ext_resource path="res://src/Game/assets/red_effect.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -52,6 +54,24 @@ font_data = ExtResource( 8 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 64
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 92
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=9]
+size = 96
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 72
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 8 )
@@ -129,7 +149,6 @@ custom_fonts/font = ExtResource( 12 )
 text = "Music"
 
 [node name="Plan" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning"]
-visible = false
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -160,6 +179,7 @@ text = "Like I said, this is a simple bank heist. You go in, look around, take o
 autowrap = true
 
 [node name="Assets" type="Panel" parent="Control/CanvasLayer/Preplanning"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_left = 1.0
 anchor_top = 0.5
@@ -361,6 +381,7 @@ custom_fonts/font = SubResource( 2 )
 text = "Blueprint map:"
 
 [node name="GameUI" type="Panel" parent="Control/CanvasLayer"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -370,7 +391,7 @@ script = ExtResource( 13 )
 modulate = Color( 1, 1, 1, 0.847059 )
 margin_left = 64.0
 margin_top = 56.0
-margin_right = 881.0
+margin_right = 78.0
 margin_bottom = 161.0
 
 [node name="Label" type="Label" parent="Control/CanvasLayer/GameUI/Objective"]
@@ -380,6 +401,32 @@ margin_right = 810.0
 margin_bottom = 98.0
 custom_fonts/font = ExtResource( 12 )
 text = "Objective: Enter the bank"
+
+[node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Objective"]
+
+[node name="Popup_panel" type="Panel" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -796.0
+margin_top = -280.0
+margin_right = 797.0
+margin_bottom = -175.0
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/GameUI/Popup_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1586.0
+margin_bottom = 98.0
+custom_fonts/font = ExtResource( 12 )
+text = "Alarm tripped: Security found a suspicious object"
+align = 1
+
+[node name="Timer" type="Timer" parent="Control/CanvasLayer/GameUI/Popup_panel"]
+
+[node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Popup_panel"]
 
 [node name="Status" type="Panel" parent="Control/CanvasLayer/GameUI"]
 modulate = Color( 1, 1, 1, 0.847059 )
@@ -651,11 +698,191 @@ rect_scale = Vector2( 5.5, 5 )
 value = 100.0
 texture_progress = ExtResource( 1 )
 
+[node name="Subtitle" type="Label" parent="Control/CanvasLayer/GameUI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1022.0
+margin_top = 536.0
+margin_right = 1022.0
+margin_bottom = 1048.0
+custom_fonts/font = ExtResource( 12 )
+text = "Bain: Alright guys, this is it. A simple bank heist on a simple bank.
+Get inside first and scout the area."
+align = 1
+autowrap = true
+
+[node name="Timer" type="Timer" parent="Control/CanvasLayer/GameUI/Subtitle"]
+
+[node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Subtitle"]
+
+[node name="Green_effect" type="TextureRect" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 14 )
+
+[node name="Red_effect" type="TextureRect" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 15 )
+
 [node name="Heist_success" type="Panel" parent="Control/CanvasLayer"]
 visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+
+[node name="Background" type="TextureRect" parent="Control/CanvasLayer/Heist_success"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+
+[node name="Heist_title" type="Label" parent="Control/CanvasLayer/Heist_success"]
+anchor_right = 1.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "Downtown Hit: Very Hard: SUCCESS"
+align = 1
+
+[node name="Praise" type="Label" parent="Control/CanvasLayer/Heist_success"]
+anchor_right = 1.0
+margin_top = 256.0
+margin_bottom = 386.0
+custom_fonts/font = SubResource( 8 )
+text = "Amazing job! I don't think even I could perform as well."
+align = 1
+
+[node name="HSplitContainer" type="HBoxContainer" parent="Control/CanvasLayer/Heist_success"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1005.0
+margin_top = -470.0
+margin_right = 1005.0
+margin_bottom = 375.0
+custom_constants/separation = 300
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Heist_success/HSplitContainer"]
+margin_right = 855.0
+margin_bottom = 845.0
+custom_constants/separation = 40
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_right = 855.0
+margin_bottom = 135.0
+custom_fonts/font = SubResource( 9 )
+text = "MONEY:"
+align = 1
+
+[node name="contract_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_top = 175.0
+margin_right = 855.0
+margin_bottom = 277.0
+custom_fonts/font = SubResource( 10 )
+text = "Contract - 40,000$"
+align = 1
+
+[node name="bag_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_top = 317.0
+margin_right = 855.0
+margin_bottom = 419.0
+custom_fonts/font = SubResource( 10 )
+text = "Bags stolen - 100,000$"
+align = 1
+
+[node name="loot_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_top = 459.0
+margin_right = 855.0
+margin_bottom = 561.0
+custom_fonts/font = SubResource( 10 )
+text = "Additional loot - 5,000$"
+align = 1
+
+[node name="total_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_top = 601.0
+margin_right = 855.0
+margin_bottom = 703.0
+custom_fonts/font = SubResource( 10 )
+text = "Total: 145,000$"
+align = 1
+
+[node name="account" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer"]
+margin_top = 743.0
+margin_right = 855.0
+margin_bottom = 845.0
+custom_fonts/font = SubResource( 10 )
+text = "Your account value:"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/CanvasLayer/Heist_success/HSplitContainer"]
+margin_left = 1155.0
+margin_right = 1937.0
+margin_bottom = 845.0
+custom_constants/separation = 40
+
+[node name="Label2" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_right = 782.0
+margin_bottom = 135.0
+custom_fonts/font = SubResource( 9 )
+text = "EXPERIENCE:"
+align = 1
+
+[node name="contract_value2" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_top = 175.0
+margin_right = 782.0
+margin_bottom = 277.0
+custom_fonts/font = SubResource( 10 )
+text = "Contract: 4,000XP"
+align = 1
+
+[node name="difficulty_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_top = 317.0
+margin_right = 782.0
+margin_bottom = 419.0
+custom_fonts/font = SubResource( 10 )
+text = "Difficulty: 8,000XP"
+align = 1
+
+[node name="bag_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_top = 459.0
+margin_right = 782.0
+margin_bottom = 561.0
+custom_fonts/font = SubResource( 10 )
+text = "Bags stolen - 1,000XP"
+align = 1
+
+[node name="total_value" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_top = 601.0
+margin_right = 782.0
+margin_bottom = 703.0
+custom_fonts/font = SubResource( 10 )
+text = "Total: 13,000XP"
+align = 1
+
+[node name="level" type="Label" parent="Control/CanvasLayer/Heist_success/HSplitContainer/VBoxContainer2"]
+margin_top = 743.0
+margin_right = 782.0
+margin_bottom = 845.0
+custom_fonts/font = SubResource( 10 )
+text = "Your total experience:"
+align = 1
+
+[node name="Button" type="Button" parent="Control/CanvasLayer/Heist_success"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -194.0
+margin_top = -490.0
+margin_right = 194.0
+margin_bottom = -393.0
+custom_fonts/font = ExtResource( 12 )
+text = "Menu"
 
 [node name="Heist_fail" type="Panel" parent="Control/CanvasLayer"]
 visible = false
