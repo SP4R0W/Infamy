@@ -160,10 +160,10 @@ func _process(delta):
 	if (!Game.game_process):
 		return
 	
-	if (is_disabled):
-		$AnimatedSprite.animation = (camera_type + "_off")
-	elif (is_broken):
+	if (is_broken):
 		$AnimatedSprite.animation = (camera_type + "_broken")
+	elif (is_disabled):
+		$AnimatedSprite.animation = (camera_type + "_off")
 	else:
 		$AnimatedSprite.animation = (camera_type + "_on")
 	
@@ -185,7 +185,7 @@ func _process(delta):
 		$Marker.hide()
 		$Detection_bar.hide()
 	
-	if (has_focus && can_interact):
+	if (has_focus && can_interact && !is_disabled && !is_broken):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
@@ -270,7 +270,16 @@ func _on_Detection_timer_timeout():
 						else:
 							detection_value += 5
 				elif (object.is_in_group("npc")):
-					pass
+					var npc = object.get_parent()
+					if (npc.is_dead || npc.is_unconscious):
+						detection_code = "camera_body"
+						detection_value += 10				
+					elif (npc.is_hostaged || npc.is_escaping):
+						detection_code = "camera_hostage"
+						detection_value += 10		
+					elif (npc.is_alerted):
+						detection_code = "camera_alert"
+						detection_value += 10
 				elif (object.is_in_group("glass")):
 					if (object.is_broken):
 						detection_code = "camera_glass"
@@ -279,8 +288,9 @@ func _on_Detection_timer_timeout():
 					detection_code = "camera_bag"
 					detection_value += 10
 				elif (object.is_in_group("drill")):
-					detection_code = "camera_drill"
-					detection_value += 10
+					if (object.get_parent().visible):
+						detection_code = "camera_drill"
+						detection_value += 10
 					
 			if (detection_value >= 100):
 				break
@@ -294,7 +304,8 @@ func _on_Alert_timer_timeout():
 
 func alarm_on():
 	is_alerted = true
-	is_disabled = true
+	if (!is_broken):
+		is_disabled = true
 	
 	targets = []
 	

@@ -2,6 +2,7 @@ extends Node2D
 class_name Weapon
 
 var bullet_scene = preload("res://src/Weapons/Player_bullet.tscn")
+var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
 
 export (float, 1,1000,1) var base_firerate = 1.0
 export (float, 0.1,10,0.1) var base_reload_time = 1.0
@@ -19,7 +20,7 @@ export var weapon_position = Vector2(0,0)
 export (String, "light", "heavy") var animation = "light"
 
 onready var sprite: Sprite = $Sprite
-onready var melee_shape: CollisionShape2D = $MeleeShape
+onready var melee_shape: CollisionShape2D = $Melee/MeleeShape
 onready var anim_player: AnimationPlayer = $AnimationPlayer
 
 onready var firerate_timer: Timer = $Firerate

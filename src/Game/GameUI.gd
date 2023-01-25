@@ -223,7 +223,7 @@ func update_popup(message: String, duration: float):
 	
 	popup.rect_size = Vector2(14+$Popup_panel/Label.rect_size.x,105)
 	
-	$Popup_panel.rect_global_position.x = (OS.get_window_safe_area().end.x / 2) - ($Popup_panel.rect_size.x / 2)
+	$Popup_panel.rect_global_position.x = (OS.get_window_safe_area().end.x) - ($Popup_panel.rect_size.x / 2)
 	
 	popup.visible = true
 

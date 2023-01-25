@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
+
 signal object_interaction_started(object,action)
 signal object_interaction_aborted(object,action)
 signal object_interaction_finished(object,action)
@@ -16,7 +18,7 @@ var max_beeps = 4
 
 var action: String
 
-func _ready():
+func _ready():	
 	if (name.find("up") != -1):
 		$Door.rotation_degrees = 0
 	elif (name.find("down") != -1):
@@ -134,6 +136,11 @@ func _on_C4_timer_timeout():
 	else:
 		$C4.hide()
 		$Explosion.play()
+		
+		var noise = noise_scene.instance()
+		noise.radius = 1000
+		noise.time = 0.1
+		add_child(noise)
 		
 		open_safe()
 

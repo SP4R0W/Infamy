@@ -258,6 +258,11 @@ func draw_bag() -> void:
 func _process(delta) -> void:
 	if (!Game.game_process):
 		return
+		
+	if (current_weapon != -1):
+		$Hostage_ray.enabled = true
+	else:
+		$Hostage_ray.enabled = false
 	
 	if (Game.is_game_loud):
 		Game.player_status = Game.player_statuses.COMPROMISED

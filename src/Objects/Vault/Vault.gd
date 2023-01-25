@@ -67,6 +67,8 @@ func _on_Interaction_timer_timeout():
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
 		Game.suspicious_interaction = false
+		
+		Game.player_bag = "empty"
 			
 		emit_signal("object_interaction_finished",self.name,self.action)
 

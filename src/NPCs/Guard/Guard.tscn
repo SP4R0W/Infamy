@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/NPCs/NPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/NPCs/Guard/Guard.gd" type="Script" id=2]
+
+[node name="Guard" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+has_weapon = true
+is_static = false
+speed = 500.0
+
+[node name="NavigationAgent2D" parent="." index="0"]
+avoidance_enabled = false
+
+[node name="MoveTimer" parent="." index="9"]
+one_shot = true
+
+[node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
+text = "Guard"
+
+[editable path="Marker"]

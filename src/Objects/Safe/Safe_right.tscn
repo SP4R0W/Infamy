@@ -176,3 +176,4 @@ position = Vector2( 104, -32 )
 
 [connection signal="timeout" from="C4_timer" to="." method="_on_C4_timer_timeout"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="drill_finished" from="Drill" to="." method="_on_drill_finished"]

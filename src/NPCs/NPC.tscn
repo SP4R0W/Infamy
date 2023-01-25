@@ -39,16 +39,19 @@ font_data = ExtResource( 3 )
 [node name="NPC" type="Node2D" groups=["Detection", "npc"]]
 script = ExtResource( 1 )
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+avoidance_enabled = true
+
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.35, 0.35 )
 frames = SubResource( 5 )
 
 [node name="Raycasts" type="Node2D" parent="AnimatedSprite"]
 
-[node name="Hitbox" type="Area2D" parent="AnimatedSprite"]
+[node name="Hitbox" type="Area2D" parent="AnimatedSprite" groups=["hitbox_npc"]]
 visible = false
 collision_layer = 4
-collision_mask = 0
+collision_mask = 96
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Hitbox"]
 position = Vector2( -4, 0 )
@@ -61,6 +64,13 @@ collision_mask = 32777
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite/Detect"]
 position = Vector2( 22.8571, 0 )
 polygon = PoolVector2Array( 68.5714, -68.5714, 1828.57, -1645.71, 1828.57, 1645.71, 68.5714, 68.5714 )
+
+[node name="BulletOrigin" type="Position2D" parent="AnimatedSprite"]
+position = Vector2( 114.286, 0 )
+
+[node name="EscapeRay" type="RayCast2D" parent="AnimatedSprite"]
+scale = Vector2( 2.85714, 2.85714 )
+cast_to = Vector2( 1000, 0 )
 
 [node name="Marker" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -150 )
@@ -98,6 +108,16 @@ one_shot = true
 [node name="Interaction_timer" type="Timer" parent="."]
 one_shot = true
 
+[node name="Shoot_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="MoveTimer" type="Timer" parent="."]
+
+[node name="Escape_timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [node name="Interaction_panel" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
@@ -110,7 +130,7 @@ margin_bottom = -114.0
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 217.0
-margin_bottom = 159.0
+margin_bottom = 161.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
 margin_right = 210.0
@@ -122,17 +142,31 @@ align = 1
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
 margin_top = 50.0
 margin_right = 210.0
-margin_bottom = 125.0
+margin_bottom = 73.0
 custom_fonts/font = SubResource( 4 )
-text = "Hold [F] to Tie
-Hold [X] to Interrogate
-Hold [C] to Bag"
+text = "Hold [F] to Tie"
+align = 1
+
+[node name="Action2" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 77.0
+margin_right = 210.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 4 )
+text = "Hold [X] to Interrogate"
+align = 1
+
+[node name="Action3" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 210.0
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 4 )
+text = "Hold [C] to Bag"
 align = 1
 
 [node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
-margin_top = 129.0
+margin_top = 131.0
 margin_right = 210.0
-margin_bottom = 152.0
+margin_bottom = 154.0
 custom_fonts/font = SubResource( 1 )
 step = 1.0
 rounded = true
@@ -143,6 +177,10 @@ rounded = true
 [connection signal="body_entered" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_exited"]
 [connection signal="timeout" from="Detection_timer" to="." method="_on_Detection_timer_timeout"]
+[connection signal="timeout" from="Alert_timer" to="." method="_on_Alert_timer_timeout"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="timeout" from="Shoot_timer" to="." method="_on_Shoot_timer_timeout"]
+[connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
+[connection signal="timeout" from="Escape_timer" to="." method="_on_Escape_timer_timeout"]
 
 [editable path="Marker"]

@@ -9,9 +9,21 @@ var alarm_codes: Dictionary = {
 	"camera_player":"Camera spotted a criminal.",
 	"camera_body":"Camera spotted a body.",
 	"camera_hostage":"Camera spotted a hostage.",
+	"camera_alert":"Camera spotted an alerted person.",
 	"camera_bag":"Camera spotted a suspicious bag.",
 	"camera_drill":"Camera spotted a drill.",
-	"camera_glass":"Camera spotted broken glass."
+	"camera_glass":"Camera spotted broken glass.",
+	"hostage_escaped":"Hostage escaped and raised the alarm.",
+	"guard_player":"Guard spotted a criminal.",
+	"guard_body":"Guard spotted a body.",
+	"guard_hostage":"Guard spotted a hostage.",
+	"guard_alert":"Camera spotted an alerted person.",
+	"guard_bag":"Guard spotted a suspicious bag.",
+	"guard_drill":"Guard spotted a drill.",
+	"guard_glass":"Guard spotted broken glass.",
+	"guard_camera":"Guard spotted a broken camera.",
+	"guard_noise":"Guard heard a suspicious noise.",
+	
 }
 
 var game_scene = null
@@ -27,7 +39,10 @@ var difficulty_names: Array = ["Easy","Normal","Hard","Very Hard"]
 var ui
 
 var map
+var map_nav
 var map_objects
+var map_guard_restpoints
+var map_escape_zone
 
 var player
 
@@ -72,7 +87,7 @@ func turn_game_loud(code: String):
 	if (not is_game_loud):
 		is_game_loud = true
 		map.loud_ready()
-		ui.update_popup(alarm_codes[code],4)
+		ui.update_popup("Alarm sounded: " + alarm_codes[code],4)
 
 func has_item_in_equipment(item_needed: String) -> bool:
 	for item in player_equipment:

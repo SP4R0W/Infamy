@@ -1,5 +1,7 @@
 extends StaticBody2D
 
+var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
+
 signal object_interaction_started(object,action)
 signal object_interaction_aborted(object,action)
 signal object_interaction_finished(object,action)
@@ -145,6 +147,11 @@ func _on_C4_timer_timeout():
 	else:
 		$C4.hide()
 		$Explosion.play()
+		
+		var noise = noise_scene.instance()
+		noise.radius = 1000
+		noise.time = 0.1
+		add_child(noise)
 		
 		if (is_equal_approx(original_rotation,90)):
 			$Sprite.rotation_degrees = 0

@@ -2,6 +2,8 @@ extends Area2D
 
 export var damage: float = 10
 
+var target = null
+
 var accuracy: float
 var spread: float
 
@@ -23,7 +25,8 @@ func _physics_process(delta) -> void:
 			spread = rand_range(-real_accuracy,real_accuracy)
 
 		look_once = false
-		look_at(get_global_mouse_position())
+		look_at(target.global_position)
+
 		
 	velocity.y = spread
 		

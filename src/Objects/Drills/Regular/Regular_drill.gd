@@ -1,5 +1,7 @@
 extends Node2D
 
+var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
+
 signal object_interaction_started(object,action)
 signal object_interaction_aborted(object,action)
 signal object_interaction_finished(object,action)
@@ -20,6 +22,8 @@ var possible_jams = [[15,89,-1],[45,64,-1],[10,43,-1],[73,90,-1],[33,-1],[87,-1]
 var jams = 0
 var jam_method
 
+var noise_area
+
 func _ready():
 	hide()
 	jam_method = possible_jams[randi() % (possible_jams.size() - 1)]
@@ -28,6 +32,11 @@ func _ready():
 	$Drill_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 	
+	noise_area = noise_scene.instance()
+	noise_area.radius = 500
+	noise_area.time = -1
+	add_child(noise_area)
+
 func show_panel():
 	has_focus = true
 	$Interaction_panel.show()
@@ -101,6 +110,8 @@ func start_drill():
 
 	is_drilling = true
 	
+	noise_area.unpause()
+	
 func jam_drill():
 	can_interact = true
 	is_drilling = false
@@ -110,6 +121,9 @@ func jam_drill():
 
 	jams += 1
 	
+	noise_area.pause()
+	
+	
 func resume_drill():
 	can_interact = false
 	$Interaction_panel.hide()
@@ -117,8 +131,12 @@ func resume_drill():
 	$Drill_timer.paused = false
 
 	is_drilling = true
+	
+	noise_area.unpause()	
 
 func _on_Drill_timer_timeout():
+	noise_area.remove()
+	
 	emit_signal("drill_finished")
 	
 	queue_free()

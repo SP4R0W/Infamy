@@ -69,7 +69,10 @@ onready var van = $Objectives/Van
 
 func _ready():
 	Game.map = self
+	Game.map_nav = $Navigation2D
 	Game.map_objects = $Objects
+	Game.map_guard_restpoints = $NPCs/Guards/RestPoints
+	Game.map_escape_zone = $NPCs/Escape_Zone
 
 	var camera: Camera2D = Game.player.get_node("Player_camera")
 	var ground_size: Rect2 = $Ground.get_used_rect()
@@ -101,7 +104,7 @@ func _ready():
 	randomize_safe()
 	randomize_blue_keycard()
 	
-	#randomize_cameras()
+	randomize_cameras()
 	
 func loud_ready():
 	if (current_objective < 8):
@@ -120,8 +123,8 @@ func loud_ready():
 	if ($ObjectiveZones/VaultZone != null):
 		$ObjectiveZones/VaultZone.queue_free()
 		
-	for camera in $Objects/Cameras.get_children():
-		camera.alarm_on()
+	get_tree().call_group("Camera","alarm_on")
+	get_tree().call_group("npc","alarm_on")
 	
 func randomize_note():
 	var num = randi() % $Objectives/Notes.get_child_count()

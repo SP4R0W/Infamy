@@ -1,7 +1,7 @@
 extends Weapon
 
 func _ready():
-	$MeleeShape.disabled = true
+	$Melee/MeleeShape.disabled = true
 	
 	firerate = 60/base_firerate
 	reload_time = base_reload_time
@@ -43,6 +43,12 @@ func shoot() -> void:
 		bullet.accuracy = self.accuracy
 		Game.game_scene.add_child(bullet)
 		bullet.global_position = Game.player.get_node("Bullet_origin").global_position	
+
+		var noise = noise_scene.instance()
+		noise.radius = 1000
+		noise.time = 0.1
+		Game.game_scene.add_child(noise)
+		noise.global_position = Game.player.global_position
 
 	.shoot()
 

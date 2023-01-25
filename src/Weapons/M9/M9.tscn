@@ -8,8 +8,8 @@
 [ext_resource path="res://src/Weapons/M9/assets/pistolShootDry.mp3" type="AudioStream" id=6]
 [ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 224, 120 )
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 226.667, 106.667 )
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -37,6 +37,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Melee/MeleeShape:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "melee"
@@ -54,7 +66,7 @@ tracks/0/keys = {
 "values": [ 0.0, 15.0, -75.0, 0.0 ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("MeleeShape:disabled")
+tracks/1/path = NodePath("Melee/MeleeShape:disabled")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -96,9 +108,9 @@ weapon_position = Vector2( 185, 115 )
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
 
-[node name="MeleeShape" parent="." index="1"]
-position = Vector2( -8, 0 )
-shape = SubResource( 1 )
+[node name="MeleeShape" parent="Melee" index="0"]
+position = Vector2( -13.3333, -3.17891e-06 )
+shape = SubResource( 5 )
 disabled = true
 
 [node name="AnimationPlayer" parent="." index="2"]
