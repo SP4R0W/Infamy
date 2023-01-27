@@ -14,6 +14,8 @@ signal npc_dead(object)
 signal alerted(code)
 
 export var health: float = 10
+export var initial_rotation: float = 0
+export var npc_name: String
 
 export var can_interact: bool = false
 export var can_see: bool = true
@@ -30,7 +32,6 @@ export var has_disguise: bool = true
 
 onready var move_timer: Timer = $MoveTimer
 onready var rays: Node2D = $AnimatedSprite/Raycasts
-onready var npc_name: String = name.to_lower()
 
 var action: String = "loop"
 
@@ -46,6 +47,7 @@ var base_detection_speed = 0.1
 var detection_code: String = "None"
 var detection_value: int = 0
 
+var is_seeing: bool = false
 var is_detecting: bool = false
 var is_detecting_player_disguise: bool = false
 
@@ -66,6 +68,8 @@ func _ready():
 	$Interaction_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 	
+	$AnimatedSprite.rotation_degrees = initial_rotation
+	
 	on_ready()
 	
 func on_ready():
@@ -85,7 +89,7 @@ func _on_Interaction_timer_timeout():
 
 func create_ray() -> RayCast2D:
 	var ray = RayCast2D.new()
-	ray.cast_to = Vector2(3500,0)
+	ray.cast_to = Vector2(2200,0)
 	ray.collide_with_areas = true
 	ray.collide_with_bodies = true	
 	ray.enabled = false
@@ -100,7 +104,7 @@ func create_ray() -> RayCast2D:
 		ray.add_exception(exception)
 	
 	rays.add_child(ray)
-	var dict = {"ray_cast":ray,"detecting":false,"object":null}
+	var dict = {"ray_cast":ray,"detecting":false,"seeing":false,"detection_value":0,"object":null}
 	raycasts.append(dict)
 	
 	return dict
@@ -146,49 +150,51 @@ func _physics_process(delta):
 						
 					if (!get_tree().get_nodes_in_group("detectable").has(target)):
 						targets.erase(target)
-						ray_dict["detecting"] = false
+						ray_dict["seeing"] = false
 						ray_dict["object"] = null
 						continue
 					
-					var ray = ray_dict["ray_cast"]
+					var ray: RayCast2D = ray_dict["ray_cast"]
 					ray.enabled = true
 						
 					ray.look_at(target.global_position)
-					if (ray.is_colliding() && ray.get_collider() == target):
-						ray_dict["detecting"] = true
-						ray_dict["object"] = target
-					else:
-						ray_dict["detecting"] = false
-						ray_dict["object"] = null
-					
+					#ray.cast_to = Vector2($AnimatedSprite.global_position.distance_to(target.global_position),0)
+					#ray.force_raycast_update()
+
+					ray_dict["seeing"] = true
+					ray_dict["object"] = target
+
 		if (targets.size() == 0):
 			for x in range(rays.get_child_count()):
 				var ray: RayCast2D = rays.get_child(x)
-				raycasts[x]["detecting"] = false
+				raycasts[x]["seeing"] = false
 				ray.enabled = false
 		elif (rays.get_child_count() > targets.size()):
 			for x in range(rays.get_child_count() - 1,targets.size(),-1):
 				var ray: RayCast2D = rays.get_child(x)
-				raycasts[x]["detecting"] = false
+				raycasts[x]["seeing"] = false
 				ray.enabled = false
 		
-		var values = []
+		var seeing = []
+		var detecting = []
 		for ray in raycasts:
-			values.append(ray["detecting"])
+			seeing.append(ray["seeing"])
+			detecting.append(ray["detecting"])
 			
-		if (values.has(true)):
+		if (seeing.has(true)):
+			is_seeing = true
+		else:
+			is_seeing = false
+			
+		if (detecting.has(true)):
 			is_detecting = true
 		else:
 			is_detecting = false
-		
-		if (is_detecting):
-			if ($Detection_timer.time_left <= 0 && detection_value <= 100):
-				$Detection_timer.wait_time = base_detection_speed
-				$Detection_timer.start()
-		else:
-			if ($Detection_timer.time_left <= 0 && detection_value > 0 && detection_value < 100):
-				$Detection_timer.wait_time = base_detection_speed
-				$Detection_timer.start()
+
+		if (is_seeing):
+			for ray in raycasts:
+				check_if_ray_sees_target(ray)
+				
 	elif (can_see && is_alerted && has_weapon && !is_hostaged && !is_unconscious && !is_dead && !is_escaping):
 		for x in range (targets.size()):
 			if (x < targets.size()):
@@ -201,9 +207,9 @@ func _physics_process(delta):
 					else:
 						ray_dict = raycasts[x]
 						
-					if (!get_tree().get_nodes_in_group("shootable").has(target)):
+					if (!get_tree().get_nodes_in_group("detectable").has(target)):
 						targets.erase(target)
-						ray_dict["detecting"] = false
+						ray_dict["seeing"] = false
 						ray_dict["object"] = null
 						continue
 					
@@ -211,11 +217,17 @@ func _physics_process(delta):
 					ray.enabled = true
 						
 					ray.look_at(target.global_position)
-					if (ray.is_colliding() && ray.get_collider() == target):
-						ray_dict["detecting"] = true
-						ray_dict["object"] = target
+
+					if (ray.is_colliding()):
+						var collider = ray.get_collider()
+						if (collider.is_in_group("Player")):
+							ray_dict["seeing"] = true
+							ray_dict["object"] = collider
+						else:
+							ray_dict["seeing"] = false
+							ray_dict["object"] = null
 					else:
-						ray_dict["detecting"] = false
+						ray_dict["seeing"] = false
 						ray_dict["object"] = null
 					
 		if (targets.size() == 0):
@@ -231,7 +243,7 @@ func _physics_process(delta):
 		
 		var values = []
 		for ray in raycasts:
-			values.append(ray["detecting"])
+			values.append(ray["seeing"])
 			
 		if (values.has(true)):
 			can_shoot = true
@@ -256,6 +268,67 @@ func _physics_process(delta):
 		
 func on_physics_process(delta: float):
 	pass
+	
+func check_if_ray_sees_target(dict):
+	var target = dict["object"]
+	var ray = dict["ray_cast"]
+	
+	if (ray.is_colliding()):
+		var collider = ray.get_collider()
+		if (collider == target && target in targets):
+			if (target.is_in_group("Player")):
+				if (Game.player_status != Game.player_statuses.NORMAL):
+					dict["detecting"] = true
+					detection_code = npc_name + "_body"
+					if (Game.player_status == Game.player_statuses.DISGUISED):
+						dict["detection_value"] = 2
+					else:
+						dict["detection_value"] = 5
+			elif (target.is_in_group("npc")):
+				var npc = target.get_parent()
+				if (npc.is_dead || npc.is_unconscious):
+					dict["detecting"] = true
+					detection_code = npc_name  + "_body"
+					dict["detection_value"] = 10				
+				elif (npc.is_hostaged || npc.is_escaping):
+					dict["detecting"] = true
+					detection_code =  npc_name  + "_hostage"
+					dict["detection_value"] = 10		
+				elif (npc.is_alerted):
+					detection_code =  npc_name  + "_alert"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("Camera")):
+				if (target.is_broken):
+					detection_code = npc_name  + "_camera"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("glass")):
+				if (target.is_broken):
+					detection_code = npc_name  + "_glass"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("bags")):
+					detection_code = npc_name  + "_bag"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("drill")):
+				if (target.get_parent().visible):
+					detection_code = npc_name  + "_drill"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			else:
+				dict["detecting"] = false
+				dict["detection_value"] = 0
+				dict["object"] = null
+		else:
+			dict["detecting"] = false
+			dict["detection_value"] = 0
+			dict["object"] = null
+	else:
+		dict["detecting"] = false
+		dict["detection_value"] = 0
+		dict["object"] = null
 		
 func _process(delta):
 	if (!Game.game_process):
@@ -271,6 +344,10 @@ func _process(delta):
 		$Marker/AnimatedSprite.animation = "alert"
 		$Detection_bar.hide()
 		if ($Alert_timer.time_left <= 0):
+			$Detection_timer.stop()
+			$MoveTimer.stop()
+			is_moving = false
+			
 			is_alerted = true
 			$Alert_timer.start()
 	else:
@@ -290,46 +367,18 @@ func _on_Detection_timer_timeout():
 	if (is_detecting):
 		for ray in raycasts:
 			if (ray["detecting"]):
-				var object = ray["object"]
-				if (object.is_in_group("Player")):
-					if (Game.player_status != Game.player_statuses.NORMAL):
-						detection_code = npc_name + "_player"
-						if (Game.player_status == Game.player_statuses.DISGUISED):
-							detection_value += 2							
-						else:
-							detection_value += 5
-				elif (object.is_in_group("npc")):
-					var npc = object.get_parent()
-					if (npc.is_dead || npc.is_unconscious):
-						detection_code = npc_name + "_body"
-						detection_value += 10				
-					elif (npc.is_hostaged || npc.is_escaping):
-						detection_code = npc_name + "_hostage"
-						detection_value += 10
-					elif (npc.is_alerted):
-						detection_code = npc_name + "_alert"
-						detection_value += 10															
-				elif (object.is_in_group("Camera")):
-					var camera = object.get_parent()
-					if (camera.is_broken):
-						detection_code = npc_name + "_camera"
-						detection_value += 10
-				elif (object.is_in_group("glass")):
-					if (object.is_broken):
-						detection_code = npc_name + "_glass"
-						detection_value += 10
-				elif (object.is_in_group("bags")):
-					detection_code = npc_name + "_bag"
-					detection_value += 10
-				elif (object.is_in_group("drill")):
-					if (object.get_parent().visible):
-						detection_code = npc_name + "_drill"
-						detection_value += 10
-					
-			if (detection_value >= 100):
-				break
+				if (ray["object"] in targets):
+					detection_value += ray["detection_value"]
+							
+					if (detection_value >= 100):
+						$Detection_timer.stop()
+						break
+				else:
+					ray["detecting"] = false
+					ray["object"] = null
 	else:
-		detection_value -= 2
+		if (detection_value > 0):
+			detection_value -= 2
 
 func _on_Hitbox_area_entered(area: Area2D):
 	if (area.is_in_group("plr_bullets")):
@@ -344,14 +393,20 @@ func shoot():
 	var target = null
 	
 	for ray in raycasts:
-		if (ray["detecting"]):
-			target = ray["object"]
+		if (ray["seeing"]):
+			if (ray["object"] in targets):
+				target = ray["object"]
+			else:
+				ray["object"] = null
 	
-	var bullet = bullet_scene.instance()
-	bullet.accuracy = 100
-	Game.game_scene.add_child(bullet)
-	bullet.target = target
-	bullet.global_position = $AnimatedSprite/BulletOrigin.global_position
+	if (target != null):
+		$AnimatedSprite.look_at(target.global_position)
+		
+		var bullet = bullet_scene.instance()
+		bullet.accuracy = 100
+		Game.game_scene.add_child(bullet)
+		bullet.target = target
+		bullet.global_position = $AnimatedSprite/BulletOrigin.global_position
 
 	$Shoot_timer.start()
 		
@@ -445,22 +500,27 @@ func alarm_on():
 	
 	detection_value = 0
 	$Detection_timer.stop()
-
+	$MoveTimer.stop()
+	is_moving = false
 
 func _on_Shoot_timer_timeout():
 	is_shooting = false
 
 func noise_heard():
 	detection_value = 100
+	$Detection_timer.stop()
 	
 	$Marker.show()
 	$Marker/AnimatedSprite.animation = "alert"
 	$Detection_bar.hide()
 	if ($Alert_timer.time_left <= 0):
+		$MoveTimer.stop()
+		is_moving = false
+		
 		is_alerted = true
 		$Alert_timer.start()
 		
-	detection_code = "guard_noise"
+	detection_code = npc_name + "_noise"
 
 func _on_MoveTimer_timeout():
 	on_move()

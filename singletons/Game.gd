@@ -23,7 +23,15 @@ var alarm_codes: Dictionary = {
 	"guard_glass":"Guard spotted broken glass.",
 	"guard_camera":"Guard spotted a broken camera.",
 	"guard_noise":"Guard heard a suspicious noise.",
-	
+	"civilian_player":"Civilian spotted a criminal.",
+	"civilian_body":"Civilian spotted a body.",
+	"civilian_hostage":"Civilian spotted a hostage.",
+	"civilian_alert":"Civilian spotted an alerted person.",
+	"civilian_bag":"Civilian spotted a suspicious bag.",
+	"civilian_drill":"Civilian spotted a drill.",
+	"civilian_glass":"Civilian spotted broken glass.",
+	"civilian_camera":"Civilian spotted a broken camera.",
+	"civilian_noise":"Civilian heard a suspicious noise.",
 }
 
 var game_scene = null

@@ -33,7 +33,7 @@ func _process(delta):
 			if (!Game.player_is_interacting && Game.player_bag == "drill"):
 				Game.player_is_interacting = true
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 
 				$Interaction_timer.wait_time = 3
 				Game.suspicious_interaction = true
@@ -43,7 +43,7 @@ func _process(delta):
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 		else:
 			if (Game.player_is_interacting):
-				emit_signal("object_interaction_aborted",self.name,self.action)
+				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -70,7 +70,7 @@ func _on_Interaction_timer_timeout():
 		
 		Game.player_bag = "empty"
 			
-		emit_signal("object_interaction_finished",self.name,self.action)
+		emit_signal("object_interaction_finished",self,self.action)
 
 		$Interaction_panel.hide()
 

@@ -3,52 +3,22 @@ extends NPC
 onready var agent: NavigationAgent2D = $NavigationAgent2D
 onready var escape_ray: RayCast2D = $AnimatedSprite/EscapeRay
 
-export var is_static: bool = false
-export var is_camera_operator: bool = false
 export var speed: float = 500
 
 var velocity: Vector2 = Vector2.ZERO
-
-var cur_pos: int = 0
 
 func on_ready():
 	yield(get_tree().create_timer(0.5),"timeout")
 	
 	agent.set_navigation(Game.map_nav)
-	
-	spawn_guard()
+
 	.on_ready()
 	
-func spawn_guard():
-	if (!is_static):
-		var rest_point = Game.map_guard_restpoints.get_random_free_pos(cur_pos)
-		
-		cur_pos = rest_point[1]
-		Game.map_guard_restpoints.set_locked(cur_pos)
-		
-		global_position = rest_point[0].global_position
-		
-		$AnimatedSprite.rotation_degrees = Game.map_guard_restpoints.positions_rotations[cur_pos]
-
-		move_timer.wait_time = int(rand_range(3,7))
-		move_timer.start()
-
 
 func on_move():
-	var rest_point = Game.map_guard_restpoints.get_random_free_pos(cur_pos)
-	
-	if (rest_point != []):
-		Game.map_guard_restpoints.set_free(cur_pos)
-		agent.set_target_location(rest_point[0].global_position)
+	agent.set_target_location(Game.map.manager_point.global_position)
 		
-		is_moving = true
-		
-		cur_pos = rest_point[1]
-		
-		Game.map_guard_restpoints.set_locked(cur_pos)
-	else:
-		move_timer.wait_time = int(rand_range(5,10))
-		move_timer.start()
+	is_moving = true
 	
 	.on_move()
 	
@@ -90,10 +60,7 @@ func try_escape():
 func reached():
 	is_moving = false
 	
-	$AnimatedSprite.rotation_degrees = Game.map_guard_restpoints.positions_rotations[cur_pos]
-	
-	move_timer.wait_time = int(rand_range(5,10))
-	move_timer.start()	
+	$AnimatedSprite.rotation_degrees = 75
 	
 func escaped():
 	emit_signal("alerted","hostage_escaped")
@@ -149,9 +116,6 @@ func set_npc_interactions():
 		$Interaction_panel/VBoxContainer/Action2.hide()
 		$Interaction_panel/VBoxContainer/Action3.hide()
 		
-		if (has_disguise):
-			$Interaction_panel/VBoxContainer/Action2.show()
-			$Interaction_panel/VBoxContainer/Action2.text = "Hold [X] to Take Disguise"
 	elif (is_hostaged):
 		if (!is_tied_hostage):
 			$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Tie"
@@ -194,15 +158,12 @@ func check_interactions():
 
 				Game.suspicious_interaction = true
 				
-				emit_signal("object_interaction_started",self,self.action)
+				emit_signal("object_interaction_started",self.f.action)
 		elif (Input.is_action_pressed("interact2") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
 				
-				if (is_unconscious && has_disguise):
-					action = "disguise"
-					$Interaction_timer.wait_time = 5
-				elif (is_hostaged && !was_interrogated):
+				if (is_hostaged && !was_interrogated):
 					action = "interrogate"
 					$Interaction_timer.wait_time = 4
 					
@@ -245,37 +206,27 @@ func finish_interactions():
 		emit_signal("object_interaction_finished",self,self.action)
 		
 		if (action == "bag"):
-			Game.carry_bag("guard",has_disguise)
+			Game.carry_bag("guard",false)
 			queue_free()
 		elif (action == "tie"):
-			is_tied_hostage = true
 			tie()
 		elif (action == "move"):
 			is_following = true
 		elif (action == "stop"):
 			is_following = false
-		elif (action == "disguise"):
-			Game.change_player_disguise("guard")
-			has_disguise = false
 		elif (action == "interrogate"):
 			Game.map.interrogated(info)
 	
 	.finish_interactions()
 	
 func kill():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
-	
 	.kill()
 
-func knockout():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
+func alarm_on():
+	if (!is_dead && !is_unconscious && !is_tied_hostage):
+		is_escaping = true
+		agent.set_target_location(Game.map_escape_zone.global_position)
+		is_hostaged = false
+		can_interact = false
 	
-	.knockout()
-
-func hostage():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
-	
-	.hostage()
+	.alarm_on()

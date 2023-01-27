@@ -50,7 +50,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "drill"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 
 				$Interaction_timer.wait_time = 2
 				Game.suspicious_interaction = true
@@ -64,7 +64,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "lockpick"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 10
 				$Interaction_timer.start()
@@ -77,7 +77,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "c4"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 2
 				$Interaction_timer.start()
@@ -87,7 +87,7 @@ func _process(delta):
 				Game.suspicious_interaction = true
 		else:
 			if (Game.player_is_interacting):
-				emit_signal("object_interaction_aborted",self.name,self.action)
+				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -112,7 +112,7 @@ func _on_Interaction_timer_timeout():
 		
 		Game.suspicious_interaction = false
 			
-		emit_signal("object_interaction_finished",self.name,self.action)
+		emit_signal("object_interaction_finished",self,self.action)
 		
 		if (action == "drill"):
 			$Drill.show()

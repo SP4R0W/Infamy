@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/Objects/Doors/WoodDoor/wooddoor.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
@@ -25,6 +25,9 @@ font_data = ExtResource( 2 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 192, 128 )
 
 [node name="Wood_door" type="StaticBody2D" groups=["wood_door"]]
 z_index = 5
@@ -89,4 +92,12 @@ custom_fonts/font = SubResource( 5 )
 step = 1.0
 rounded = true
 
+[node name="NPC_open" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_open"]
+shape = SubResource( 6 )
+
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="area_entered" from="NPC_open" to="." method="_on_NPC_open_area_entered"]

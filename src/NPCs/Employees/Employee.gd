@@ -4,7 +4,6 @@ onready var agent: NavigationAgent2D = $NavigationAgent2D
 onready var escape_ray: RayCast2D = $AnimatedSprite/EscapeRay
 
 export var is_static: bool = false
-export var is_camera_operator: bool = false
 export var speed: float = 500
 
 var velocity: Vector2 = Vector2.ZERO
@@ -255,27 +254,11 @@ func finish_interactions():
 		elif (action == "stop"):
 			is_following = false
 		elif (action == "disguise"):
-			Game.change_player_disguise("guard")
+			Game.change_player_disguise("employee")
 			has_disguise = false
 		elif (action == "interrogate"):
 			Game.map.interrogated(info)
 	
 	.finish_interactions()
 	
-func kill():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
 	
-	.kill()
-
-func knockout():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
-	
-	.knockout()
-
-func hostage():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
-	
-	.hostage()

@@ -31,7 +31,7 @@ func _process(delta):
 			if (!Game.player_is_interacting && Game.player_bag == "empty"):
 				Game.player_is_interacting = true
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 2
 					
@@ -42,7 +42,7 @@ func _process(delta):
 				Game.player_status = Game.player_statuses.SUSPICIOUS
 		else:
 			if (Game.player_is_interacting):
-				emit_signal("object_interaction_aborted",self.name,self.action)
+				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -75,7 +75,7 @@ func _on_Interaction_timer_timeout():
 		else:
 			Game.player_status = Game.player_statuses.NORMAL
 			
-		emit_signal("object_interaction_finished",self.name,self.action)
+		emit_signal("object_interaction_finished",self,self.action)
 		
 		Game.carry_bag("money",false)
 		queue_free()

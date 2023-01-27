@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/Objects/Doors/MetalDoor/MetalDoor.tscn" type="PackedScene" id=1]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 128, 192 )
 
 [node name="90MetalDoor" instance=ExtResource( 1 )]
 
@@ -14,3 +17,6 @@ rotation = 1.5708
 
 [node name="Interaction_hitbox" parent="." index="6"]
 rotation = 1.5708
+
+[node name="CollisionShape2D" parent="NPC_open" index="0"]
+shape = SubResource( 1 )

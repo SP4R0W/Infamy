@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://src/Game/Maps/bank/bank.gd" type="Script" id=1]
 [ext_resource path="res://src/Game/Maps/bank/bank.tres" type="TileSet" id=2]
@@ -32,6 +32,8 @@
 [ext_resource path="res://src/Objects/Camera/Camera_downright.tscn" type="PackedScene" id=30]
 [ext_resource path="res://src/NPCs/Guard/Guard.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/Game/Maps/bank/RestNode.gd" type="Script" id=32]
+[ext_resource path="res://src/NPCs/Manager/Manager.tscn" type="PackedScene" id=33]
+[ext_resource path="res://src/Game/Maps/bank/RestPoints.gd" type="Script" id=34]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 12008, -2024, 12008, 6888, 10264, 6888, 10264, 2024, 9344, 872, 7320, 872, 7320, -24, 3944, 0, 3944, 872, 2152, 872, 24, -2024, 2152, 4888, 3944, 4888, 3944, 5784, 24, 6888, 7144, 5784, 7144, 6888, 9368, 2024 )
@@ -136,6 +138,7 @@ format = 1
 tile_data = PoolIntArray( 20, 5, 393218, 23, -1073741819, 196610, 65554, 5, 393218, 65563, -1073741819, 196610, 65565, -1073741819, 196610, 65568, 5, 7, 65573, 5, 7, 65576, 5, 327687, 65577, 5, 327685, 65583, 5, 458753, 65584, 5, 458753, 65587, 5, 7, 65591, 5, 7, 131095, -1073741819, 196610, 131098, -1073741819, 196610, 131100, -1073741819, 196610, 131119, 5, 458753, 131120, 5, 458753, 196625, 5, 393218, 196627, -1073741819, 196613, 196629, -1073741819, 196613, 196636, -1073741819, 196610, 262162, 5, 393218, 262163, -1610612731, 196608, 262164, 1610612741, 196608, 262165, -1073741819, 65543, 262169, -1073741819, 196610, 327699, 5, 196608, 327700, -1073741819, 196608, 327704, -1073741819, 196613, 327707, -1073741819, 196610, 393234, 5, 393218, 393235, 5, 65543, 393237, -1073741819, 65543, 393248, 5, 7, 393253, 5, 7, 524306, 5, 7, 524353, 1610612742, 196617, 524354, 1610612742, 196617, 524355, 1610612741, 6, 524356, 1610612742, 196617, 524357, 1610612741, 6, 524358, 1610612742, 196617, 524359, 1610612742, 196617, 655385, 5, 7, 786478, 1610612742, 196617, 786480, 1610612742, 196617, 786488, 1610612742, 196617, 786490, 1610612742, 196617, 786503, -1073741818, 196616, 851990, 5, 7, 983105, -1073741819, 7, 983111, -1073741819, 7, 1048598, 5, 7, 1048622, 6, 196617, 1048624, 6, 196617, 1048632, 6, 196617, 1048634, 6, 196617, 1114146, 5, 7, 1114177, 5, 7, 1114190, 5, 7, 1245209, 5, 7, 1310771, 1610612742, 196617, 1310773, 1610612742, 196617, 1310787, 5, 458753, 1376322, 5, 458753, 1441827, 5, 7, 1507353, 5, 7, 1572915, 6, 196617, 1572917, 6, 196617, 1703958, 5, 7, 1769508, 5, 7, 1769537, 5, 7, 1835054, 1610612742, 196617, 1835056, 1610612742, 196617, 1835064, 1610612742, 196617, 1835066, 1610612742, 196617, 1900566, 5, 7, 1900609, 5, 7, 1900622, 5, 7, 1966098, 5, 7, 2097177, 5, 7, 2097198, 6, 196617, 2097200, 6, 196617, 2359314, 5, 7, 2359320, 5, 7, 2490400, 5, 7, 2490423, 5, 7, 2490431, -1610612731, 327685, 2555921, 5, 393218, 2555924, 5, 131072, 2555925, -1610612731, 131072, 2555929, 5, 65543, 2555967, -1610612731, 327687, 2621460, -1073741819, 131072, 2621461, 1610612741, 131072, 2621463, 5, 393218, 2621464, 5, 393218, 2621481, 5, 393216, 2621484, 5, 393216, 2621489, 5, 393216, 2686994, -1610612731, 65543, 2686996, 5, 196613, 2687004, -1610612731, 196610, 2752534, 5, 393218, 2752537, -1610612731, 196610, 2752540, 5, 65543, 2818066, 5, 262144, 2818068, -1610612731, 196610, 2818080, 5, 7, 2818103, 5, 7, 2818111, 5, 7, 2949143, -1610612731, 196610, 2949148, -1610612731, 196610, 2949169, -1610612731, 196610, 2949177, 5, 7, 2949183, 5, 7, 3014673, 5, 262144, 3014684, 5, 393218, 3014689, -1610612731, 196610, 3014708, 5, 393218, 3014709, -1610612731, 196610, 3080226, -1610612731, 196610, 3080230, -1610612731, 131074, 3080231, 5, 393218, 3080235, -1610612731, 196610, 3080238, -1610612731, 196610, 3080241, 5, 393218, 3145747, 5, 393218, 3145748, -1610612731, 65543, 3145753, -1610612731, 196610, 3145760, -1610612731, 65543, 3145769, -1610612731, 131074, 3145779, -1610612731, 196610, 3145782, -1610612731, 196610, 3145783, -1610612731, 196610, 3211290, -1610612731, 65543, 3211292, -1610612731, 196610, 3211296, 5, 393218, 3211308, -1610612731, 196610, 3276817, 5, 262144, 3276825, -1610612731, 196610, 3276827, -1610612731, 196610, 3276836, 5, 393218, 3276848, 5, 65543, 3276851, 5, 393218, 3342354, 5, 65543, 3342358, -1610612731, 65543, 3342375, -1610612731, 196610, 3342378, 5, 65543, 3342388, -1610612731, 196610, 3407889, 5, 393218, 3407891, 5, 393218, 3407893, -1610612731, 196610, 3407897, -1610612731, 196610, 3407898, -1610612731, 196610, 3407906, 5, 393218, 3407910, -1610612731, 196610, 3407920, 5, 393218, 3407929, 5, 7, 3407935, 5, 7, 3473439, -1610612731, 196610, 3473447, -1610612731, 131074 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
+visible = false
 
 [node name="Outside" type="NavigationPolygonInstance" parent="Navigation2D"]
 navpoly = SubResource( 1 )
@@ -286,73 +289,135 @@ rotation = 1.5708
 position = Vector2( 7616, 5696 )
 rotation = 1.5708
 
+[node name="Loot" type="Node2D" parent="Glass"]
+
+[node name="Money_bag" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9152, 5560 )
+
+[node name="Money_bundle" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 4536, 2240 )
+
+[node name="Money_bundle2" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 4664, 2240 )
+
+[node name="Money_bundle3" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 4552, 3520 )
+
+[node name="Money_bundle4" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 4552, 4160 )
+
+[node name="Money_bundle5" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 5552, 5200 )
+
+[node name="Money_bundle6" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 6464, 5160 )
+
+[node name="Money_bundle7" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 7896, 6432 )
+
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 183, 2714 )
-
-[node name="Camera_right4" parent="." instance=ExtResource( 25 )]
-position = Vector2( 280, 2680 )
 
 [node name="Objects" type="Node2D" parent="."]
 visible = false
 
 [node name="Cameras" type="Node2D" parent="Objects"]
+visible = false
 
 [node name="Camera_left" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 3984 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upleft" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 4816, 848 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_right" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 2384, 1984 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_right2" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 5328, 2816 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_right3" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 5328, 3904 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_downright" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 2352, 1080 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_downright3" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 5200, 1024 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_downright4" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 8376, 2232 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_downright2" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 4136, 4904 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upright" parent="Objects/Cameras" instance=ExtResource( 27 )]
 position = Vector2( 2360, 4680 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_left2" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 3328 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_left5" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 8112, 2808 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_left3" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 2688 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_left4" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 1864 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upleft2" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 6344, 848 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upleft3" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 7112, 5584 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upleft4" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 8136, 5576 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_upleft5" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 10056, 4424 )
+is_disabled = true
+is_broken = true
 
 [node name="Camera_downleft" parent="Objects/Cameras" instance=ExtResource( 29 )]
 position = Vector2( 8152, 1080 )
+is_disabled = true
+is_broken = true
 
 [node name="WoodDoor" parent="Objects" instance=ExtResource( 4 )]
 position = Vector2( 4928, 512 )
@@ -386,11 +451,6 @@ can_use_ecm = true
 position = Vector2( 4478, 4800 )
 
 [node name="Objectives" type="Node2D" parent="."]
-visible = false
-
-[node name="Safe_left3" parent="Objectives" instance=ExtResource( 23 )]
-position = Vector2( 856, 2720 )
-item_stored = "keys"
 
 [node name="Safe_locations" type="Node2D" parent="Objectives"]
 
@@ -440,7 +500,7 @@ position = Vector2( 6088, 5176 )
 position = Vector2( 5184, 5184 )
 
 [node name="Note12" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6640, 5184 )
+position = Vector2( 6656, 5192 )
 
 [node name="Note13" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6984, 1600 )
@@ -522,36 +582,6 @@ position = Vector2( 9216, 4544 )
 
 [node name="Van" parent="Objectives" instance=ExtResource( 18 )]
 position = Vector2( 1712, 6064 )
-
-[node name="Loot" type="Node2D" parent="."]
-visible = false
-
-[node name="Money_bag" parent="Loot" instance=ExtResource( 16 )]
-position = Vector2( 9152, 5560 )
-
-[node name="Money_bag2" parent="Loot" instance=ExtResource( 16 )]
-position = Vector2( 496, 3000 )
-
-[node name="Money_bundle" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 4536, 2240 )
-
-[node name="Money_bundle2" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 4664, 2240 )
-
-[node name="Money_bundle3" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 4552, 3520 )
-
-[node name="Money_bundle4" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 4552, 4160 )
-
-[node name="Money_bundle5" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 5552, 5200 )
-
-[node name="Money_bundle6" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 6464, 5160 )
-
-[node name="Money_bundle7" parent="Loot" instance=ExtResource( 19 )]
-position = Vector2( 7896, 6432 )
 
 [node name="Cars" type="Node2D" parent="."]
 
@@ -665,10 +695,80 @@ polygon = PoolVector2Array( 7296, 5224, 8192, 5240, 8200, 5696, 7304, 5696 )
 polygon = PoolVector2Array( 8320, 3712, 8320, 4488, 10112, 4488, 10112, 3712 )
 
 [node name="NPCs" type="Node2D" parent="."]
-visible = false
 
 [node name="Escape_Zone" type="Position2D" parent="NPCs"]
 position = Vector2( 1856, -1984 )
+
+[node name="Manager_point" type="Position2D" parent="NPCs"]
+position = Vector2( 8952, 2696 )
+
+[node name="Employees" type="Node2D" parent="NPCs"]
+
+[node name="RestPoints" type="Node2D" parent="NPCs/Employees"]
+script = ExtResource( 34 )
+
+[node name="1" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 4280, 1984 )
+
+[node name="2" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 4288, 2752 )
+
+[node name="3" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 4288, 3392 )
+
+[node name="4" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 4288, 4032 )
+
+[node name="5" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 5312, 5320 )
+
+[node name="6" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6784, 5312 )
+
+[node name="7" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 8000, 4928 )
+
+[node name="8" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 7104, 4040 )
+
+[node name="9" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6336, 4032 )
+
+[node name="10" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 5824, 3768 )
+
+[node name="11" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 7616, 3768 )
+
+[node name="12" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6464, 3008 )
+
+[node name="13" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6976, 2752 )
+
+[node name="14" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 7104, 1984 )
+
+[node name="15" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 7624, 1984 )
+
+[node name="16" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6336, 1984 )
+
+[node name="17" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6336, 1984 )
+
+[node name="18" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 5824, 1728 )
+
+[node name="19" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 5440, 304 )
+
+[node name="20" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 6144, 448 )
+
+[node name="21" type="Position2D" parent="NPCs/Employees/RestPoints"]
+position = Vector2( 8768, 2880 )
 
 [node name="Guards" type="Node2D" parent="NPCs"]
 
@@ -679,7 +779,7 @@ script = ExtResource( 32 )
 position = Vector2( 2496, 1216 )
 
 [node name="2" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 2432, 4544 )
+position = Vector2( 2440, 4512 )
 
 [node name="3" type="Position2D" parent="NPCs/Guards/RestPoints"]
 position = Vector2( 3840, 4544 )
@@ -709,22 +809,22 @@ position = Vector2( 7936, 5120 )
 position = Vector2( 6720, 4544 )
 
 [node name="12" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 5312, 3904 )
+position = Vector2( 5312, 4064 )
 
 [node name="13" type="Position2D" parent="NPCs/Guards/RestPoints"]
 position = Vector2( 8128, 3904 )
 
 [node name="14" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 8128, 2880 )
+position = Vector2( 8128, 2368 )
 
 [node name="15" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 5312, 2880 )
+position = Vector2( 5312, 3008 )
 
 [node name="16" type="Position2D" parent="NPCs/Guards/RestPoints"]
 position = Vector2( 5312, 1856 )
 
 [node name="17" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 8128, 1856 )
+position = Vector2( 8120, 1504 )
 
 [node name="18" type="Position2D" parent="NPCs/Guards/RestPoints"]
 position = Vector2( 9856, 2368 )
@@ -736,14 +836,32 @@ position = Vector2( 6720, 1120 )
 position = Vector2( 5056, 320 )
 
 [node name="Guard" parent="NPCs/Guards" instance=ExtResource( 31 )]
-position = Vector2( 56, 1824 )
+position = Vector2( 8776, 1352 )
+initial_rotation = -90.0
+npc_name = "guard"
 is_static = true
 is_camera_operator = true
 
 [node name="Guard2" parent="NPCs/Guards" instance=ExtResource( 31 )]
-position = Vector2( 664, 1840 )
+position = Vector2( 9224, 4248 )
+initial_rotation = -90.0
+npc_name = "guard"
 is_static = true
-is_camera_operator = false
+
+[node name="Guard3" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 112, 248 )
+npc_name = "guard"
+
+[node name="Guard4" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 104, 256 )
+npc_name = "guard"
+
+[node name="Manager" parent="NPCs" instance=ExtResource( 33 )]
+position = Vector2( 7640, 6016 )
+health = 1.0
+initial_rotation = 180.0
+npc_name = "civilian"
+info = "code"
 
 [editable path="LevelZones/LevelZone"]
 [editable path="LevelZones/LevelZone2"]

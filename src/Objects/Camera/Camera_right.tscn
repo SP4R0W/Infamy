@@ -140,7 +140,7 @@ polygon = PoolVector2Array( 80, -24, 1664, -1408, 1656, 1408, 80, 24 )
 
 [node name="Detection_timer" type="Timer" parent="."]
 wait_time = 0.1
-one_shot = true
+autostart = true
 
 [node name="Alert_timer" type="Timer" parent="."]
 wait_time = 2.0

@@ -53,7 +53,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "open"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = .5
 					
@@ -68,7 +68,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "c4"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 2
 				$Interaction_timer.start()
@@ -81,7 +81,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "ecm"
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 2
 				$Interaction_timer.start()
@@ -91,7 +91,7 @@ func _process(delta):
 				Game.suspicious_interaction = true
 		else:
 			if (Game.player_is_interacting):
-				emit_signal("object_interaction_aborted",self.name,self.action)
+				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -115,7 +115,7 @@ func _on_Interaction_timer_timeout():
 		
 		Game.suspicious_interaction = false
 			
-		emit_signal("object_interaction_finished",self.name,self.action)
+		emit_signal("object_interaction_finished",self,self.action)
 		
 		if (action == "open"):
 			if (is_closed):
@@ -179,6 +179,8 @@ func _on_C4_timer_timeout():
 		noise.time = 0.1
 		add_child(noise)
 		
+		$NPC_open.call_deferred("queue_free")
+		
 		if (is_equal_approx(original_rotation,90)):
 			$Sprite.rotation_degrees = 0
 		elif (is_equal_approx(original_rotation,0)):
@@ -187,3 +189,21 @@ func _on_C4_timer_timeout():
 		set_collision_layer_bit(12,false)
 		get_tree().call_group("Detection","add_exception",self)
 		get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
+
+
+func _on_NPC_open_area_entered(area):
+	if (area.is_in_group("hitbox_npc")):
+		if (is_closed):
+			is_closed = false
+			can_interact = false
+			
+			if (is_equal_approx(original_rotation,90)):
+				$Sprite.rotation_degrees = 0
+			elif (is_equal_approx(original_rotation,0)):
+				$Sprite.rotation_degrees = 90
+			
+			$Sprite.modulate = Color(1,0,0,1)
+			
+			set_collision_layer_bit(12,false)
+			get_tree().call_group("Detection","add_exception",self)
+			get_tree().call_group("Detection","add_exception",$Interaction_hitbox)

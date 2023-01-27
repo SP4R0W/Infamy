@@ -21,7 +21,7 @@ func _process(delta):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.add_player_inventory_item("r_keycard")
-				emit_signal("object_interaction_finished",self.name,"pickup")
+				emit_signal("object_interaction_finished",self,"pickup")
 				
 				queue_free()
 				

@@ -20,7 +20,7 @@ func _process(delta):
 	if (has_focus):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
-				emit_signal("object_interaction_finished",self.name,"steal")
+				emit_signal("object_interaction_finished",self,"steal")
 				
 				queue_free()
 				

@@ -67,6 +67,9 @@ onready var vault_panel = $Objectives/Vault_panel
 onready var vault = $Objectives/Vault
 onready var van = $Objectives/Van
 
+onready var manager_point = $NPCs/Manager_point
+onready var manager = $NPCs/Manager
+
 func _ready():
 	Game.map = self
 	Game.map_nav = $Navigation2D
@@ -182,32 +185,35 @@ func update_objective(objective: int):
 		van.can_escape = true
 	
 func interaction_finish(object, action):
-	if (object == "Drill_bag" && action == "carry"):
+	print(object.name)
+	
+	if (object.name == "Drill_bag" && action == "carry"):
 		if (current_objective < 8):
 			has_found_drill = true
 			Game.ui.update_subtitle("BAIN: That's the thermal drill my contact has stashed away. But for now, we have a better plan of opening the vault.",1,7)
 		elif (current_objective == 8):
 			update_objective(9)
 			
-	elif (object == "KeyDoor" && current_objective < 6):
+	elif (object.name == "KeyDoor" && current_objective < 6):
 		update_objective(6)
-	elif (object == "Phone" && current_objective < 4):
+	elif (object.name == "Phone" && current_objective < 5):
+		manager.on_move()
 		Game.ui.update_subtitle("BAIN: Haha, he took the bait! Okay, the office is now open for you. Go there.",2,7)
 		update_objective(5)
-	elif (object.find("Safe") != -1 && current_objective < 4):
+	elif (object.name.find("Safe") != -1 && current_objective < 5):
 		Game.ui.update_subtitle("BAIN: This safe should have the keys we need. Good find.",2,5)
-	elif (object.find("Keys") != -1 && current_objective < 4):
+	elif (object.name.find("Keys") != -1 && current_objective < 5):
 		Game.ui.update_subtitle("BAIN: Perfect! That's exactly what we need! Go open the manager's office.",2,7)
 		update_objective(5)
-	elif (object.find("Note") != -1 && current_objective < 4):
+	elif (object.name.find("Note") != -1 && current_objective < 5):
 		if (object.has_phone_number):
 			Game.ui.update_subtitle("BAIN: Hey, that's the phone number for our dear manager! Why not call him and see if you can persuade him to leave his office?",2,7)
-	elif (object == "Red_keycard"):
+	elif (object.name == "Red_keycard"):
 		if (Game.player_inventory.has("vault_code")):
 			update_objective(7)
 		else:
 			Game.ui.update_subtitle("BAIN: Okay, that's the red keycard. Now we just need the code.",1,5)
-	elif (object == "PC"):
+	elif (object.name == "PC"):
 		if (action == "code"):
 			if (Game.player_inventory.has("r_keycard")):
 				update_objective(7)
@@ -215,16 +221,27 @@ func interaction_finish(object, action):
 				Game.ui.update_subtitle("BAIN: Okay, that's the code. Now just find that keycard.",1,5)
 		elif (action == "hack"):
 			Game.ui.update_subtitle("BAIN: Smart. This computer should have the vault code.",1,5)
-	elif (object == "Vault_panel"):
+	elif (object.name == "Vault_panel"):
 		vault.can_interact = false
 		update_objective(12)
-	elif (object == "Vault"):
+	elif (object.name == "Vault"):
 		vault_panel.can_interact = false
 		update_objective(10)
 	
 func vault_finished():
 	update_objective(12)
-
+	
+func interrogated(info):
+	if (info == "none"):
+		Game.ui.update_popup("This person had no info.",4)
+	elif (info == "code"):
+		Game.ui.update_popup("You got the vault code.",4)
+		Game.add_player_inventory_item("vault_code")
+		if (Game.player_inventory.has("r_keycard")):
+			update_objective(7)
+		else:
+			Game.ui.update_subtitle("BAIN: Okay, that's the code. Now just find that keycard.",1,5)
+			
 func objective_enter(zone):
 	if (zone.name == "EnterZone"):
 		update_objective(2)

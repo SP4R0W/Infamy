@@ -29,6 +29,7 @@ var base_detection_speed = 0.1
 var detection_code: String = "None"
 var detection_value: int = 0
 
+var is_seeing: bool = false
 var is_detecting: bool = false
 var is_detecting_player_disguise: bool = false
 
@@ -53,7 +54,7 @@ func hide_panel():
 	
 func create_ray() -> RayCast2D:
 	var ray = RayCast2D.new()
-	ray.cast_to = Vector2(3000,0)
+	ray.cast_to = Vector2(2200,0)
 	ray.collide_with_areas = true
 	ray.collide_with_bodies = true	
 	ray.enabled = false
@@ -68,7 +69,7 @@ func create_ray() -> RayCast2D:
 		ray.add_exception(exception)
 	
 	rays.add_child(ray)
-	var dict = {"ray_cast":ray,"detecting":false,"object":null}
+	var dict = {"ray_cast":ray,"detecting":false,"seeing":false,"detection_value":0,"object":null}
 	raycasts.append(dict)
 	
 	return dict
@@ -92,6 +93,7 @@ func _physics_process(delta):
 		return
 	
 	if (!is_disabled && !is_broken && !is_alerted):
+		print(targets)
 		for x in range (targets.size()):
 			if (x < targets.size()):
 				if (targets.has(targets[x])):
@@ -105,49 +107,50 @@ func _physics_process(delta):
 						
 					if (!get_tree().get_nodes_in_group("detectable").has(target)):
 						targets.erase(target)
-						ray_dict["detecting"] = false
+						ray_dict["seeing"] = false
 						ray_dict["object"] = null
 						continue
 					
-					var ray = ray_dict["ray_cast"]
+					var ray: RayCast2D = ray_dict["ray_cast"]
 					ray.enabled = true
 						
 					ray.look_at(target.global_position)
-					if (ray.is_colliding() && ray.get_collider() == target):
-						ray_dict["detecting"] = true
-						ray_dict["object"] = target
-					else:
-						ray_dict["detecting"] = false
-						ray_dict["object"] = null
-					
+					ray.cast_to = Vector2(self.global_position.distance_to(target.global_position),0)
+					ray.force_raycast_update()
+
+					ray_dict["seeing"] = true
+					ray_dict["object"] = target
+
 		if (targets.size() == 0):
 			for x in range(rays.get_child_count()):
 				var ray: RayCast2D = rays.get_child(x)
-				raycasts[x]["detecting"] = false
+				raycasts[x]["seeing"] = false
 				ray.enabled = false
 		elif (rays.get_child_count() > targets.size()):
 			for x in range(rays.get_child_count() - 1,targets.size(),-1):
 				var ray: RayCast2D = rays.get_child(x)
-				raycasts[x]["detecting"] = false
+				raycasts[x]["seeing"] = false
 				ray.enabled = false
 		
-		var values = []
+		var seeing = []
+		var detecting = []
 		for ray in raycasts:
-			values.append(ray["detecting"])
+			seeing.append(ray["seeing"])
+			detecting.append(ray["detecting"])
 			
-		if (values.has(true)):
+		if (seeing.has(true)):
+			is_seeing = true
+		else:
+			is_seeing = false
+			
+		if (detecting.has(true)):
 			is_detecting = true
 		else:
 			is_detecting = false
-		
-		if (is_detecting):
-			if ($Detection_timer.time_left <= 0 && detection_value <= 100):
-				$Detection_timer.wait_time = base_detection_speed
-				$Detection_timer.start()
-		else:
-			if ($Detection_timer.time_left <= 0 && detection_value > 0 && detection_value < 100):
-				$Detection_timer.wait_time = base_detection_speed
-				$Detection_timer.start()
+
+		if (is_seeing):
+			for ray in raycasts:
+				check_if_ray_sees_target(ray)
 	else:
 		targets = []
 		raycasts = []
@@ -155,6 +158,61 @@ func _physics_process(delta):
 		for x in range(rays.get_child_count()):
 			var ray: RayCast2D = rays.get_child(x)
 			ray.queue_free()
+			
+func check_if_ray_sees_target(dict):
+	var target = dict["object"]
+	var ray = dict["ray_cast"]
+	
+	if (ray.is_colliding()):
+		var collider = ray.get_collider()
+		if (collider == target && targets.has(target)):
+			if (target.is_in_group("Player")):
+				if (Game.player_status != Game.player_statuses.NORMAL):
+					dict["detecting"] = true
+					detection_code = "camera_player"
+					if (Game.player_status == Game.player_statuses.DISGUISED):
+						dict["detection_value"] = 2
+					else:
+						dict["detection_value"] = 5
+			elif (target.is_in_group("npc")):
+				var npc = target.get_parent()
+				if (npc.is_dead || npc.is_unconscious):
+					dict["detecting"] = true
+					detection_code = "camera_body"
+					dict["detection_value"] = 10				
+				elif (npc.is_hostaged || npc.is_escaping):
+					dict["detecting"] = true
+					detection_code = "camera_hostage"
+					dict["detection_value"] = 10		
+				elif (npc.is_alerted):
+					detection_code = "camera_alert"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("glass")):
+				if (target.is_broken):
+					detection_code = "camera_glass"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("bags")):
+					detection_code = "camera_bag"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			elif (target.is_in_group("drill")):
+				if (target.get_parent().visible):
+					detection_code = "camera_drill"
+					dict["detecting"] = true
+					dict["detection_value"] = 10
+			else:
+				dict["detecting"] = false
+				dict["object"] = null
+		else:
+			dict["detecting"] = false
+			dict["detection_value"] = 0
+			dict["object"] = null
+	else:
+		dict["detecting"] = false
+		dict["detection_value"] = 0
+		dict["object"] = null
 			
 func _process(delta):
 	if (!Game.game_process):
@@ -190,7 +248,7 @@ func _process(delta):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
 				
-				emit_signal("object_interaction_started",self.name,self.action)
+				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 3
 				$Interaction_timer.start()
@@ -198,7 +256,7 @@ func _process(delta):
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 		else:
 			if (Game.player_is_interacting):
-				emit_signal("object_interaction_aborted",self.name,self.action)
+				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -229,7 +287,7 @@ func _on_Interaction_timer_timeout():
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
-		emit_signal("object_interaction_finished",self.name,self.action)
+		emit_signal("object_interaction_finished",self,self.action)
 		
 		can_interact = false
 		is_disabled = true
@@ -258,45 +316,23 @@ func _on_Loop_timer_timeout():
 	is_disabled = false
 
 func _on_Detection_timer_timeout():
+
 	if (is_detecting):
 		for ray in raycasts:
 			if (ray["detecting"]):
-				var object = ray["object"]
-				if (object.is_in_group("Player")):
-					if (Game.player_status != Game.player_statuses.NORMAL):
-						detection_code = "camera_player"
-						if (Game.player_status == Game.player_statuses.DISGUISED):
-							detection_value += 2							
-						else:
-							detection_value += 5
-				elif (object.is_in_group("npc")):
-					var npc = object.get_parent()
-					if (npc.is_dead || npc.is_unconscious):
-						detection_code = "camera_body"
-						detection_value += 10				
-					elif (npc.is_hostaged || npc.is_escaping):
-						detection_code = "camera_hostage"
-						detection_value += 10		
-					elif (npc.is_alerted):
-						detection_code = "camera_alert"
-						detection_value += 10
-				elif (object.is_in_group("glass")):
-					if (object.is_broken):
-						detection_code = "camera_glass"
-						detection_value += 10
-				elif (object.is_in_group("bags")):
-					detection_code = "camera_bag"
-					detection_value += 10
-				elif (object.is_in_group("drill")):
-					if (object.get_parent().visible):
-						detection_code = "camera_drill"
-						detection_value += 10
-					
-			if (detection_value >= 100):
-				break
+				if (ray["object"] in targets):
+					detection_value += ray["detection_value"]
+							
+					if (detection_value >= 100):
+						break
+				else:
+					ray["detecting"] = false
+					ray["object"] = null
+			else:
+				continue
 	else:
-		detection_value -= 2
-		
+		if (detection_value > 0):
+			detection_value -= 2
 
 func _on_Alert_timer_timeout():
 	alarm_on()
