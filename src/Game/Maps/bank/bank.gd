@@ -41,9 +41,9 @@ var objectives: Dictionary = {
 	"subtitle_priority":2,
 	"subtitle_length":7},
 	12:{"objective_name":"Secure one bag of cash",
-	"objective_subtitle":"BAIN: Vault's open! Get there and grab the loot. I need you to secure at least one bag of cash.",
+	"objective_subtitle":"BAIN: Vault's open! We need one bag of cash. The van is at the front of the bank, on the right end of the street.",
 	"subtitle_priority":2,
-	"subtitle_length":8.5},
+	"subtitle_length":12},
 	13:{"objective_name":"Escape",
 	"objective_subtitle":"BAIN: Perfect. You can escape now, or hang around for more loot. I won't complain.",
 	"subtitle_priority":2,
@@ -52,7 +52,13 @@ var objectives: Dictionary = {
 
 var current_objective: int = 0
 
-var camera_amount = 14
+var camera_amounts: Array = [8,10,12,14]
+var guard_amounts: Array = [4,6,8,8]
+
+var camera_amount: int = camera_amounts[Game.difficulty]
+var guard_amount: int = guard_amounts[Game.difficulty]
+
+var secured_bags: int = 0
 
 var has_found_drill: bool = false
 var has_found_office: bool = false
@@ -75,6 +81,7 @@ func _ready():
 	Game.map_nav = $Navigation2D
 	Game.map_objects = $Objects
 	Game.map_guard_restpoints = $NPCs/Guards/RestPoints
+	Game.map_empl_restpoints = $NPCs/Employees/RestPoints
 	Game.map_escape_zone = $NPCs/Escape_Zone
 
 	var camera: Camera2D = Game.player.get_node("Player_camera")
@@ -97,6 +104,8 @@ func _ready():
 	vault_panel.connect("object_interaction_finished",self,"interaction_finish")
 	vault.connect("object_interaction_finished",self,"interaction_finish")
 	
+	van.connect("bag_secured",self,"bag_secured")
+	
 	$Objectives/Vault/Drill.connect("drill_finished",self,"vault_finished")
 	
 	$ObjectiveZones/EnterZone.connect("objective_entered",self,"objective_enter")
@@ -108,6 +117,7 @@ func _ready():
 	randomize_blue_keycard()
 	
 	randomize_cameras()
+	set_difficulty()
 	
 func loud_ready():
 	if (current_objective < 8):
@@ -161,6 +171,27 @@ func randomize_cameras():
 		if (active_camera == camera_amount):
 			break
 	
+func set_difficulty():
+	if (Game.difficulty == 0):
+		for x in range(10,6,-1):
+			var guard = get_node("NPCs/Guards/Guard" + str(x))
+			guard.queue_free()
+	elif (Game.difficulty == 1):
+		for x in range(10,8,-1):
+			var guard = get_node("NPCs/Guards/Guard" + str(x))
+			guard.queue_free() 
+			
+func set_assets():
+	for asset in $Assets.get_children():
+		if (asset.name in Game.map_assets):
+			asset.show()
+			
+	if (Game.map_assets.has("van")):
+		$Objectives/Van.global_position = Vector2(11088,6288)
+	else:
+		$Objectives/Van.global_position = Vector2(1536,6064)
+		
+	
 func update_objective(objective: int):
 	current_objective = objective
 	var cur_objective_dict: Dictionary = objectives[current_objective]
@@ -179,14 +210,24 @@ func update_objective(objective: int):
 			update_objective(9)
 			
 	if (current_objective == 12):
+		$Objectives/Van/SecureZoneVisible.visible = true		
 		van.can_secure = true
+		if (secured_bags > 0):
+			update_objective(13)
 		
 	if (current_objective == 13):
+		$Objectives/Van/SecureZoneVisible.visible = true
 		van.can_escape = true
+		
+func bag_secured(type: String):
+	if (type == "money"):
+		secured_bags += 1
+		Game.ui.update_popup("Bag secured: " + type,4)
+		
+		if (secured_bags > 0):
+			update_objective(13)
 	
 func interaction_finish(object, action):
-	print(object.name)
-	
 	if (object.name == "Drill_bag" && action == "carry"):
 		if (current_objective < 8):
 			has_found_drill = true
@@ -208,23 +249,24 @@ func interaction_finish(object, action):
 	elif (object.name.find("Note") != -1 && current_objective < 5):
 		if (object.has_phone_number):
 			Game.ui.update_subtitle("BAIN: Hey, that's the phone number for our dear manager! Why not call him and see if you can persuade him to leave his office?",2,7)
-	elif (object.name == "Red_keycard"):
+	elif (object.name == "Red_keycard" && current_objective < 7):
 		if (Game.player_inventory.has("vault_code")):
 			update_objective(7)
 		else:
 			Game.ui.update_subtitle("BAIN: Okay, that's the red keycard. Now we just need the code.",1,5)
-	elif (object.name == "PC"):
+	elif (object.name == "PC" && current_objective < 7):
 		if (action == "code"):
 			if (Game.player_inventory.has("r_keycard")):
 				update_objective(7)
 			else:
 				Game.ui.update_subtitle("BAIN: Okay, that's the code. Now just find that keycard.",1,5)
-		elif (action == "hack"):
+		elif (action == "hack" && current_objective < 7):
 			Game.ui.update_subtitle("BAIN: Smart. This computer should have the vault code.",1,5)
-	elif (object.name == "Vault_panel"):
+	elif (object.name == "Vault_panel" && current_objective < 8):
 		vault.can_interact = false
+		vault.open_vault()
 		update_objective(12)
-	elif (object.name == "Vault"):
+	elif (object.name == "Vault" && current_objective < 9):
 		vault_panel.can_interact = false
 		update_objective(10)
 	

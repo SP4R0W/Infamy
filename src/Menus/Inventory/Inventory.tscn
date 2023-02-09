@@ -1,0 +1,524 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/Menus/Inventory/Inventory.gd" type="Script" id=2]
+[ext_resource path="res://src/Menus/Inventory/assets/uzi_preview.png" type="Texture" id=3]
+[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/Menus/Inventory/assets/m9_preview.png" type="Texture" id=5]
+[ext_resource path="res://src/Menus/Inventory/assets/suit_preview.png" type="Texture" id=6]
+[ext_resource path="res://src/Menus/Inventory/assets/ecm_preview.png" type="Texture" id=7]
+[ext_resource path="res://src/Menus/Inventory/assets/c4_preview.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 200
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
+
+[node name="Inventory" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Control" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -1919.0
+margin_right = 1920.0
+margin_bottom = 420.0
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/VBoxContainer"]
+margin_right = 3839.0
+margin_bottom = 280.0
+custom_fonts/font = SubResource( 1 )
+text = "Your selected loadout (1):"
+align = 1
+valign = 1
+
+[node name="Inventory_panel" type="Panel" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1550.0
+margin_top = -630.5
+margin_right = 1550.0
+margin_bottom = 630.5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/Inventory_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 20
+
+[node name="Primary" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
+margin_right = 600.0
+margin_bottom = 1261.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Primary: UZI"
+align = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_top = 91.0
+margin_right = 600.0
+margin_bottom = 271.0
+texture = ExtResource( 3 )
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 271.0
+margin_right = 600.0
+margin_bottom = 291.0
+custom_constants/separation = 20
+
+[node name="Mods" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_top = 291.0
+margin_right = 600.0
+margin_bottom = 430.0
+custom_fonts/font = SubResource( 2 )
+text = "Modifications:
+None"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 430.0
+margin_right = 600.0
+margin_bottom = 480.0
+custom_constants/separation = 50
+
+[node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_top = 480.0
+margin_right = 600.0
+margin_bottom = 903.0
+custom_fonts/font = SubResource( 3 )
+text = "Stats:
+Damage: 10
+Accuracy: 20
+Concealment: 5
+Mag size: 30
+Ammo Count: 210"
+align = 1
+
+[node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+modulate = Color( 1, 0, 0.0941176, 1 )
+margin_top = 903.0
+margin_right = 600.0
+margin_bottom = 971.0
+custom_fonts/font = SubResource( 3 )
+text = "Visible"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 971.0
+margin_right = 600.0
+margin_bottom = 1021.0
+custom_constants/separation = 50
+
+[node name="Modify" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_top = 1021.0
+margin_right = 600.0
+margin_bottom = 1118.0
+custom_fonts/font = ExtResource( 4 )
+text = "Modify"
+
+[node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 1118.0
+margin_right = 600.0
+margin_bottom = 1128.0
+custom_constants/separation = 10
+
+[node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
+margin_top = 1128.0
+margin_right = 600.0
+margin_bottom = 1225.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change"
+
+[node name="Secondary" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
+margin_left = 620.0
+margin_right = 1220.0
+margin_bottom = 1261.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Secondary: M9"
+align = 1
+
+[node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_top = 91.0
+margin_right = 600.0
+margin_bottom = 271.0
+texture = ExtResource( 5 )
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 271.0
+margin_right = 600.0
+margin_bottom = 291.0
+custom_constants/separation = 20
+
+[node name="Mods" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_top = 291.0
+margin_right = 600.0
+margin_bottom = 430.0
+custom_fonts/font = SubResource( 2 )
+text = "Modifications:
+None"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 430.0
+margin_right = 600.0
+margin_bottom = 480.0
+custom_constants/separation = 50
+
+[node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_top = 480.0
+margin_right = 600.0
+margin_bottom = 903.0
+custom_fonts/font = SubResource( 3 )
+text = "Stats:
+Damage: 10
+Accuracy: 60
+Concealment: 8
+Mag size: 8
+Ammo Count: 80"
+align = 1
+
+[node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_top = 903.0
+margin_right = 600.0
+margin_bottom = 971.0
+custom_fonts/font = SubResource( 3 )
+text = "Concealed"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 971.0
+margin_right = 600.0
+margin_bottom = 1021.0
+custom_constants/separation = 50
+
+[node name="Modify" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_top = 1021.0
+margin_right = 600.0
+margin_bottom = 1118.0
+custom_fonts/font = ExtResource( 4 )
+text = "Modify"
+
+[node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 1118.0
+margin_right = 600.0
+margin_bottom = 1128.0
+custom_constants/separation = 10
+
+[node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
+margin_top = 1128.0
+margin_right = 600.0
+margin_bottom = 1225.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change"
+
+[node name="Armor" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
+margin_left = 1240.0
+margin_right = 1840.0
+margin_bottom = 1261.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Armor: Suit"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 91.0
+margin_right = 600.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+margin_top = 191.0
+margin_right = 600.0
+margin_bottom = 371.0
+texture = ExtResource( 6 )
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 371.0
+margin_right = 600.0
+margin_bottom = 480.0
+custom_constants/separation = 109
+
+[node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+margin_top = 480.0
+margin_right = 600.0
+margin_bottom = 832.0
+custom_fonts/font = SubResource( 3 )
+text = "Stats:
+Protection: 0%
+Durability: 0
+Speed reduction: 0%
+Dodge chance: 15%"
+align = 1
+
+[node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+modulate = Color( 0, 0.670588, 1, 1 )
+margin_top = 832.0
+margin_right = 600.0
+margin_bottom = 900.0
+custom_fonts/font = SubResource( 3 )
+text = "Concealed"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 900.0
+margin_right = 600.0
+margin_bottom = 1021.0
+custom_constants/separation = 121
+
+[node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
+margin_top = 1021.0
+margin_right = 600.0
+margin_bottom = 1118.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change"
+
+[node name="Equipment1" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
+margin_left = 1860.0
+margin_right = 2460.0
+margin_bottom = 1261.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Item 1: ECM"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 91.0
+margin_right = 600.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+margin_top = 191.0
+margin_right = 600.0
+margin_bottom = 371.0
+texture = ExtResource( 7 )
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 371.0
+margin_right = 600.0
+margin_bottom = 571.0
+custom_constants/separation = 200
+
+[node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+margin_top = 571.0
+margin_right = 600.0
+margin_bottom = 639.0
+custom_fonts/font = SubResource( 3 )
+text = "Amount: 4"
+align = 1
+
+[node name="Info" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+margin_top = 639.0
+margin_right = 600.0
+margin_bottom = 707.0
+custom_fonts/font = SubResource( 3 )
+text = "Duration: 6s"
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 707.0
+margin_right = 600.0
+margin_bottom = 1021.0
+custom_constants/separation = 314
+
+[node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
+margin_top = 1021.0
+margin_right = 600.0
+margin_bottom = 1118.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change"
+
+[node name="Equipment2" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
+margin_left = 2480.0
+margin_right = 3080.0
+margin_bottom = 1261.0
+rect_min_size = Vector2( 600, 0 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_constants/separation = 0
+alignment = 1
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+margin_right = 600.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Item 2: C4"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 91.0
+margin_right = 600.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+margin_top = 191.0
+margin_right = 600.0
+margin_bottom = 371.0
+texture = ExtResource( 8 )
+
+[node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 371.0
+margin_right = 600.0
+margin_bottom = 571.0
+custom_constants/separation = 200
+
+[node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+margin_top = 571.0
+margin_right = 600.0
+margin_bottom = 639.0
+custom_fonts/font = SubResource( 3 )
+text = "Amount: 8"
+align = 1
+
+[node name="Info" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+margin_top = 639.0
+margin_right = 600.0
+margin_bottom = 707.0
+custom_fonts/font = SubResource( 3 )
+align = 1
+
+[node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_top = 707.0
+margin_right = 600.0
+margin_bottom = 1021.0
+custom_constants/separation = 314
+
+[node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
+margin_top = 1021.0
+margin_right = 600.0
+margin_bottom = 1118.0
+custom_fonts/font = ExtResource( 4 )
+text = "Change"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -310.0
+margin_right = 200.0
+margin_bottom = -213.0
+custom_constants/separation = 50
+
+[node name="1_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 4 )
+text = "1"
+
+[node name="2_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_left = 150.0
+margin_right = 250.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 4 )
+text = "2"
+
+[node name="3_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_left = 300.0
+margin_right = 400.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 4 )
+text = "3"
+
+[node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -183.5
+margin_top = -160.0
+margin_right = 183.5
+margin_bottom = -63.0
+custom_fonts/font = ExtResource( 4 )
+text = "Main Menu"
+
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/1_btn" to="." method="_on_1_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/2_btn" to="." method="_on_2_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/3_btn" to="." method="_on_3_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Menu_btn" to="." method="_on_Menu_btn_pressed"]

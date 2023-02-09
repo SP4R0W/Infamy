@@ -12,6 +12,8 @@ var velocity: Vector2 = Vector2.ZERO
 var cur_pos: int = 0
 
 func on_ready():
+	$AnimatedSprite.animation = "stand"
+	
 	yield(get_tree().create_timer(0.5),"timeout")
 	
 	agent.set_navigation(Game.map_nav)
@@ -78,6 +80,8 @@ func try_escape():
 	var chance = int(rand_range(1,100))
 
 	if (chance > 75):
+		$AnimatedSprite.animation = "stand"
+		
 		is_escaping = true
 		agent.set_target_location(Game.map_escape_zone.global_position)
 		is_hostaged = false
@@ -144,14 +148,22 @@ func set_npc_interactions():
 		$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Bag"
 		$Interaction_panel/VBoxContainer/Action2.hide()
 		$Interaction_panel/VBoxContainer/Action3.hide()
+		
+		has_second_interaction = false
+		has_third_interaction = false
 	elif (is_unconscious):
 		$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Bag"
 		$Interaction_panel/VBoxContainer/Action2.hide()
 		$Interaction_panel/VBoxContainer/Action3.hide()
 		
+		has_second_interaction = false
+		has_third_interaction = false
+		
 		if (has_disguise):
 			$Interaction_panel/VBoxContainer/Action2.show()
 			$Interaction_panel/VBoxContainer/Action2.text = "Hold [X] to Take Disguise"
+			
+			has_second_interaction = true
 	elif (is_hostaged):
 		if (!is_tied_hostage):
 			$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Tie"
@@ -162,25 +174,38 @@ func set_npc_interactions():
 			
 		$Interaction_panel/VBoxContainer/Action2.hide()
 		$Interaction_panel/VBoxContainer/Action3.hide()
+		
+		has_second_interaction = false
+		has_third_interaction = false
 			
 		if (!was_interrogated):
 			$Interaction_panel/VBoxContainer/Action2.show()
 			$Interaction_panel/VBoxContainer/Action2.text = "Hold [X] to Interrogate"
+			
+			has_second_interaction = true
 	
 	.set_npc_interactions()
 	
 func check_interactions():
 	if (has_focus && can_interact):
+		$Interaction_panel/VBoxContainer/Action1.show()
+		
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
 				
 				if (is_dead || is_unconscious):
 					action = "bag"
-					$Interaction_timer.wait_time = 5
+					if (Game.bodybags > 0):
+						$Interaction_timer.wait_time = 5
+					else:
+						$Interaction_timer.wait_time = 0.1
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
-					$Interaction_timer.wait_time = 1
+					if (Game.handcuffs > 0):
+						$Interaction_timer.wait_time = 1
+					else:
+						$Interaction_timer.wait_time = 0.1
 				elif (is_hostaged && is_tied_hostage && !is_following):
 					action = "move"
 					$Interaction_timer.wait_time = .5
@@ -195,7 +220,7 @@ func check_interactions():
 				Game.suspicious_interaction = true
 				
 				emit_signal("object_interaction_started",self,self.action)
-		elif (Input.is_action_pressed("interact2") && Game.player_can_interact):
+		elif (Input.is_action_pressed("interact2") && Game.player_can_interact && has_second_interaction):
 			if (!Game.player_is_interacting):
 				Game.player_is_interacting = true
 				
@@ -224,6 +249,9 @@ func check_interactions():
 				Game.suspicious_interaction = false
 				
 				emit_signal("object_interaction_aborted",self,self.action)
+	elif (has_focus && !can_interact):
+		$Interaction_panel/VBoxContainer/Action1.hide()
+		$Interaction_panel/VBoxContainer/Action3.show()
 	else:
 		hide_panel()
 	
@@ -245,8 +273,12 @@ func finish_interactions():
 		emit_signal("object_interaction_finished",self,self.action)
 		
 		if (action == "bag"):
-			Game.carry_bag("guard",has_disguise)
-			queue_free()
+			if (Game.bodybags > 0):
+				Game.bodybags -= 1
+				Game.carry_bag("guard",has_disguise)
+				queue_free()
+			else:
+				Game.ui.update_popup("You have no body bags!",2)
 		elif (action == "tie"):
 			is_tied_hostage = true
 			tie()
@@ -262,20 +294,52 @@ func finish_interactions():
 	
 	.finish_interactions()
 	
+func alerted():
+	$AnimatedSprite.animation = "shoot"
+	
+	.alerted()
+	
 func kill():
 	if (is_camera_operator):
 		get_tree().call_group("Camera","alarm_on")
+		
+	Game.kills += 1
+		
+	$AnimatedSprite.animation = "dead"
 	
 	.kill()
 
 func knockout():
 	if (is_camera_operator):
 		get_tree().call_group("Camera","alarm_on")
+		
+	$AnimatedSprite.animation = "knocked"
 	
 	.knockout()
 
 func hostage():
 	if (is_camera_operator):
 		get_tree().call_group("Camera","alarm_on")
+		
+	$AnimatedSprite.animation = "untied"
 	
 	.hostage()
+	
+func tie():
+	$AnimatedSprite.animation = "tied"
+	
+	.tie()
+
+func alarm_on():
+	if (!is_dead && !is_unconscious && !is_tied_hostage && is_hostaged):
+		$AnimatedSprite.animation = "stand"
+		
+		is_escaping = true
+		agent.set_target_location(Game.map_escape_zone.global_position)
+		is_hostaged = false
+		can_interact = false
+	elif (!is_dead && !is_unconscious && !is_tied_hostage && !is_hostaged):
+		$AnimatedSprite.animation = "shoot"
+		
+	
+	.alarm_on()

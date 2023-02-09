@@ -2,7 +2,7 @@ extends Panel
 
 onready var objective: PanelContainer = $Objective
 onready var subtitle: Label = $Subtitle
-onready var popup: Panel = $Popup_panel
+onready var popup: PanelContainer = $Popup_panel
 
 onready var timer: Label = $Status/VBoxContainer/Timer
 onready var player_status: Label = $Status/VBoxContainer/Status
@@ -31,9 +31,9 @@ onready var stamina_bar: TextureProgress = $Player/Stamina_bar
 onready var green_effect: TextureRect = $Green_effect
 onready var red_effect: TextureRect = $Red_effect
 
-var start_time: int = OS.get_system_time_msecs()
-var start_time_secs: int = start_time
-var start_time_mins: int = start_time
+var seconds: int = 0
+var minutes: int = 0
+var hours: int = 0
 
 var item_textures: Dictionary = {
 	"b_keycard":"res://src/Objects/Blue_keycard/blue_keycard.png",
@@ -44,10 +44,10 @@ var item_textures: Dictionary = {
 }
 
 var equipment_textures: Dictionary = {
-	"medic":"res://src/Equipment/medic.png",
-	"ammo":"res://src/Equipment/ammo.png",
-	"c4":"res://src/Equipment/c4.png",
-	"ecm":"res://src/Equipment/ecm.png",
+	"Medic Bag":"res://src/Equipment/medic.png",
+	"Ammo Bag":"res://src/Equipment/ammo.png",
+	"C4":"res://src/Equipment/c4.png",
+	"ECM":"res://src/Equipment/ecm.png",
 }
 
 var texture_rects: Array
@@ -63,20 +63,14 @@ func _ready() -> void:
 	Game.ui = self
 
 func set_ui_timer() -> void:
-	var time_difference = OS.get_system_time_msecs() - start_time
-	var time_difference_secs = OS.get_system_time_msecs() - start_time_secs
-	var time_difference_mins = OS.get_system_time_msecs() - start_time_mins
-	
-	var seconds = floor(time_difference_secs / 1000)
+	seconds += 1
 	if (seconds == 60):
-		start_time_secs = OS.get_system_time_msecs()
-		
-	var minutes = floor(time_difference_mins / 60000)
-	if (minutes == 60):
-		start_time_mins = OS.get_system_time_msecs()
-		
-	var hours = floor(time_difference / 3600000)
-	
+		seconds = 0
+		minutes += 1
+		if (minutes == 60):
+			minutes = 0
+			hours += 1
+
 	if (hours == 0):
 		timer.text = "%02d:%02d" % [minutes,seconds]
 	else:
@@ -148,17 +142,24 @@ func draw_weapon_names() -> void:
 		ammo2_text.modulate = Color(0.54,0.54,0.54,1)	
 		
 func draw_player_equipment() -> void:
-	item1_img.texture = load(equipment_textures[Game.player_equipment[0][0]])
-	item1_text.text = str(Game.player_equipment[0][1]) + "x"
-	if (Game.player_current_equipment == 0):
-		item1_text.modulate = Color(1,1,1,1)
+	if (Game.player_equipment[0][0] != "none"):
+		item1_img.show()
+		item1_text.show()
+		
+		item1_img.texture = load(equipment_textures[Game.player_equipment[0][0]])
+		item1_text.text = str(Game.player_equipment[0][1]) + "x"
+		if (Game.player_current_equipment == 0):
+			item1_text.modulate = Color(1,1,1,1)
+		else:
+			item1_text.modulate = Color(0.54,0.54,0.54,1)
 	else:
-		item1_text.modulate = Color(0.54,0.54,0.54,1)
+		item1_img.hide()
+		item1_text.hide()
 	
-	item2_img.texture = null
-	item2_text.text = ""
-	
-	if ((range(Game.player_equipment.size()).has(1))):
+	if (Game.player_equipment[1][0] != "none"):
+		item2_img.show()
+		item2_text.show()
+		
 		item2_img.texture = load(equipment_textures[Game.player_equipment[1][0]])
 		item2_text.text = str(Game.player_equipment[1][1]) + "x"		
 		
@@ -166,8 +167,12 @@ func draw_player_equipment() -> void:
 			item2_text.modulate = Color(1,1,1,1)
 		else:
 			item2_text.modulate = Color(0.54,0.54,0.54,1)
+	else:
+		item2_img.hide()
+		item2_text.hide()
 		
-	
+	$Player/Cable_amount.text = str(Game.handcuffs) + "x"
+	$Player/Bags_amount.text = str(Game.bodybags) + "x"
 		
 func draw_player_bars() -> void:
 	health_bar.value = 	Game.player.health
@@ -177,8 +182,10 @@ func draw_player_bars() -> void:
 func _process(delta) -> void:
 	if (!Game.game_process):
 		return	
+	
+	if ($Timer.time_left <= 0):
+		$Timer.start()
 		
-	set_ui_timer()
 	set_player_status()
 	set_player_bag_text()
 	
@@ -186,6 +193,9 @@ func _process(delta) -> void:
 	draw_weapon_names()
 	draw_player_equipment()
 	draw_player_bars()
+	
+	$Counters/VBoxContainer/Hostage.text = "H:" + str(Game.hostages)
+	$Counters/VBoxContainer/Kills.text = "K:" + str(Game.kills)
 	
 func do_green_effect():
 	green_effect.modulate = Color(1,1,1,1)
@@ -217,14 +227,8 @@ func update_popup(message: String, duration: float):
 	popup.visible = false
 	
 	$Popup_panel.rect_scale = Vector2(0,1)
-	$Popup_panel/Label.text = ""
-	
-	$Popup_panel/Label.text = message
-	
-	popup.rect_size = Vector2(14+$Popup_panel/Label.rect_size.x,105)
-	
-	$Popup_panel.rect_global_position.x = (OS.get_window_safe_area().end.x) - ($Popup_panel.rect_size.x / 2)
-	
+	$Popup_panel/CenterContainer/Label.text = message
+
 	popup.visible = true
 
 	$Popup_panel/Tween.interpolate_property(popup,"rect_scale:x",0,1,0.5)

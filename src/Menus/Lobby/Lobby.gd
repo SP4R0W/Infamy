@@ -4,9 +4,7 @@ var selected_diff: int = 0
 var selected_heist: String = ""
 
 var heist_ids: Dictionary = {
-	0:"busy",
-	1:"italy",
-	2:"bank"
+	0:"bank"
 }
 
 var heist_info: Dictionary = {

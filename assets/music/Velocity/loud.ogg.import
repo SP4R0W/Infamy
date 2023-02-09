@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/loud.ogg-4b212c4ba7ce9ce1f6d4bb8f543ca879.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Velocity/loud.ogg"
+dest_files=[ "res://.import/loud.ogg-4b212c4ba7ce9ce1f6d4bb8f543ca879.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

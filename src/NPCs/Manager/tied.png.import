@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/uzi.png-6b4dc128c059f6b1cea545ba61365cff.stex"
+path="res://.import/tied.png-a1940ca0352439c8e014dc8fb36018fc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/Weapons/assets/UZI/uzi.png"
-dest_files=[ "res://.import/uzi.png-6b4dc128c059f6b1cea545ba61365cff.stex" ]
+source_file="res://src/NPCs/Manager/tied.png"
+dest_files=[ "res://.import/tied.png-a1940ca0352439c8e014dc8fb36018fc.stex" ]
 
 [params]
 

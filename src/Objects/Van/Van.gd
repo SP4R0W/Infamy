@@ -8,9 +8,6 @@ export var can_escape: bool = true
 
 var forbidden_bags = ["drill"]
 
-func _ready():
-	pass
-
 
 func _on_Secure_zone_area_entered(area):
 	if (can_secure):
@@ -20,21 +17,23 @@ func _on_Secure_zone_area_entered(area):
 				bag.can_interact = false
 
 				emit_signal("bag_secured",bag.bag_type)
+				area.z_index = 0
 
 
 func _on_Secure_zone_body_entered(body):
 	if (can_escape):
-		if (body.is_in_group("Player")):
-			if ($Timer.wait_time <= 0):
+		if (body.name == "Player"):
+			if ($Timer.time_left <= 0):
+				print("escape started")
 				$Timer.start()
 			
 func _on_Secure_zone_body_exited(body):
 	if (can_escape):
-		if (body.is_in_group("Player")):
+		if (body.name == "Player"):
 			$Timer.stop()
 
 func _on_Timer_timeout():
-	Game.can_process = false
+	Game.game_process = false
 	Game.game_scene.show_gamewin()
 	
 

@@ -1,0 +1,96 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://src/Game/assets/medicbag.png" type="Texture" id=1]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/Equipment/MedicBag/MedicBag.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 72, 128 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[node name="MedicBag" type="Sprite"]
+z_index = 5
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
+visible = false
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_hitbox"]
+shape = SubResource( 1 )
+
+[node name="Interaction_timer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+
+[node name="Interaction_panel" type="PanelContainer" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -176.0
+margin_top = -240.0
+margin_right = 48.0
+margin_bottom = -99.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 217.0
+margin_bottom = 161.0
+
+[node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_right = 210.0
+margin_bottom = 46.0
+custom_fonts/font = SubResource( 2 )
+text = "Medic Bag"
+align = 1
+
+[node name="Uses" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 50.0
+margin_right = 210.0
+margin_bottom = 73.0
+custom_fonts/font = SubResource( 3 )
+text = "Uses left: 2/2"
+align = 1
+
+[node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 77.0
+margin_right = 210.0
+margin_bottom = 100.0
+custom_fonts/font = SubResource( 3 )
+text = "Hold [F] to Heal"
+align = 1
+
+[node name="Action2" type="Label" parent="Interaction_panel/VBoxContainer"]
+margin_top = 104.0
+margin_right = 210.0
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 3 )
+text = "Hold [X] to Replenish"
+align = 1
+
+[node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
+margin_top = 131.0
+margin_right = 210.0
+margin_bottom = 154.0
+custom_fonts/font = SubResource( 4 )
+step = 1.0
+rounded = true
+
+[connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]

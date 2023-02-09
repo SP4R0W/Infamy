@@ -93,7 +93,6 @@ func _physics_process(delta):
 		return
 	
 	if (!is_disabled && !is_broken && !is_alerted):
-		print(targets)
 		for x in range (targets.size()):
 			if (x < targets.size()):
 				if (targets.has(targets[x])):
@@ -173,35 +172,41 @@ func check_if_ray_sees_target(dict):
 					if (Game.player_status == Game.player_statuses.DISGUISED):
 						dict["detection_value"] = 2
 					else:
-						dict["detection_value"] = 5
+						dict["detection_value"] = 5 * (Game.difficulty + 1)
+				else:
+					dict["detecting"] = false
+					dict["object"] = null
 			elif (target.is_in_group("npc")):
 				var npc = target.get_parent()
 				if (npc.is_dead || npc.is_unconscious):
 					dict["detecting"] = true
 					detection_code = "camera_body"
-					dict["detection_value"] = 10				
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 				elif (npc.is_hostaged || npc.is_escaping):
 					dict["detecting"] = true
 					detection_code = "camera_hostage"
-					dict["detection_value"] = 10		
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 				elif (npc.is_alerted):
 					detection_code = "camera_alert"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("glass")):
 				if (target.is_broken):
 					detection_code = "camera_glass"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("bags")):
 					detection_code = "camera_bag"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("drill")):
 				if (target.get_parent().visible):
 					detection_code = "camera_drill"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
+				else:
+					dict["detecting"] = false
+					dict["object"] = null
 			else:
 				dict["detecting"] = false
 				dict["object"] = null
@@ -246,6 +251,7 @@ func _process(delta):
 	if (has_focus && can_interact && !is_disabled && !is_broken):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
+				Game.suspicious_interaction = true
 				Game.player_is_interacting = true
 				
 				emit_signal("object_interaction_started",self,self.action)
@@ -256,6 +262,7 @@ func _process(delta):
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 		else:
 			if (Game.player_is_interacting):
+				Game.suspicious_interaction = false
 				emit_signal("object_interaction_aborted",self,self.action)
 				
 				Game.player_is_interacting = false
@@ -285,6 +292,7 @@ func _on_Interaction_timer_timeout():
 		$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 		
 		Game.player_can_interact = false
+		Game.suspicious_interaction = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
 		emit_signal("object_interaction_finished",self,self.action)
@@ -339,6 +347,8 @@ func _on_Alert_timer_timeout():
 	emit_signal("alerted",detection_code)
 
 func alarm_on():
+	$Loop_timer.stop()
+	
 	is_alerted = true
 	if (!is_broken):
 		is_disabled = true

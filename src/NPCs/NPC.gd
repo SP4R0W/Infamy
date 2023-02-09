@@ -2,13 +2,15 @@ extends Node2D
 class_name NPC
 
 var bullet_scene = preload("res://src/Weapons/Enemy_bullet.tscn")
+var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
 
 signal object_interaction_started(object)
 signal object_interaction_aborted(object)
 signal object_interaction_finished(object)
 
-signal npc_hostaged(object, data)
-signal npc_interrogated(object,data)
+signal npc_hostaged(object)
+signal npc_interrogated(object)
+signal npc_knocked(object)
 signal npc_dead(object)
 
 signal alerted(code)
@@ -18,6 +20,8 @@ export var initial_rotation: float = 0
 export var npc_name: String
 
 export var can_interact: bool = false
+export var has_second_interaction: bool = false
+export var has_third_interaction: bool = false
 export var can_see: bool = true
 export var has_weapon: bool = false
 
@@ -60,13 +64,16 @@ var is_following: bool = false
 var is_escaping: bool = false
 var is_moving: bool = false
 
-func _ready():	
+func _ready():
 	connect("alerted",Game,"turn_game_loud")
 	
 	$Marker.hide()
 	$Detection_bar.hide()
 	$Interaction_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
+	$Interaction_panel/VBoxContainer/Action1.hide()
+	$Interaction_panel/VBoxContainer/Action2.hide()
+	$Interaction_panel/VBoxContainer/Action3.hide()
 	
 	$AnimatedSprite.rotation_degrees = initial_rotation
 	
@@ -124,7 +131,9 @@ func remove_exception(object):
 		ray.remove_exception(object)
 		
 func set_npc_interactions():
-	pass
+	if (!can_interact):
+		return
+
 				
 func check_interactions():
 	pass
@@ -283,40 +292,46 @@ func check_if_ray_sees_target(dict):
 					if (Game.player_status == Game.player_statuses.DISGUISED):
 						dict["detection_value"] = 2
 					else:
-						dict["detection_value"] = 5
+						dict["detection_value"] = 5 * (Game.difficulty + 1)		
+				else:
+					dict["detecting"] = false
+					dict["object"] = null
 			elif (target.is_in_group("npc")):
 				var npc = target.get_parent()
 				if (npc.is_dead || npc.is_unconscious):
 					dict["detecting"] = true
 					detection_code = npc_name  + "_body"
-					dict["detection_value"] = 10				
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 				elif (npc.is_hostaged || npc.is_escaping):
 					dict["detecting"] = true
 					detection_code =  npc_name  + "_hostage"
-					dict["detection_value"] = 10		
+					dict["detection_value"] = 10 * (Game.difficulty + 1)	
 				elif (npc.is_alerted):
 					detection_code =  npc_name  + "_alert"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("Camera")):
 				if (target.is_broken):
 					detection_code = npc_name  + "_camera"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("glass")):
 				if (target.is_broken):
 					detection_code = npc_name  + "_glass"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("bags")):
 					detection_code = npc_name  + "_bag"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
 			elif (target.is_in_group("drill")):
 				if (target.get_parent().visible):
 					detection_code = npc_name  + "_drill"
 					dict["detecting"] = true
-					dict["detection_value"] = 10
+					dict["detection_value"] = 10 * (Game.difficulty + 1)
+				else:
+					dict["detecting"] = false
+					dict["object"] = null
 			else:
 				dict["detecting"] = false
 				dict["detection_value"] = 0
@@ -344,6 +359,7 @@ func _process(delta):
 		$Marker/AnimatedSprite.animation = "alert"
 		$Detection_bar.hide()
 		if ($Alert_timer.time_left <= 0):
+			alerted()
 			$Detection_timer.stop()
 			$MoveTimer.stop()
 			is_moving = false
@@ -371,6 +387,7 @@ func _on_Detection_timer_timeout():
 					detection_value += ray["detection_value"]
 							
 					if (detection_value >= 100):
+						$Detection_timer.stop()
 						$Detection_timer.stop()
 						break
 				else:
@@ -407,10 +424,22 @@ func shoot():
 		Game.game_scene.add_child(bullet)
 		bullet.target = target
 		bullet.global_position = $AnimatedSprite/BulletOrigin.global_position
+		
+		var noise = noise_scene.instance()
+		noise.radius = 4000
+		noise.time = 0.1
+		Game.game_scene.add_child(noise)
+		noise.global_position = $AnimatedSprite.global_position
 
 	$Shoot_timer.start()
 		
+func alerted():
+	pass
+			
 func kill():
+	if (is_tied_hostage):
+		Game.hostages -= 1
+	
 	can_interact = true
 	has_disguise = false
 	
@@ -427,7 +456,9 @@ func kill():
 	$Alert_timer.stop()
 	$Shoot_timer.stop()
 	$MoveTimer.stop()
-	$Escape_timer.stop()	
+	$Escape_timer.stop()
+	
+	emit_signal("npc_dead",self)
 	
 func knockout():
 	can_interact = true
@@ -447,6 +478,8 @@ func knockout():
 	$MoveTimer.stop()
 	$Escape_timer.stop()	
 	
+	emit_signal("npc_knocked",self)
+	
 func hostage():
 	can_interact = true
 	
@@ -458,11 +491,19 @@ func hostage():
 	
 	$MoveTimer.stop()
 	$Escape_timer.start()
+	
+	emit_signal("npc_hostaged",self)
 
 func tie():
-	is_tied_hostage = true
-	
-	$Escape_timer.stop()
+	if (Game.handcuffs > 0):
+		Game.handcuffs -= 1
+		Game.hostages += 1
+		
+		is_tied_hostage = true
+		
+		$Escape_timer.stop()
+	else:
+		Game.ui.update_popup("You have no handcuffs!",2)
 	
 func interrogate():
 	was_interrogated = true

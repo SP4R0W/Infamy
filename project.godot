@@ -44,6 +44,7 @@ config/icon="res://icon.png"
 Global="*res://singletons/Global.gd"
 Composer="*res://singletons/Composer.gd"
 Game="*res://singletons/Game.gd"
+Savedata="*res://singletons/Savedata.gd"
 
 [debug]
 
@@ -59,7 +60,11 @@ window/size/resizable=false
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="2d"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
+
+[editor]
+
+search_in_file_extensions=PoolStringArray( "gd", "gdshader", "shader", "tscn" )
 
 [gui]
 

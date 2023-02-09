@@ -39,7 +39,7 @@ func _process(delta):
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 				
-				Game.player_status = Game.player_statuses.SUSPICIOUS
+				Game.suspicious_interaction = true
 		else:
 			if (Game.player_is_interacting):
 				emit_signal("object_interaction_aborted",self,self.action)
@@ -49,10 +49,7 @@ func _process(delta):
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
-				if (Game.player_disguise != "normal"):
-					Game.player_status = Game.player_statuses.DISGUISED
-				else:
-					Game.player_status = Game.player_statuses.NORMAL
+				Game.suspicious_interaction = false
 	else:
 		hide_panel()
 	
@@ -70,10 +67,7 @@ func _on_Interaction_timer_timeout():
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
-		if (Game.player_disguise != "normal"):
-			Game.player_status = Game.player_statuses.DISGUISED
-		else:
-			Game.player_status = Game.player_statuses.NORMAL
+		Game.suspicious_interaction = false
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		

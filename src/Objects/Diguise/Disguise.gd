@@ -4,6 +4,7 @@ signal object_interaction_finished(object,action)
 
 var has_focus: bool = false
 export var can_interact: bool = true
+export var disguise: String = "employee"
 
 func _ready():
 	$Interaction_panel.hide()
@@ -20,8 +21,8 @@ func _process(delta):
 	if (has_focus):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
-				if (Game.player_disguise != "guard"):
-					Game.change_player_disguise("guard")
+				if (Game.player_disguise != disguise):
+					Game.change_player_disguise(disguise)
 					emit_signal("object_pickup",self.name,"pickup")
 					
 					queue_free()

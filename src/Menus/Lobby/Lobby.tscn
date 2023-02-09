@@ -125,7 +125,7 @@ margin_top = -375.0
 margin_right = 519.5
 margin_bottom = 375.0
 custom_fonts/font = SubResource( 9 )
-items = [ "Busy Street", null, false, "Cristalli Abbaglianti", null, false, "Downtown Hit", null, false ]
+items = [ "Downtown Hit", null, false ]
 allow_reselect = true
 auto_height = true
 same_column_width = true
@@ -158,6 +158,7 @@ align = 1
 valign = 1
 
 [node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 123.0
 margin_right = 1739.0
 margin_bottom = 153.0
@@ -174,6 +175,7 @@ valign = 1
 autowrap = true
 
 [node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 300.0
 margin_right = 1739.0
 margin_bottom = 330.0
@@ -195,6 +197,7 @@ valign = 1
 autowrap = true
 
 [node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 713.0
 margin_right = 1739.0
 margin_bottom = 743.0
@@ -211,6 +214,7 @@ valign = 1
 autowrap = true
 
 [node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 842.0
 margin_right = 1739.0
 margin_bottom = 872.0
@@ -237,6 +241,7 @@ items = [ "Easy", null, false, 0, null, "Normal", null, false, 1, null, "Hard", 
 selected = 0
 
 [node name="HSeparator5" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 1018.0
 margin_right = 1739.0
 margin_bottom = 1048.0
@@ -250,6 +255,7 @@ custom_fonts/font = SubResource( 7 )
 text = "Play"
 
 [node name="HSeparator6" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+modulate = Color( 1, 1, 1, 0 )
 margin_top = 1130.0
 margin_right = 1739.0
 margin_bottom = 1160.0

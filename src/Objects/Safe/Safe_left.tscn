@@ -13,7 +13,7 @@
 extents = Vector2( 48, 64 )
 
 [sub_resource type="RectangleShape2D" id=9]
-extents = Vector2( 80, 80 )
+extents = Vector2( 144, 80 )
 
 [sub_resource type="DynamicFont" id=10]
 size = 32
@@ -100,12 +100,11 @@ max_distance = 1000.0
 one_shot = true
 
 [node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
-visible = false
 collision_layer = 8
 collision_mask = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction_hitbox"]
-position = Vector2( -16, -32 )
+position = Vector2( -80, -32 )
 shape = SubResource( 9 )
 
 [node name="Interaction_timer" type="Timer" parent="."]

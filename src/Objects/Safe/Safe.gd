@@ -73,7 +73,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = true
 		elif (Input.is_action_pressed("interact3") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.get_amount_of_equipment("c4") > 0):
+			if (!Game.player_is_interacting && Game.get_amount_of_equipment("C4") > 0):
 				Game.player_is_interacting = true
 				action = "c4"
 				
@@ -106,6 +106,7 @@ func _on_Interaction_timer_timeout():
 		can_interact = false
 		Game.player_is_interacting = false
 		$Interaction_panel/VBoxContainer/Interaction_progress.hide()
+		$Interaction_hitbox/CollisionShape2D.disabled = true
 		
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
@@ -120,7 +121,7 @@ func _on_Interaction_timer_timeout():
 		elif (action == "lockpick"):
 			open_safe()
 		elif (action == "c4"):
-			Game.use_player_equipment("c4")
+			Game.use_player_equipment("C4")
 			
 			$C4.show()
 			$C4_noise.play()
@@ -160,7 +161,6 @@ func open_safe():
 	$Interaction_hitbox.queue_free()
 	$Drill.queue_free()
 	
-	print(item_stored)
 	if (item_stored != "none"):
 		var item = load(Game.scene_objects[item_stored]).instance()
 		add_child(item)

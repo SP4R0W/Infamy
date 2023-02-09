@@ -57,6 +57,7 @@ func get_input() -> void:
 	if (global_position.distance_to(mouse_pos) >  5 && !Game.player_is_interacting):
 		look_at(mouse_pos)
 		$Interaction_ray.look_at(mouse_pos)
+		$Interaction_ray.force_raycast_update()
 		
 	var xDir = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 	var yDir = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
@@ -271,9 +272,21 @@ func _process(delta) -> void:
 	elif (current_weapon != -1 || weapons[0].is_weapon_visible || weapons[1].is_weapon_visible):
 		Game.player_status = Game.player_statuses.ARMED
 	elif (Game.player_collision_zones.size() != 0):
+		print(Game.player_collision_zones)
 		for zone in Game.player_collision_zones:
 			if (!zone.disguises_needed.has(Game.player_disguise)):
 				Game.player_status = Game.player_statuses.TRESPASSING
+			else:
+				if (Game.player_disguise != "normal"):
+					Game.player_status = Game.player_statuses.DISGUISED
+				else:
+					Game.player_status = Game.player_statuses.NORMAL	
+				
+		if (Game.player_status != Game.player_statuses.TRESPASSING):
+			if (Game.player_disguise != "normal"):
+				Game.player_status = Game.player_statuses.DISGUISED
+			else:
+				Game.player_status = Game.player_statuses.NORMAL
 	else:
 		if (Game.player_disguise != "normal"):
 			Game.player_status = Game.player_statuses.DISGUISED

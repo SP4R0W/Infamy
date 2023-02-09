@@ -64,7 +64,7 @@ func _process(delta):
 				if (!disguises_needed.has(Game.player_disguise)):
 					Game.suspicious_interaction = true
 		elif (Input.is_action_pressed("interact2") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.get_amount_of_equipment("c4") > 0):
+			if (!Game.player_is_interacting && Game.get_amount_of_equipment("C4") > 0):
 				Game.player_is_interacting = true
 				action = "c4"
 				
@@ -77,7 +77,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = true
 		elif (Input.is_action_pressed("interact3") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.get_amount_of_equipment("ecm") > 0 && can_use_ecm):
+			if (!Game.player_is_interacting && Game.get_amount_of_equipment("ECM") > 0 && can_use_ecm):
 				Game.player_is_interacting = true
 				action = "ecm"
 				
@@ -133,6 +133,7 @@ func _on_Interaction_timer_timeout():
 				get_tree().call_group("Detection","add_exception",self)
 				get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 			else:
+				is_closed = true
 				$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Open (requires " + item_needed_name + ")"
 				
 				$Sprite.rotation_degrees = original_rotation
@@ -142,14 +143,14 @@ func _on_Interaction_timer_timeout():
 				get_tree().call_group("Detection","remove_exception",self)
 				get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 		elif (action == "c4"):
-			Game.use_player_equipment("c4")
+			Game.use_player_equipment("C4")
 			can_interact = false
 			
 			$C4.show()
 			$C4_noise.play()
 			$C4_timer.start()
 		elif (action == "ecm"):
-			Game.use_player_equipment("ecm")
+			Game.use_player_equipment("ECM")
 			can_interact = false
 			
 			if (is_equal_approx(original_rotation,90)):
@@ -175,7 +176,7 @@ func _on_C4_timer_timeout():
 		$Explosion.play()
 		
 		var noise = noise_scene.instance()
-		noise.radius = 1000
+		noise.radius = 4000
 		noise.time = 0.1
 		add_child(noise)
 		

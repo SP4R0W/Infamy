@@ -108,6 +108,10 @@ weapon_position = Vector2( 185, 115 )
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 2 )
 
+[node name="Melee" parent="." index="1"]
+collision_layer = 32
+collision_mask = 4
+
 [node name="MeleeShape" parent="Melee" index="0"]
 position = Vector2( -13.3333, -3.17891e-06 )
 shape = SubResource( 5 )

@@ -162,4 +162,5 @@ rounded = true
 anims/RESET = SubResource( 6 )
 anims/open = SubResource( 7 )
 
+[connection signal="drill_finished" from="Drill" to="." method="_on_drill_finished"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]

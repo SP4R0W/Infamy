@@ -37,6 +37,8 @@ var alarm_codes: Dictionary = {
 var game_scene = null
 var game_process: bool = false
 
+var game_scene_map_path: String = ""
+
 var is_game_loud = false
 
 var level: String = ""
@@ -50,16 +52,19 @@ var map
 var map_nav
 var map_objects
 var map_guard_restpoints
+var map_empl_restpoints
 var map_escape_zone
+
+var map_assets: Array = []
 
 var player
 
 var player_weapons: Array = ["UZI","M9"]
+var player_armor: String = "Suit"
+var player_equipment: Array = [["Medic Bag",2],["Ammo Bag",8]]
+var player_current_equipment: int = 0
 
 var player_inventory: Array = []
-
-var player_equipment: Array = [["ecm",4],["c4",8]]
-var player_current_equipment: int = 0
 
 enum player_statuses {
 	NORMAL,
@@ -91,11 +96,33 @@ var player_is_running: bool = false
 
 var player_collision_zones: Array = []
 
+var hostages = 0
+var kills = 0
+
+var max_handcuffs = 6
+var handcuffs = 6
+
+var max_bodybags = 2
+var bodybags = 2
+
+var max_equipment_amounts: Dictionary = {
+	"Medic Bag":2,
+	"Ammo Bag":2,
+	"ECM":4,
+	"C4":9,
+	"Sentry":1,
+	"Body Bags":2
+}
+
 func turn_game_loud(code: String):
 	if (not is_game_loud):
+		game_scene.get_node("Audio/stealth").stop()
+		
 		is_game_loud = true
 		map.loud_ready()
 		ui.update_popup("Alarm sounded: " + alarm_codes[code],4)
+		
+		game_scene.get_node("Audio/loud").play()
 
 func has_item_in_equipment(item_needed: String) -> bool:
 	for item in player_equipment:

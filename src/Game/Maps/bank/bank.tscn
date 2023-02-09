@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://src/Game/Maps/bank/bank.gd" type="Script" id=1]
 [ext_resource path="res://src/Game/Maps/bank/bank.tres" type="TileSet" id=2]
@@ -34,6 +34,12 @@
 [ext_resource path="res://src/Game/Maps/bank/RestNode.gd" type="Script" id=32]
 [ext_resource path="res://src/NPCs/Manager/Manager.tscn" type="PackedScene" id=33]
 [ext_resource path="res://src/Game/Maps/bank/RestPoints.gd" type="Script" id=34]
+[ext_resource path="res://src/NPCs/Employees/Employee.tscn" type="PackedScene" id=35]
+[ext_resource path="res://src/NPCs/Civilians/Civilian.tscn" type="PackedScene" id=36]
+[ext_resource path="res://src/Equipment/MedicBag/MedicBag.tscn" type="PackedScene" id=37]
+[ext_resource path="res://src/Equipment/AmmoBag/AmmoBag.tscn" type="PackedScene" id=38]
+[ext_resource path="res://src/Equipment/CableBag/CableBag.tscn" type="PackedScene" id=39]
+[ext_resource path="res://src/Equipment/BodyBag/BodyBag.tscn" type="PackedScene" id=40]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 12008, -2024, 12008, 6888, 10264, 6888, 10264, 2024, 9344, 872, 7320, 872, 7320, -24, 3944, 0, 3944, 872, 2152, 872, 24, -2024, 2152, 4888, 3944, 4888, 3944, 5784, 24, 6888, 7144, 5784, 7144, 6888, 9368, 2024 )
@@ -294,11 +300,47 @@ rotation = 1.5708
 [node name="Money_bag" parent="Glass/Loot" instance=ExtResource( 16 )]
 position = Vector2( 9152, 5560 )
 
+[node name="Money_bag2" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9288, 5696 )
+
+[node name="Money_bag3" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9288, 5696 )
+
+[node name="Money_bag4" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9288, 5816 )
+
+[node name="Money_bag5" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9152, 5912 )
+
+[node name="Money_bag6" parent="Glass/Loot" instance=ExtResource( 16 )]
+position = Vector2( 9280, 6080 )
+
 [node name="Money_bundle" parent="Glass/Loot" instance=ExtResource( 19 )]
 position = Vector2( 4536, 2240 )
 
 [node name="Money_bundle2" parent="Glass/Loot" instance=ExtResource( 19 )]
 position = Vector2( 4664, 2240 )
+
+[node name="Money_bundle8" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9128, 5672 )
+
+[node name="Money_bundle9" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9144, 6120 )
+
+[node name="Money_bundle10" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9144, 6120 )
+
+[node name="Money_bundle11" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9296, 5944 )
+
+[node name="Money_bundle12" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9112, 5784 )
+
+[node name="Money_bundle13" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9312, 5592 )
+
+[node name="Money_bundle14" parent="Glass/Loot" instance=ExtResource( 19 )]
+position = Vector2( 9328, 5528 )
 
 [node name="Money_bundle3" parent="Glass/Loot" instance=ExtResource( 19 )]
 position = Vector2( 4552, 3520 )
@@ -318,106 +360,119 @@ position = Vector2( 7896, 6432 )
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 183, 2714 )
 
-[node name="Objects" type="Node2D" parent="."]
+[node name="Assets" type="Node2D" parent="."]
+
+[node name="medic1" parent="Assets" instance=ExtResource( 37 )]
 visible = false
+position = Vector2( 8128, 5440 )
+
+[node name="medic2" parent="Assets" instance=ExtResource( 37 )]
+visible = false
+position = Vector2( 8520, 1992 )
+
+[node name="ammo1" parent="Assets" instance=ExtResource( 38 )]
+visible = false
+position = Vector2( 5824, 848 )
+
+[node name="ammo2" parent="Assets" instance=ExtResource( 38 )]
+visible = false
+position = Vector2( 9920, 4432 )
+
+[node name="cables1" parent="Assets" instance=ExtResource( 39 )]
+visible = false
+position = Vector2( 3272, 4680 )
+
+[node name="cables2" parent="Assets" instance=ExtResource( 39 )]
+visible = false
+position = Vector2( 8504, 3528 )
+
+[node name="bodies1" parent="Assets" instance=ExtResource( 40 )]
+visible = false
+position = Vector2( 6720, 712 )
+
+[node name="bodies2" parent="Assets" instance=ExtResource( 40 )]
+visible = false
+position = Vector2( 9424, 1992 )
+
+[node name="Objects" type="Node2D" parent="."]
 
 [node name="Cameras" type="Node2D" parent="Objects"]
-visible = false
 
 [node name="Camera_left" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 3984 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upleft" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 4816, 848 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_right" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 2384, 1984 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_right2" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 5328, 2816 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_right3" parent="Objects/Cameras" instance=ExtResource( 25 )]
 position = Vector2( 5328, 3904 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_downright" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 2352, 1080 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_downright3" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 5200, 1024 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_downright4" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 8376, 2232 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_downright2" parent="Objects/Cameras" instance=ExtResource( 30 )]
 position = Vector2( 4136, 4904 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upright" parent="Objects/Cameras" instance=ExtResource( 27 )]
 position = Vector2( 2360, 4680 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_left2" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 3328 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_left5" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 8112, 2808 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_left3" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 2688 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_left4" parent="Objects/Cameras" instance=ExtResource( 28 )]
 position = Vector2( 5040, 1864 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upleft2" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 6344, 848 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upleft3" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 7112, 5584 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upleft4" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 8136, 5576 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_upleft5" parent="Objects/Cameras" instance=ExtResource( 26 )]
 position = Vector2( 10056, 4424 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="Camera_downleft" parent="Objects/Cameras" instance=ExtResource( 29 )]
 position = Vector2( 8152, 1080 )
-is_disabled = true
-is_broken = true
+z_index = 5
 
 [node name="WoodDoor" parent="Objects" instance=ExtResource( 4 )]
 position = Vector2( 4928, 512 )
@@ -430,25 +485,22 @@ position = Vector2( 7232, 5248 )
 
 [node name="90MetalDoor" parent="Objects" instance=ExtResource( 6 )]
 position = Vector2( 4480, 64 )
-z_index = 0
 
 [node name="90MetalDoor2" parent="Objects" instance=ExtResource( 6 )]
 position = Vector2( 9216, 3648 )
-z_index = 0
 
 [node name="MetalDoor" parent="Objects" instance=ExtResource( 7 )]
 position = Vector2( 10176, 2560 )
 
-[node name="MetalDoor2" parent="Objects" instance=ExtResource( 7 )]
-position = Vector2( 6464, 512 )
-
 [node name="KeycardDoor" parent="Objects" instance=ExtResource( 9 )]
 position = Vector2( 8960, 2112 )
-z_index = 0
 can_use_ecm = true
 
 [node name="90WoodDoor" parent="Objects" instance=ExtResource( 5 )]
 position = Vector2( 4478, 4800 )
+
+[node name="MetalDoor3" parent="Objects" instance=ExtResource( 7 )]
+position = Vector2( 6464, 512 )
 
 [node name="Objectives" type="Node2D" parent="."]
 
@@ -468,54 +520,71 @@ item_stored = "keys"
 
 [node name="Note" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 4288, 2240 )
+z_index = 5
 
 [node name="Note2" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 4672, 2880 )
+z_index = 5
 
 [node name="Note3" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 4672, 4160 )
+z_index = 5
 
 [node name="Note4" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 5704, 4160 )
+z_index = 5
 
 [node name="Note5" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6464, 3648 )
+z_index = 5
 
 [node name="Note6" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6464, 2616 )
+z_index = 5
 
 [node name="Note7" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6976, 3136 )
+z_index = 5
 
 [node name="Note8" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 7104, 3648 )
+z_index = 5
 
 [node name="Note9" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 7760, 4160 )
+z_index = 5
 
 [node name="Note10" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6088, 5176 )
+z_index = 5
 
 [node name="Note11" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 5184, 5184 )
+z_index = 5
 
 [node name="Note12" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6656, 5192 )
+z_index = 5
 
 [node name="Note13" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6984, 1600 )
+z_index = 5
 
 [node name="Note14" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 5816, 2112 )
+z_index = 5
 
 [node name="Note15" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 6448, 1600 )
+z_index = 5
 
 [node name="Note16" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 7744, 1600 )
+z_index = 5
 
 [node name="Note17" parent="Objectives/Notes" instance=ExtResource( 12 )]
 position = Vector2( 5568, 832 )
+z_index = 5
 
 [node name="Keycards" type="Node2D" parent="Objectives"]
 
@@ -561,7 +630,6 @@ bag_type = "drill"
 
 [node name="KeyDoor" parent="Objectives" instance=ExtResource( 9 )]
 position = Vector2( 7936, 5696 )
-z_index = 0
 item_needed_name = "Keys"
 item_needed = "keys"
 
@@ -573,29 +641,32 @@ position = Vector2( 7592, 6496 )
 
 [node name="PC" parent="Objectives" instance=ExtResource( 14 )]
 position = Vector2( 7744, 6488 )
+z_index = 5
 
 [node name="Vault_panel" parent="Objectives" instance=ExtResource( 15 )]
 position = Vector2( 8848, 4456 )
+z_index = 5
 
 [node name="Vault" parent="Objectives" instance=ExtResource( 17 )]
 position = Vector2( 9216, 4544 )
+z_index = 5
 
 [node name="Van" parent="Objectives" instance=ExtResource( 18 )]
-position = Vector2( 1712, 6064 )
+position = Vector2( 11088, 6288 )
 
 [node name="Cars" type="Node2D" parent="."]
 
 [node name="Car" parent="Cars" instance=ExtResource( 10 )]
-position = Vector2( 376, 4688 )
+position = Vector2( 456, 4672 )
 rotation = 1.5708
 
 [node name="Car2" parent="Cars" instance=ExtResource( 10 )]
-position = Vector2( 1760, 720 )
+position = Vector2( 1712, 728 )
 rotation = 1.5708
 animation = "mini_yellow"
 
 [node name="Car3" parent="Cars" instance=ExtResource( 10 )]
-position = Vector2( 352, -1072 )
+position = Vector2( 448, -1064 )
 rotation = 1.5708
 animation = "4x4_blue"
 
@@ -646,7 +717,7 @@ position = Vector2( 5704, -232 )
 animation = "4x4_green"
 
 [node name="Car6" parent="Cars" instance=ExtResource( 10 )]
-position = Vector2( 10048, 1600 )
+position = Vector2( 10064, 1472 )
 rotation = 1.5708
 animation = "4x4_green"
 
@@ -697,7 +768,7 @@ polygon = PoolVector2Array( 8320, 3712, 8320, 4488, 10112, 4488, 10112, 3712 )
 [node name="NPCs" type="Node2D" parent="."]
 
 [node name="Escape_Zone" type="Position2D" parent="NPCs"]
-position = Vector2( 1856, -1984 )
+position = Vector2( 1856, -2176 )
 
 [node name="Manager_point" type="Position2D" parent="NPCs"]
 position = Vector2( 8952, 2696 )
@@ -711,64 +782,87 @@ script = ExtResource( 34 )
 position = Vector2( 4280, 1984 )
 
 [node name="2" type="Position2D" parent="NPCs/Employees/RestPoints"]
-position = Vector2( 4288, 2752 )
-
-[node name="3" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 4288, 3392 )
 
-[node name="4" type="Position2D" parent="NPCs/Employees/RestPoints"]
-position = Vector2( 4288, 4032 )
-
-[node name="5" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="3" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 5312, 5320 )
 
-[node name="6" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="4" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6784, 5312 )
 
-[node name="7" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="5" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 8000, 4928 )
 
-[node name="8" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="6" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 7104, 4040 )
 
-[node name="9" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="7" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6336, 4032 )
 
-[node name="10" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="8" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 5824, 3768 )
 
-[node name="11" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="9" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 7616, 3768 )
 
-[node name="12" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="10" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6464, 3008 )
 
-[node name="13" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="11" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6976, 2752 )
 
-[node name="14" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="12" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 7104, 1984 )
 
-[node name="15" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="13" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 7624, 1984 )
 
-[node name="16" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="14" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6336, 1984 )
 
-[node name="17" type="Position2D" parent="NPCs/Employees/RestPoints"]
-position = Vector2( 6336, 1984 )
-
-[node name="18" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="15" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 5824, 1728 )
 
-[node name="19" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="16" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 5440, 304 )
 
-[node name="20" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="17" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 6144, 448 )
 
-[node name="21" type="Position2D" parent="NPCs/Employees/RestPoints"]
+[node name="18" type="Position2D" parent="NPCs/Employees/RestPoints"]
 position = Vector2( 8768, 2880 )
+
+[node name="Employee" parent="NPCs/Employees" instance=ExtResource( 35 )]
+
+[node name="Employee3" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 4872, -80 )
+initial_rotation = -90.0
+is_static = true
+
+[node name="Employee2" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 4296, 2744 )
+initial_rotation = 180.0
+is_static = true
+
+[node name="Employee4" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 4296, 4032 )
+initial_rotation = 180.0
+is_static = true
+
+[node name="Employee5" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 7104, 3776 )
+initial_rotation = -90.0
+is_static = true
+
+[node name="Employee6" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 5824, 4032 )
+initial_rotation = 90.0
+is_static = true
+
+[node name="Employee7" parent="NPCs/Employees" instance=ExtResource( 35 )]
+position = Vector2( 6336, 1728 )
+initial_rotation = -90.0
+is_static = true
 
 [node name="Guards" type="Node2D" parent="NPCs"]
 
@@ -788,16 +882,16 @@ position = Vector2( 3840, 4544 )
 position = Vector2( 3840, 1216 )
 
 [node name="5" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 5000, 1920 )
+position = Vector2( 4992, 2016 )
 
 [node name="6" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 4992, 2688 )
+position = Vector2( 4992, 2848 )
 
 [node name="7" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 4992, 3328 )
+position = Vector2( 4992, 3488 )
 
 [node name="8" type="Position2D" parent="NPCs/Guards/RestPoints"]
-position = Vector2( 4992, 3968 )
+position = Vector2( 4992, 4128 )
 
 [node name="9" type="Position2D" parent="NPCs/Guards/RestPoints"]
 position = Vector2( 4352, 5384 )
@@ -838,23 +932,37 @@ position = Vector2( 5056, 320 )
 [node name="Guard" parent="NPCs/Guards" instance=ExtResource( 31 )]
 position = Vector2( 8776, 1352 )
 initial_rotation = -90.0
-npc_name = "guard"
 is_static = true
 is_camera_operator = true
 
 [node name="Guard2" parent="NPCs/Guards" instance=ExtResource( 31 )]
 position = Vector2( 9224, 4248 )
 initial_rotation = -90.0
-npc_name = "guard"
 is_static = true
 
 [node name="Guard3" parent="NPCs/Guards" instance=ExtResource( 31 )]
 position = Vector2( 112, 248 )
-npc_name = "guard"
 
 [node name="Guard4" parent="NPCs/Guards" instance=ExtResource( 31 )]
-position = Vector2( 104, 256 )
-npc_name = "guard"
+position = Vector2( 536, 512 )
+
+[node name="Guard5" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 144, 480 )
+
+[node name="Guard6" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 136, 656 )
+
+[node name="Guard7" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 144, 920 )
+
+[node name="Guard8" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 144, 1104 )
+
+[node name="Guard9" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 424, 1088 )
+
+[node name="Guard10" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 752, 1088 )
 
 [node name="Manager" parent="NPCs" instance=ExtResource( 33 )]
 position = Vector2( 7640, 6016 )
@@ -862,6 +970,90 @@ health = 1.0
 initial_rotation = 180.0
 npc_name = "civilian"
 info = "code"
+
+[node name="Civilians" type="Node2D" parent="NPCs"]
+
+[node name="Start1" type="Position2D" parent="NPCs/Civilians"]
+position = Vector2( 192, -2176 )
+
+[node name="Start2" type="Position2D" parent="NPCs/Civilians"]
+position = Vector2( 1984, 7040 )
+
+[node name="End1" type="Position2D" parent="NPCs/Civilians"]
+position = Vector2( 192, 7048 )
+
+[node name="End2" type="Position2D" parent="NPCs/Civilians"]
+position = Vector2( 1984, -2176 )
+
+[node name="Civilian" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 192, -1616 )
+start_point = NodePath("../Start1")
+end_point = NodePath("../End1")
+
+[node name="Civilian2" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 152, -480 )
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian3" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 3072, 1736 )
+initial_rotation = 90.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian4" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 2392, 2112 )
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian5" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 2872, 3968 )
+initial_rotation = 180.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian6" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 2688, 4664 )
+initial_rotation = -90.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian7" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 4032, 4032 )
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian8" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 4032, 2744 )
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian9" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 5824, 4288 )
+initial_rotation = -90.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian11" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 7232, 3520 )
+initial_rotation = 90.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[node name="Civilian10" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+position = Vector2( 6336, 1472 )
+initial_rotation = 90.0
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
 
 [editable path="LevelZones/LevelZone"]
 [editable path="LevelZones/LevelZone2"]

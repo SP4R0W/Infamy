@@ -33,7 +33,7 @@ func _ready():
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 	
 	noise_area = noise_scene.instance()
-	noise_area.radius = 500
+	noise_area.radius = 2000
 	noise_area.time = -1
 	add_child(noise_area)
 

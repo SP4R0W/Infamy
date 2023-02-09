@@ -69,6 +69,7 @@ func _on_Interaction_timer_timeout():
 		Game.suspicious_interaction = false
 		
 		Game.player_bag = "empty"
+		Game.player.remove_bag()
 			
 		emit_signal("object_interaction_finished",self,self.action)
 

@@ -48,18 +48,16 @@ func _process(delta):
 				
 				if (!is_lockpicked):
 					$Interaction_timer.wait_time = 5
-					Game.player_status = Game.player_statuses.SUSPICIOUS
+					Game.suspicious_interaction = true
 				else:
 					$Interaction_timer.wait_time = .5
-					if (!disguises_needed.has(Game.player_disguise)):
-						Game.player_status = Game.player_statuses.SUSPICIOUS
 					
 				$Interaction_timer.start()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 			
 		elif (Input.is_action_pressed("interact2") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.get_amount_of_equipment("c4") > 0):
+			if (!Game.player_is_interacting && Game.get_amount_of_equipment("C4") > 0):
 				Game.player_is_interacting = true
 				action = "c4"
 				
@@ -70,7 +68,7 @@ func _process(delta):
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 				
-				Game.player_status = Game.player_statuses.SUSPICIOUS
+				Game.suspicious_interaction = true
 		else:
 			if (Game.player_is_interacting):
 				emit_signal("object_interaction_aborted",self,self.action)
@@ -80,10 +78,7 @@ func _process(delta):
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
-				if (Game.player_disguise != "normal"):
-					Game.player_status = Game.player_statuses.DISGUISED
-				else:
-					Game.player_status = Game.player_statuses.NORMAL
+				Game.suspicious_interaction = false
 	else:
 		hide_panel()
 	
@@ -98,10 +93,7 @@ func _on_Interaction_timer_timeout():
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
-		if (Game.player_disguise != "normal"):
-			Game.player_status = Game.player_statuses.DISGUISED
-		else:
-			Game.player_status = Game.player_statuses.NORMAL
+		Game.suspicious_interaction = false
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		
@@ -122,6 +114,7 @@ func _on_Interaction_timer_timeout():
 				get_tree().call_group("Detection","add_exception",self)
 				get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 			else:
+				is_closed = true
 				$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Open"
 				
 				$Sprite.rotation_degrees = original_rotation
@@ -130,7 +123,7 @@ func _on_Interaction_timer_timeout():
 				get_tree().call_group("Detection","remove_exception",self)
 				get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 		elif (action == "c4"):
-			Game.use_player_equipment("c4")
+			Game.use_player_equipment("C4")
 			can_interact = false
 			
 			$C4.show()
@@ -149,7 +142,7 @@ func _on_C4_timer_timeout():
 		$Explosion.play()
 		
 		var noise = noise_scene.instance()
-		noise.radius = 1000
+		noise.radius = 4000
 		noise.time = 0.1
 		add_child(noise)
 		

@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/Weapons/assets/UZI/uzi.png" type="Texture" id=2]
+[ext_resource path="res://src/Weapons/UZI/assets/uzi.png" type="Texture" id=2]
 [ext_resource path="res://src/Weapons/UZI/UZI.gd" type="Script" id=3]
 [ext_resource path="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3" type="AudioStream" id=4]
 [ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=5]
@@ -101,7 +101,7 @@ cam_shake_intensity = 0.85
 base_mag_size = 30
 base_ammo_count = 210
 base_accuracy = 20
-base_concealment = 5
+base_concealment = 8
 weapon_position = Vector2( 160, 100 )
 animation = "heavy"
 

@@ -15,8 +15,8 @@ font_data = ExtResource( 2 )
 script = ExtResource( 4 )
 
 [node name="Control" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
@@ -147,4 +147,7 @@ custom_fonts/font = ExtResource( 3 )
 text = "Exit"
 
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Online_btn" to="." method="_on_Online_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Inventory_btn" to="." method="_on_Inventory_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Help_btn" to="." method="_on_Help_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Credits_btn" to="." method="_on_Credits_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Exit_btn" to="." method="_on_Exit_btn_pressed"]

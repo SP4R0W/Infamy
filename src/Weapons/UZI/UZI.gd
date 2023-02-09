@@ -46,7 +46,7 @@ func shoot() -> void:
 		bullet.global_position = Game.player.get_node("Bullet_origin").global_position	
 		
 		var noise = noise_scene.instance()
-		noise.radius = 1000
+		noise.radius = 4000
 		noise.time = 0.1
 		Game.game_scene.add_child(noise)
 		noise.global_position = Game.player.global_position
