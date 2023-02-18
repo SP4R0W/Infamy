@@ -76,3 +76,13 @@ func _on_Interaction_timer_timeout():
 			Game.add_player_inventory_item("p_number")
 		
 		queue_free()
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

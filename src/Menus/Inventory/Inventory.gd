@@ -1,70 +1,134 @@
 extends Node2D
+class_name Inventory
 
-onready var primary_title: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Title
-onready var primary_img: TextureRect = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/TextureRect
-onready var primary_mods: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Mods
-onready var primary_stats: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Stats
-onready var primary_hidden: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Hidden
+onready var menu_track: AudioStreamPlayer = Global.root.get_node("menu")
 
-onready var secondary_title: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer/Title
-onready var secondary_img: TextureRect = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer/TextureRect
-onready var secondary_mods: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer/Mods
-onready var secondary_stats: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer/Stats
-onready var secondary_hidden: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer/Hidden
-
-onready var armor_title: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer/Title
-onready var armor_img: TextureRect = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer/TextureRect
-onready var armor_stats: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer/Stats
-onready var armor_hidden: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer/Hidden
-
-onready var item1_title: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer/Title
-onready var item1_img: TextureRect = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer/TextureRect
-onready var item1_stats: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer/Stats
-onready var item1_info: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer/Info
-
-onready var item2_title: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer/Title
-onready var item2_img: TextureRect = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer/TextureRect
-onready var item2_stats: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer/Stats
-onready var item2_info: Label = $Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer/Info
-
-var selected_loadout: int = 1
+onready var inventory_panel: Panel = $Control/CanvasLayer/Inventory_panel
+onready var modify_panel: TabContainer = $Control/CanvasLayer/Modify_panel
+onready var weapon_panel: Panel = $Control/CanvasLayer/Weapon_panel
+onready var armor_panel: Panel = $Control/CanvasLayer/Armor_panel
+onready var equipment_panel: Panel = $Control/CanvasLayer/Equipment_panel
 
 func _ready():
-	redraw_inventory()
+	goto_inventory()
 
 func _on_Menu_btn_pressed():
-	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5)
-	
-func redraw_inventory():
-	var loadout = Savedata.player_loadouts[selected_loadout]
-	
-	primary_title.text = loadout["primary"]
-	primary_img.texture = load(Global.item_previews[loadout["primary"]])
-	
-	secondary_title.text = loadout["secondary"]
-	secondary_img.texture = load(Global.item_previews[loadout["secondary"]])
-	
-	armor_title.text = loadout["armor"]
-	armor_img.texture = load(Global.item_previews[loadout["armor"]])
-	
-	item1_title.text = loadout["equipment1"]
-	item1_img.texture = load(Global.item_previews[loadout["equipment1"]])
-	
-	item2_title.text = loadout["equipment2"]
-	item2_img.texture = load(Global.item_previews[loadout["equipment2"]])
-	
+	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 
+func goto_inventory():
+	inventory_panel.show()
+	modify_panel.hide()
+	weapon_panel.hide()
+	armor_panel.hide()
+	equipment_panel.hide()
+	get_node("Control/CanvasLayer/HBoxContainer/1_btn").show()
+	get_node("Control/CanvasLayer/HBoxContainer/2_btn").show()
+	get_node("Control/CanvasLayer/HBoxContainer/3_btn").show()
+	$Control/CanvasLayer/HBoxContainer/Back_button.hide()
+	
+	inventory_panel.redraw_inventory()	
 
+func goto_modify():
+	inventory_panel.hide()
+	modify_panel.show()
+	
+	get_node("Control/CanvasLayer/HBoxContainer/1_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/2_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/3_btn").hide()
+	$Control/CanvasLayer/HBoxContainer/Back_button.show()
+	
+func goto_weapon():
+	inventory_panel.hide()
+	weapon_panel.show()
+	
+	get_node("Control/CanvasLayer/HBoxContainer/1_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/2_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/3_btn").hide()
+	$Control/CanvasLayer/HBoxContainer/Back_button.show()
+	
+	weapon_panel.draw_equip()	
+	
+func goto_armor():
+	inventory_panel.hide()
+	armor_panel.show()
+	
+	get_node("Control/CanvasLayer/HBoxContainer/1_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/2_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/3_btn").hide()
+	$Control/CanvasLayer/HBoxContainer/Back_button.show()
+	
+	armor_panel.draw_equip()
+	
+func goto_item():
+	inventory_panel.hide()
+	equipment_panel.show()
+	
+	get_node("Control/CanvasLayer/HBoxContainer/1_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/2_btn").hide()
+	get_node("Control/CanvasLayer/HBoxContainer/3_btn").hide()
+	$Control/CanvasLayer/HBoxContainer/Back_button.show()
+	
+	equipment_panel.draw_equip()
+	
 func _on_1_btn_pressed():
-	selected_loadout = 1
-	redraw_inventory()
-
+	inventory_panel.selected_loadout = 1
+	inventory_panel.redraw_inventory()
 
 func _on_2_btn_pressed():
-	selected_loadout = 2
-	redraw_inventory()
-
+	inventory_panel.selected_loadout = 2
+	inventory_panel.redraw_inventory()
 
 func _on_3_btn_pressed():
-	selected_loadout = 3
-	redraw_inventory()
+	inventory_panel.selected_loadout = 3
+	inventory_panel.redraw_inventory()
+	
+func _on_Modify_primary_pressed():
+	modify_panel.selected_loadout = inventory_panel.selected_loadout
+	modify_panel.edited_gun = Savedata.player_loadouts[inventory_panel.selected_loadout]["primary"]
+	modify_panel.weapon_id = 0
+	goto_modify()
+	
+	modify_panel.draw_modify(0)
+
+func _on_Modify_secondary_pressed():
+	modify_panel.selected_loadout = inventory_panel.selected_loadout
+	modify_panel.edited_gun = Savedata.player_loadouts[inventory_panel.selected_loadout]["secondary"]
+	modify_panel.weapon_id = 1
+	goto_modify()
+	
+	modify_panel.draw_modify(0)
+	
+func _on_Change_pweapon_pressed():
+	weapon_panel.selected_loadout = inventory_panel.selected_loadout
+	weapon_panel.weapon_id = 1
+	goto_weapon()
+	
+	weapon_panel.draw_equip()
+
+
+func _on_Change_sweapon_pressed():
+	weapon_panel.selected_loadout = inventory_panel.selected_loadout
+	weapon_panel.weapon_id = 2
+	goto_weapon()
+	
+	weapon_panel.draw_equip()
+
+func _on_Back_button_pressed():
+	goto_inventory()
+
+func _on_Change_armor_pressed():
+	armor_panel.selected_loadout = inventory_panel.selected_loadout 
+	
+	goto_armor()
+
+func _on_Change_primary_pressed():
+	equipment_panel.selected_loadout = inventory_panel.selected_loadout 
+	equipment_panel.item_id = 1
+	
+	goto_item()
+
+func _on_Change_secondary_pressed():
+	equipment_panel.selected_loadout = inventory_panel.selected_loadout 
+	equipment_panel.item_id = 2
+	
+	goto_item()

@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/Objects/Drills/Regular/Regular_drill.gd" type="Script" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/Objects/Drills/Regular/drill.png" type="Texture" id=3]
+[ext_resource path="res://src/Objects/Drills/broken.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/Objects/Drills/drill.mp3" type="AudioStream" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 128, 136 )
@@ -113,6 +115,14 @@ margin_bottom = 100.0
 custom_fonts/font = SubResource( 4 )
 step = 1.0
 rounded = true
+
+[node name="drill" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "SFX"
+
+[node name="broke" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "SFX"
 
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
 [connection signal="timeout" from="Drill_timer" to="." method="_on_Drill_timer_timeout"]

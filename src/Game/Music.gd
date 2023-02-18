@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 var music_info: Dictionary = {
-	"bank":1
+	"bank":0
 }
 
 var music_tracks: Array = [

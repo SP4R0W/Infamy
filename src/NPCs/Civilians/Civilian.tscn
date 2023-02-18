@@ -140,6 +140,9 @@ end_point = NodePath("")
 frames = SubResource( 1 )
 animation = "4_untied"
 
+[node name="Detect" parent="AnimatedSprite" index="2"]
+visible = false
+
 [node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
 text = "Civilian"
 

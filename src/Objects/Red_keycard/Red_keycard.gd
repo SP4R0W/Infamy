@@ -27,3 +27,13 @@ func _process(delta):
 				
 				Game.player_can_interact = false
 				get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

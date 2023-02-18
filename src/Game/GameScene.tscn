@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://src/Game/assets/StaminaBar.png" type="Texture" id=1]
 [ext_resource path="res://src/Equipment/ammo.png" type="Texture" id=2]
@@ -13,8 +13,8 @@
 [ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=11]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=12]
 [ext_resource path="res://src/Game/GameUI.gd" type="Script" id=13]
-[ext_resource path="res://src/Game/assets/green_effect.png" type="Texture" id=14]
-[ext_resource path="res://src/Game/assets/red_effect.png" type="Texture" id=15]
+[ext_resource path="res://assets/music/success/success.mp3" type="AudioStream" id=14]
+[ext_resource path="res://src/Game/assets/audio/secure.mp3" type="AudioStream" id=15]
 [ext_resource path="res://src/Game/assets/alert.png" type="Texture" id=16]
 [ext_resource path="res://src/Game/assets/van.png" type="Texture" id=17]
 [ext_resource path="res://src/Game/assets/handcuffs.png" type="Texture" id=18]
@@ -32,6 +32,7 @@
 [ext_resource path="res://src/Game/Plan.gd" type="Script" id=30]
 [ext_resource path="res://src/Game/Music.gd" type="Script" id=31]
 [ext_resource path="res://assets/music/briefing/briefing.ogg" type="AudioStream" id=32]
+[ext_resource path="res://src/Game/assets/audio/objective.mp3" type="AudioStream" id=33]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -109,6 +110,7 @@ anchor_bottom = 1.0
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
 [node name="Preplanning" type="Panel" parent="Control/CanvasLayer"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -442,6 +444,7 @@ margin_left = -120.0
 margin_top = -10.0
 margin_right = 480.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 24 )
 
 [node name="item2" type="TextureRect" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel/VBoxContainer/Items"]
@@ -449,6 +452,7 @@ margin_left = 120.0
 margin_top = -10.0
 margin_right = 720.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 25 )
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel/VBoxContainer"]
@@ -504,6 +508,7 @@ margin_left = -120.0
 margin_top = -10.0
 margin_right = 480.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 27 )
 
 [node name="item2" type="TextureRect" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel2/VBoxContainer/Items"]
@@ -511,6 +516,7 @@ margin_left = 120.0
 margin_top = -10.0
 margin_right = 720.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 26 )
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel2/VBoxContainer"]
@@ -566,6 +572,7 @@ margin_left = -120.0
 margin_top = -10.0
 margin_right = 480.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 24 )
 
 [node name="item2" type="TextureRect" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel3/VBoxContainer/Items"]
@@ -573,6 +580,7 @@ margin_left = 120.0
 margin_top = -10.0
 margin_right = 720.0
 margin_bottom = 170.0
+rect_min_size = Vector2( 600, 180 )
 texture = ExtResource( 25 )
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Preplanning/Gear/HBoxContainer/Panel3/VBoxContainer"]
@@ -999,6 +1007,7 @@ margin_top = 300.0
 margin_right = 234.0
 margin_bottom = 305.0
 rect_scale = Vector2( 5.5, 5 )
+step = 0.1
 value = 100.0
 texture_progress = ExtResource( 5 )
 
@@ -1016,6 +1025,7 @@ margin_top = 372.0
 margin_right = 234.0
 margin_bottom = 377.0
 rect_scale = Vector2( 5.5, 5 )
+step = 0.1
 value = 100.0
 texture_progress = ExtResource( 4 )
 
@@ -1033,6 +1043,7 @@ margin_top = 444.0
 margin_right = 234.0
 margin_bottom = 449.0
 rect_scale = Vector2( 5.5, 5 )
+step = 0.1
 value = 100.0
 texture_progress = ExtResource( 1 )
 
@@ -1055,17 +1066,20 @@ autowrap = true
 
 [node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Subtitle"]
 
-[node name="Green_effect" type="TextureRect" parent="Control/CanvasLayer/GameUI"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 40.0
-margin_bottom = 40.0
-texture = ExtResource( 14 )
+[node name="Effect" type="ColorRect" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 0, 1, 0.227451, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 
-[node name="Red_effect" type="TextureRect" parent="Control/CanvasLayer/GameUI"]
-modulate = Color( 1, 1, 1, 0 )
-margin_right = 40.0
-margin_bottom = 40.0
-texture = ExtResource( 15 )
+[node name="SFX" type="Node2D" parent="Control/CanvasLayer/GameUI"]
+
+[node name="secure" type="AudioStreamPlayer" parent="Control/CanvasLayer/GameUI/SFX"]
+stream = ExtResource( 15 )
+bus = "SFX"
+
+[node name="objective" type="AudioStreamPlayer" parent="Control/CanvasLayer/GameUI/SFX"]
+stream = ExtResource( 33 )
+bus = "SFX"
 
 [node name="Heist_success" type="Panel" parent="Control/CanvasLayer"]
 visible = false
@@ -1210,25 +1224,85 @@ custom_fonts/font = SubResource( 10 )
 text = "Your total experience:"
 align = 1
 
-[node name="Button" type="Button" parent="Control/CanvasLayer/Heist_success"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -194.0
-margin_top = -490.0
-margin_right = 194.0
-margin_bottom = -393.0
-custom_fonts/font = ExtResource( 12 )
-text = "Menu"
-
 [node name="Heist_fail" type="Panel" parent="Control/CanvasLayer"]
-visible = false
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
+[node name="Background" type="TextureRect" parent="Control/CanvasLayer/Heist_fail"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 3 )
+expand = true
+
+[node name="Heist_title" type="Label" parent="Control/CanvasLayer/Heist_fail"]
+anchor_right = 1.0
+margin_bottom = 231.0
+custom_fonts/font = ExtResource( 11 )
+text = "Downtown Hit: Very Hard: FAIL"
+align = 1
+
+[node name="Mourn" type="Label" parent="Control/CanvasLayer/Heist_fail"]
+anchor_right = 1.0
+margin_top = 256.0
+margin_bottom = 386.0
+custom_fonts/font = SubResource( 8 )
+text = "How did that happen? I'm sorry, I will get you out soon. Don't you worry."
+align = 1
+autowrap = true
+
+[node name="HSplitContainer" type="HBoxContainer" parent="Control/CanvasLayer/Heist_fail"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -1005.0
+margin_top = -470.0
+margin_right = 1005.0
+margin_bottom = 375.0
+custom_constants/separation = 300
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Heist_fail/HSplitContainer"]
+margin_right = 782.0
+margin_bottom = 845.0
+rect_min_size = Vector2( 782, 845 )
+custom_constants/separation = 40
+
+[node name="Label" type="Label" parent="Control/CanvasLayer/Heist_fail/HSplitContainer/VBoxContainer"]
+margin_right = 782.0
+margin_bottom = 273.0
+custom_fonts/font = SubResource( 9 )
+text = "MONEY:
+CONFISCATED"
+align = 1
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/CanvasLayer/Heist_fail/HSplitContainer"]
+margin_left = 1082.0
+margin_right = 1864.0
+margin_bottom = 845.0
+rect_min_size = Vector2( 782, 845 )
+custom_constants/separation = 40
+
+[node name="Label2" type="Label" parent="Control/CanvasLayer/Heist_fail/HSplitContainer/VBoxContainer2"]
+margin_right = 782.0
+margin_bottom = 273.0
+custom_fonts/font = SubResource( 9 )
+text = "EXPERIENCE:
+LOST"
+align = 1
+
+[node name="Mourn2" type="Label" parent="Control/CanvasLayer/Heist_fail"]
+anchor_right = 1.0
+margin_top = 1200.0
+margin_bottom = 1596.0
+custom_fonts/font = SubResource( 8 )
+text = "You failed!
+Try again or, if you keep failing, try playing on an easier difficulty first. You can also check out the Tutorial and Help sections in Main Menu."
+align = 1
+autowrap = true
+
 [node name="Start_btn" type="Button" parent="Control/CanvasLayer"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -1241,6 +1315,7 @@ custom_fonts/font = ExtResource( 12 )
 text = "Start Heist"
 
 [node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
+visible = false
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -1260,6 +1335,9 @@ stream = ExtResource( 32 )
 [node name="stealth" type="AudioStreamPlayer" parent="Audio"]
 
 [node name="loud" type="AudioStreamPlayer" parent="Audio"]
+
+[node name="success" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource( 14 )
 
 [connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Plan" to="Control/CanvasLayer/Preplanning" method="_on_Plan_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Assets" to="Control/CanvasLayer/Preplanning" method="_on_Assets_pressed"]

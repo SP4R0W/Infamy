@@ -92,4 +92,10 @@ custom_fonts/font = SubResource( 4 )
 step = 1.0
 rounded = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 1.90735e-06, -4 )
+scale = Vector2( 6.4, 5.2 )
+
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

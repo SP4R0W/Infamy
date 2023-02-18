@@ -15,6 +15,11 @@ _global_script_classes=[ {
 "path": "res://src/Game/GameScene.gd"
 }, {
 "base": "Node2D",
+"class": "Inventory",
+"language": "GDScript",
+"path": "res://src/Menus/Inventory/Inventory.gd"
+}, {
+"base": "Node2D",
 "class": "NPC",
 "language": "GDScript",
 "path": "res://src/NPCs/NPC.gd"
@@ -26,6 +31,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "GameScene": "",
+"Inventory": "",
 "NPC": "",
 "Weapon": ""
 }
@@ -48,6 +54,7 @@ Savedata="*res://singletons/Savedata.gd"
 
 [debug]
 
+gdscript/warnings/enable=false
 gdscript/warnings/unused_argument=false
 gdscript/warnings/return_value_discarded=false
 gdscript/warnings/integer_division=false
@@ -183,12 +190,17 @@ sprint={
 
 project/assembly_name="Infamy"
 
+[network]
+
+limits/debugger_stdout/max_chars_per_second=4096
+
 [physics]
 
 common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/driver/driver_name="GLES2"
 2d/options/use_nvidia_rect_flicker_workaround=true
 2d/snapping/use_gpu_pixel_snap=true
 environment/default_clear_color=Color( 0.435294, 0.423529, 0.423529, 1 )

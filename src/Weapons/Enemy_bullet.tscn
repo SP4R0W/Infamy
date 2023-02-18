@@ -8,7 +8,7 @@ extents = Vector2( 2.5, 10 )
 
 [node name="Enemy_bullet" type="Area2D" groups=["enm_bullets"]]
 collision_layer = 128
-collision_mask = 53252
+collision_mask = 36868
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -24,3 +24,6 @@ shape = SubResource( 1 )
 visible = false
 position = Vector2( -0.5, 0 )
 scale = Vector2( 0.25, 1 )
+
+[connection signal="area_entered" from="." to="." method="_on_Enemy_bullet_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_Enemy_bullet_body_entered"]

@@ -28,13 +28,14 @@ func hide_panel():
 func _process(delta):
 	if (has_focus && can_interact):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
-			print(Game.has_item_in_equipment("vault_code"), " ", Game.has_item_in_equipment("r_keycard"))
 			if (!Game.player_is_interacting && Game.player_inventory.has("vault_code") && Game.player_inventory.has("r_keycard")):
 				Game.player_is_interacting = true
 				
 				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 2
+				
+				$panel.play()
 					
 				$Interaction_timer.start()
 				
@@ -44,6 +45,8 @@ func _process(delta):
 		else:
 			if (Game.player_is_interacting):
 				emit_signal("object_interaction_aborted",self,self.action)
+				
+				$panel.stop()
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -63,6 +66,8 @@ func _on_Interaction_timer_timeout():
 		can_interact = false
 		Game.player_is_interacting = false
 		
+		$panel.stop()
+		
 		$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 		
 		Game.player_can_interact = false
@@ -71,3 +76,13 @@ func _on_Interaction_timer_timeout():
 		Game.suspicious_interaction = false
 			
 		emit_signal("object_interaction_finished",self,self.action)
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

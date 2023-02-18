@@ -131,7 +131,6 @@ auto_height = true
 same_column_width = true
 
 [node name="Heist_panel" type="Panel" parent="Control/CanvasLayer"]
-visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 50.0
@@ -286,6 +285,8 @@ margin_top = 1208.0
 margin_right = 3432.0
 margin_bottom = 1272.0
 texture = ExtResource( 6 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="item_activated" from="Control/CanvasLayer/Browser_panel/HeistList" to="." method="_on_HeistList_item_activated"]
 [connection signal="item_selected" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Difficulty_selector" to="." method="_on_Difficulty_selector_item_selected"]

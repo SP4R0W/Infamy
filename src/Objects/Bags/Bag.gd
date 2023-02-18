@@ -38,9 +38,13 @@ func _process(delta):
 	else:
 		$Interaction_panel/VBoxContainer/Action2.hide()
 	
-	if (has_focus):
-		if (Input.is_action_pressed("interact1") && Game.player_can_interact && Game.player_bag == "empty"):
+	if (has_focus && can_interact):
+		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
+				if (Game.player_bag != "empty"):
+					Game.ui.update_popup("You are already carrying a bag!",2)
+					return
+				
 				Game.player_is_interacting = true
 				action = "carry"
 				

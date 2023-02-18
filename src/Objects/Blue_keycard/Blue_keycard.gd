@@ -27,4 +27,4 @@ func _process(delta):
 				
 				Game.player_can_interact = false
 				get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
-	
+

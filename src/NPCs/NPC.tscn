@@ -1,8 +1,14 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/NPCs/NPC.gd" type="Script" id=1]
 [ext_resource path="res://src/Objects/Detection_marker/Detection_marker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sfx/detected.mp3" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/detection.mp3" type="AudioStream" id=5]
+[ext_resource path="res://src/Objects/Bags/bag.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/NPCs/tie.mp3" type="AudioStream" id=7]
+[ext_resource path="res://src/NPCs/knockout.mp3" type="AudioStream" id=8]
+[ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=9]
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 91.43
@@ -38,9 +44,9 @@ avoidance_enabled = true
 scale = Vector2( 0.35, 0.35 )
 
 [node name="Raycasts" type="Node2D" parent="AnimatedSprite"]
+scale = Vector2( 2.85, 2.85 )
 
 [node name="Hitbox" type="Area2D" parent="AnimatedSprite" groups=["hitbox_npc"]]
-visible = false
 collision_layer = 4
 collision_mask = 96
 
@@ -49,18 +55,20 @@ position = Vector2( -4, 0 )
 shape = SubResource( 6 )
 
 [node name="Detect" type="Area2D" parent="AnimatedSprite"]
+position = Vector2( -200, 0 )
+scale = Vector2( 2.85, 2.85 )
 collision_layer = 256
 collision_mask = 32777
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite/Detect"]
 position = Vector2( 22.8571, 0 )
-polygon = PoolVector2Array( 68.5714, -68.5714, 1828.57, -1645.71, 1828.57, 1645.71, 68.5714, 68.5714 )
+polygon = PoolVector2Array( 55, -75, 2500, -1500, 2500, 1500, 55, 75 )
 
 [node name="BulletOrigin" type="Position2D" parent="AnimatedSprite"]
 position = Vector2( 114.286, 0 )
 
 [node name="EscapeRay" type="RayCast2D" parent="AnimatedSprite"]
-scale = Vector2( 2.85714, 2.85714 )
+scale = Vector2( 2.85, 2.85 )
 cast_to = Vector2( 1000, 0 )
 
 [node name="Marker" parent="." instance=ExtResource( 2 )]
@@ -107,6 +115,10 @@ one_shot = true
 one_shot = true
 
 [node name="Escape_timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Dissappear" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
@@ -164,6 +176,40 @@ custom_fonts/font = SubResource( 1 )
 step = 1.0
 rounded = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -12, -3.8147e-06 )
+scale = Vector2( 6.8, 8 )
+
+[node name="detection" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="detected" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="bag" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 10.0
+bus = "SFX"
+
+[node name="tie" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 10.0
+bus = "SFX"
+
+[node name="knockout" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = 10.0
+bus = "SFX"
+
+[node name="shoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = 10.0
+bus = "SFX"
+
 [connection signal="area_entered" from="AnimatedSprite/Hitbox" to="." method="_on_Hitbox_area_entered"]
 [connection signal="area_entered" from="AnimatedSprite/Detect" to="." method="_on_Detect_area_entered"]
 [connection signal="area_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_area_exited"]
@@ -175,5 +221,8 @@ rounded = true
 [connection signal="timeout" from="Shoot_timer" to="." method="_on_Shoot_timer_timeout"]
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
 [connection signal="timeout" from="Escape_timer" to="." method="_on_Escape_timer_timeout"]
+[connection signal="timeout" from="Dissappear" to="." method="_on_Dissappear_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 [editable path="Marker"]

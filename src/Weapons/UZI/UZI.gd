@@ -1,9 +1,30 @@
 extends Weapon
 
+var modification_offsets: Dictionary = {
+	"suppressor1":Vector2(425,-3),
+	"suppressor2":Vector2(400,-3),
+	"suppressor3":Vector2(335,-3),
+	"compensator1":Vector2(350,-3),
+	"compensator2":Vector2(350,-3),
+	"compensator3":Vector2(365,-3),
+	"stock_uzi":Vector2(-245,0)
+}
 
 func _ready():
+	base_firerate = Global.weapon_base_values[name]["firerate"]
+	base_reload_time = Global.weapon_base_values[name]["reload_time"]
+	base_empty_reload_time = Global.weapon_base_values[name]["reload_time_empty"]
+	base_mag_size = Global.weapon_base_values[name]["magsize"]
+	base_ammo_count = Global.weapon_base_values[name]["ammo_count"]
+	base_damage = Global.weapon_base_values[name]["damage"]
+	base_accuracy = Global.weapon_base_values[name]["accuracy"]
+	base_concealment = Global.weapon_base_values[name]["concealment"]
+	
 	$Melee/MeleeShape.disabled = true
 	
+	draw_attachments()
+
+func draw_attachments():
 	firerate = 60/base_firerate
 	reload_time = base_reload_time
 	empty_reload_time = base_empty_reload_time
@@ -14,6 +35,42 @@ func _ready():
 	accuracy = base_accuracy
 	concealment = base_concealment
 	
+	is_weapon_suppresed = false
+	
+	var attachments = Game.player_attachments[name]
+	
+	$Sprite/Barrel_attachment.texture = null
+	$Sprite/Stock_attachment.texture = null
+	
+	if (attachments["barrel"] != ""):
+		$Sprite/Barrel_attachment.texture = load(Global.weapon_attachment_paths[attachments["barrel"]])
+		$Sprite/Barrel_attachment.offset = modification_offsets[attachments["barrel"]]
+		
+		damage += Global.attachment_values[attachments["barrel"]]["damage"]
+		accuracy += Global.attachment_values[attachments["barrel"]]["accuracy"]
+		concealment += Global.attachment_values[attachments["barrel"]]["concealment"]
+		
+		if (attachments["barrel"].find("suppressor") != -1):
+			is_weapon_suppresed = true
+		else:
+			is_weapon_suppresed = false
+			
+	if (attachments["sight"] != ""):
+		accuracy += Global.attachment_values[attachments["sight"]]["accuracy"]
+		concealment += Global.attachment_values[attachments["sight"]]["concealment"]
+		
+	if (attachments["magazine"] != ""):
+		mag_size += Global.attachment_values[attachments["magazine"]]["mag_size"]
+		accuracy += Global.attachment_values[attachments["magazine"]]["accuracy"]
+		concealment += Global.attachment_values[attachments["magazine"]]["concealment"]
+			
+	if (attachments["stock"] != ""):
+		$Sprite/Stock_attachment.texture = load(Global.weapon_attachment_paths[attachments["stock"]])
+		$Sprite/Stock_attachment.offset = modification_offsets[attachments["stock"]]
+		
+		accuracy += Global.attachment_values[attachments["stock"]]["accuracy"]
+		concealment += Global.attachment_values[attachments["stock"]]["concealment"]
+
 	current_mag_size = mag_size
 	current_ammo_count = ammo_count
 
@@ -21,94 +78,3 @@ func _ready():
 		is_weapon_visible = true
 	else:
 		is_weapon_visible = false
-
-func _process(delta):	
-	if (shake_camera):
-		Game.player.get_node("Player_camera").offset = Vector2(rand_range(-5,5) * cam_shake_intensity,rand_range(-5,5) * cam_shake_intensity)
-
-func end_shake() -> void:
-	shake_camera = false
-
-func shoot() -> void:
-	if (current_mag_size > 0 && firerate_timer.time_left <= 0):
-		current_mag_size -= 1
-		
-		shake_camera = true
-		get_tree().create_timer(0.1).connect("timeout",self,"end_shake")
-		
-		fire_sound.play()
-		firerate_timer.wait_time = firerate
-		firerate_timer.start()
-		
-		var bullet = bullet_scene.instance()
-		bullet.accuracy = self.accuracy
-		Game.game_scene.add_child(bullet)
-		bullet.global_position = Game.player.get_node("Bullet_origin").global_position	
-		
-		var noise = noise_scene.instance()
-		noise.radius = 4000
-		noise.time = 0.1
-		Game.game_scene.add_child(noise)
-		noise.global_position = Game.player.global_position
-
-	.shoot()
-
-func reload() -> void:
-	if (current_mag_size != mag_size):
-		if (current_mag_size > 0 && current_ammo_count > 0):
-			var actual_reload_duration = base_reload_time / reload_time 
-			Game.player_is_reloading = true
-			
-			reload_timer.wait_time = reload_time
-			reload_timer.start()
-			
-			anim_player.play("reload",-1,actual_reload_duration)
-			
-			reload_sound.pitch_scale = actual_reload_duration
-			reload_sound.play()
-		elif (current_mag_size == 0 && current_ammo_count > 0):
-			var actual_reload_duration = base_empty_reload_time / empty_reload_time 
-			Game.player_is_reloading = true
-			
-			reload_timer.wait_time = empty_reload_time
-			reload_timer.start()
-			
-			anim_player.play("reload",-1,actual_reload_duration)
-			
-			reload_empty_sound.pitch_scale = actual_reload_duration
-			reload_empty_sound.play()	
-		else:
-			if (firerate_timer.time_left <= 0):
-				fire_dry_sound.play()
-				
-				firerate_timer.wait_time = 0.5
-				firerate_timer.start()	
-				
-	.reload()
-
-func reload_finish() -> void:
-	var needed_bullets: int = mag_size - current_mag_size
-	
-	if (current_ammo_count < needed_bullets):
-		current_mag_size += current_ammo_count
-		current_ammo_count -= needed_bullets
-		
-		var fake_bullets: int = -current_ammo_count
-		current_ammo_count += fake_bullets
-	else:
-		current_ammo_count -= needed_bullets
-		current_mag_size = mag_size
-		
-	Game.player_is_reloading = false
-	
-	.reload_finish()
-
-func melee() -> void:
-	Game.player_is_meleing = true
-	
-	anim_player.play("melee")
-	
-	yield(anim_player,"animation_finished")
-	
-	Game.player_is_meleing = false	
-	.melee()

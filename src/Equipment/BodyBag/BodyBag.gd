@@ -32,6 +32,14 @@ func _process(delta):
 	if (has_focus && can_interact):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
+				if (Game.bodybags >= Game.max_bodybags):
+					Game.ui.update_popup("You can't carry more body bags!",2)
+	
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				
 				Game.player_is_interacting = true
 				action = "use"
 				
@@ -70,13 +78,26 @@ func _on_Interaction_timer_timeout():
 			
 		emit_signal("object_interaction_finished",self,self.action)
 
-		if (Game.bodybags < Game.max_bodybags):
-			Game.bodybags += 1
-			remaining_uses -= 1
+		var needed = Game.max_bodybags - Game.habodybagsndcuffs
+		if (remaining_uses >= needed):
+			remaining_uses -= needed
+			Game.bodybags += needed
 		else:
-			Game.ui.update_popup("You can't carry more body bags!",2)
-
+			Game.bodybags += remaining_uses
+			remaining_uses = 0
+				
 		$Interaction_panel/VBoxContainer/Uses.text = "Bags left: " + str(remaining_uses) + "/" + str(max_uses)
 		
 		if (remaining_uses == 0):
 			queue_free()
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	if (name in Game.map_assets):
+		set_process(true)
+		show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

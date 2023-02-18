@@ -163,27 +163,47 @@ func check_interactions():
 		$Interaction_panel/VBoxContainer/Action1.show()
 		
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
-			if (!Game.player_is_interacting):
-				Game.player_is_interacting = true
-				
+			if (!Game.player_is_interacting):	
 				if (is_dead || is_unconscious):
 					action = "bag"
 					if (Game.bodybags > 0):
-						$Interaction_timer.wait_time = 5
+						if (Game.player_bag == "empty"):			
+							$Interaction_timer.wait_time = 5
+							$bag.play()
+						else:
+							Game.ui.update_popup("You are already carrying a bag!",2)
+							
+							Game.player_can_interact = false
+							get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+							
+							return							
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no body bags!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
 					if (Game.handcuffs > 0):
 						$Interaction_timer.wait_time = 1
+						$tie.play()
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no cable ties!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && is_tied_hostage && !is_following):
 					action = "move"
 					$Interaction_timer.wait_time = .5
 				elif (is_hostaged && is_tied_hostage && is_following):
 					action = "stop"
 					$Interaction_timer.wait_time = .5
+					
+				Game.player_is_interacting = true
 					
 				$Interaction_timer.start()
 				
@@ -197,6 +217,9 @@ func check_interactions():
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
+				
+				$bag.stop()
+				$tie.stop()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
@@ -223,18 +246,17 @@ func finish_interactions():
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
 		Game.suspicious_interaction = false
+		
+		$bag.stop()
+		$tie.stop()
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		
 		if (action == "bag"):
-			if (Game.bodybags > 0):
-				Game.bodybags -= 1
-				Game.carry_bag("civilian",false)
-				queue_free()
-			else:
-				Game.ui.update_popup("You have no body bags!",2)
+			Game.bodybags -= 1
+			Game.carry_bag("civilian",false)
+			queue_free()
 		elif (action == "tie"):
-			is_tied_hostage = true
 			tie()
 		elif (action == "move"):
 			is_following = true
@@ -244,14 +266,16 @@ func finish_interactions():
 	.finish_interactions()
 	
 func kill():	
-	$AnimatedSprite.animation = str(civ_type) + "_dead"
-	
-	.kill()
+	if (!is_dead):
+		$AnimatedSprite.animation = str(civ_type) + "_dead"
+		
+		.kill()
 
 func knockout():	
-	$AnimatedSprite.animation = str(civ_type) + "_knocked"
-	
-	.knockout()
+	if (!is_unconscious && !is_dead):
+		$AnimatedSprite.animation = str(civ_type) + "_knocked"
+		
+		.knockout()
 
 func hostage():
 	$AnimatedSprite.animation = str(civ_type) + "_untied"

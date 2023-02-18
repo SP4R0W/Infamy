@@ -8,6 +8,7 @@ var level_paths: Dictionary = {
 }
 
 func _ready():
+	Global.root.get_node("menu").stop()
 	$Audio/briefing.play()
 	
 	Game.game_scene = self
@@ -17,6 +18,8 @@ func _ready():
 	load_level()
 	
 	show_preplanning()
+	
+	Game.max_exceptions = 3
 
 func restart_game():
 	Game.map_assets = []
@@ -38,11 +41,12 @@ func restart_game():
 	Game.player_can_melee = true
 	Game.player_can_run = true
 
-	Game.player_is_interacting= false
+	Game.player_is_interacting = false
 	Game.suspicious_interaction = false
 	Game.player_is_reloading = false
 	Game.player_is_meleing = false
 	Game.player_is_running = false
+	Game.player_is_dead = false
 
 	Game.player_collision_zones = []
 
@@ -61,7 +65,7 @@ func load_level() -> void:
 	Game.game_scene_map_path = level_paths[Game.level]
 	
 func start_game() -> void:
-	$Audio/briefing.stop()	
+	$Audio/briefing.stop()
 	
 	show_gameui()
 	
@@ -69,13 +73,21 @@ func start_game() -> void:
 	Game.map.update_objective(1)
 	Game.map.set_assets()
 	
+	Game.update_attachments()
+	Game.update_armor()
+	
 	$Audio/stealth.play()
 
 func _on_Start_btn_pressed() -> void:
 	start_game()
 
 func _on_Menu_btn_pressed() -> void:
-	Composer.goto_scene(Global.scene_paths["lobby"],true,true,0.5,0.5)
+	$Audio/loud.stop()
+	$Audio/stealth.stop()
+	
+	$Audio/success.stop()
+	
+	Composer.goto_scene(Global.scene_paths["lobby"],true,true,0.5,0.5,$Audio/briefing,false)
 
 func show_preplanning() -> void:
 	$Control/CanvasLayer/Preplanning.show()
@@ -87,35 +99,45 @@ func show_preplanning() -> void:
 	$Control/CanvasLayer/Menu_btn.show()
 	
 func show_gameui() -> void:
-	$Control/CanvasLayer/Preplanning.hide()
 	$Control/CanvasLayer/GameUI.show()
 	$Control/CanvasLayer/Heist_success.hide()
 	$Control/CanvasLayer/Heist_fail.hide()
 	
-	$Control/CanvasLayer/Start_btn.hide()
+	$Control/CanvasLayer/Preplanning.queue_free()
+	
+	$Control/CanvasLayer/Start_btn.queue_free()
 	$Control/CanvasLayer/Menu_btn.hide()
 	
-func show_gamewin() -> void:
-	$Control/CanvasLayer/Preplanning.hide()
-	$Control/CanvasLayer/GameUI.hide()
+func show_gamewin() -> void:	
+	Game.game_process = false	
+	
+	$Audio/stealth.stop()
+	$Audio/loud.stop()
+	
+	Game.map.queue_free()
+	
+	$Audio/success.play()
+	
 	$Control/CanvasLayer/Heist_success.show()
-	$Control/CanvasLayer/Heist_fail.hide()
+
+	$Control/CanvasLayer/GameUI.queue_free()
 	
-	$Control/CanvasLayer/Start_btn.hide()
 	$Control/CanvasLayer/Menu_btn.show()
-	
-	Game.game_process = false
 	
 func show_gamefail() -> void:
-	$Control/CanvasLayer/Preplanning.hide()
-	$Control/CanvasLayer/GameUI.hide()
-	$Control/CanvasLayer/Heist_success.hide()
+	Game.game_process = false	
+	
+	$Audio/stealth.stop()
+	$Audio/loud.stop()
+	
+	Game.map.queue_free()
+	
 	$Control/CanvasLayer/Heist_fail.show()
 	
-	$Control/CanvasLayer/Start_btn.hide()
+	$Control/CanvasLayer/GameUI.queue_free()
+	
 	$Control/CanvasLayer/Menu_btn.show()
 	
-	Game.game_process = false
 
 func _exit_tree():
 	Game.game_scene = null

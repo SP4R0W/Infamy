@@ -18,7 +18,7 @@ rotation = 1.5708
 [node name="Interaction_hitbox" parent="." index="2"]
 rotation = 1.5708
 
-[node name="Interaction_panel" parent="." index="4"]
+[node name="Interaction_panel" parent="." index="5"]
 margin_top = -200.0
 margin_bottom = -80.0
 

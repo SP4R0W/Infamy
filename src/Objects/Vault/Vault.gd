@@ -83,7 +83,18 @@ func _on_drill_finished():
 	open_vault()
 
 func open_vault():
+	$open.play()
 	$Drill.queue_free()
 	$AnimationPlayer.play("open")
 	$CollisionShape2D.disabled = true
 
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

@@ -192,20 +192,35 @@ func check_interactions():
 		
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
-				Game.player_is_interacting = true
-				
 				if (is_dead || is_unconscious):
 					action = "bag"
 					if (Game.bodybags > 0):
-						$Interaction_timer.wait_time = 5
+						if (Game.player_bag == "empty"):
+							$Interaction_timer.wait_time = 5
+							$bag.play()
+						else:
+							Game.ui.update_popup("You are already carrying a bag!",2)
+							
+							Game.player_can_interact = false
+							get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+							return
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no body bags!",2)
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						return
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
 					if (Game.handcuffs > 0):
 						$Interaction_timer.wait_time = 1
+						$tie.play()
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no cable ties!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && is_tied_hostage && !is_following):
 					action = "move"
 					$Interaction_timer.wait_time = .5
@@ -213,6 +228,7 @@ func check_interactions():
 					action = "stop"
 					$Interaction_timer.wait_time = .5
 					
+				Game.player_is_interacting = true				
 				$Interaction_timer.start()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
@@ -222,15 +238,23 @@ func check_interactions():
 				emit_signal("object_interaction_started",self,self.action)
 		elif (Input.is_action_pressed("interact2") && Game.player_can_interact && has_second_interaction):
 			if (!Game.player_is_interacting):
-				Game.player_is_interacting = true
 				
 				if (is_unconscious && has_disguise):
-					action = "disguise"
-					$Interaction_timer.wait_time = 5
+					if (Game.player_disguise != "guard"):
+						action = "disguise"
+						$Interaction_timer.wait_time = 5
+					else:
+						Game.ui.update_popup("You already have this disguise!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && !was_interrogated):
 					action = "interrogate"
 					$Interaction_timer.wait_time = 4
 					
+				Game.player_is_interacting = true
 				$Interaction_timer.start()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
@@ -243,6 +267,9 @@ func check_interactions():
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
+				
+				$bag.stop()
+				$tie.stop()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
@@ -272,15 +299,14 @@ func finish_interactions():
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		
+		$bag.stop()
+		$tie.stop()
+		
 		if (action == "bag"):
-			if (Game.bodybags > 0):
-				Game.bodybags -= 1
-				Game.carry_bag("guard",has_disguise)
-				queue_free()
-			else:
-				Game.ui.update_popup("You have no body bags!",2)
+			Game.bodybags -= 1
+			Game.carry_bag("guard",has_disguise)
+			queue_free()
 		elif (action == "tie"):
-			is_tied_hostage = true
 			tie()
 		elif (action == "move"):
 			is_following = true
@@ -300,22 +326,24 @@ func alerted():
 	.alerted()
 	
 func kill():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
+	if (!is_dead):
+		if (is_camera_operator):
+			get_tree().call_group("Camera","alarm_on")
+			
+		Game.kills += 1
+			
+		$AnimatedSprite.animation = "dead"
 		
-	Game.kills += 1
-		
-	$AnimatedSprite.animation = "dead"
-	
-	.kill()
+		.kill()
 
 func knockout():
-	if (is_camera_operator):
-		get_tree().call_group("Camera","alarm_on")
+	if (!is_unconscious && !is_dead):
+		if (is_camera_operator):
+			get_tree().call_group("Camera","alarm_on")
+			
+		$AnimatedSprite.animation = "knocked"
 		
-	$AnimatedSprite.animation = "knocked"
-	
-	.knockout()
+		.knockout()
 
 func hostage():
 	if (is_camera_operator):

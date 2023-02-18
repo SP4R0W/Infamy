@@ -194,167 +194,215 @@ navpoly = SubResource( 15 )
 [node name="Glass" type="Node2D" parent="."]
 
 [node name="Glass" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 2112 )
 
 [node name="Glass2" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 1984 )
 
 [node name="Glass3" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 1856 )
 
 [node name="Glass4" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 1728 )
 
 [node name="Glass5" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 2752 )
 
 [node name="Glass6" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 2624 )
 
 [node name="Glass7" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 3392 )
 
 [node name="Glass8" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 3264 )
 
 [node name="Glass9" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 4032 )
 
 [node name="Glass10" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4160, 3904 )
 
 [node name="Glass11" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 4928, 4800 )
 rotation = 1.5708
 
 [node name="Glass12" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5056, 4800 )
 rotation = 1.5708
 
 [node name="Glass13" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5184, 4800 )
 rotation = 1.5708
 
 [node name="Glass14" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5312, 4800 )
 rotation = 1.5708
 
 [node name="Glass15" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5440, 4800 )
 rotation = 1.5708
 
 [node name="Glass16" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5568, 4800 )
 rotation = 1.5708
 
 [node name="Glass17" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5696, 4800 )
 rotation = 1.5708
 
 [node name="Glass18" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5824, 4800 )
 rotation = 1.5708
 
 [node name="Glass19" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 5952, 4800 )
 rotation = 1.5708
 
 [node name="Glass20" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6080, 4800 )
 rotation = 1.5708
 
 [node name="Glass21" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6208, 4800 )
 rotation = 1.5708
 
 [node name="Glass22" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6336, 4800 )
 rotation = 1.5708
 
 [node name="Glass23" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6464, 4800 )
 rotation = 1.5708
 
 [node name="Glass24" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6592, 4800 )
 rotation = 1.5708
 
 [node name="Glass25" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6720, 4800 )
 rotation = 1.5708
 
 [node name="Glass26" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 6848, 4800 )
 rotation = 1.5708
 
 [node name="Glass27" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 7488, 5696 )
 rotation = 1.5708
 
 [node name="Glass28" parent="Glass" instance=ExtResource( 8 )]
+visible = false
 position = Vector2( 7616, 5696 )
 rotation = 1.5708
 
 [node name="Loot" type="Node2D" parent="Glass"]
 
 [node name="Money_bag" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9152, 5560 )
 
 [node name="Money_bag2" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9288, 5696 )
 
 [node name="Money_bag3" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9288, 5696 )
 
 [node name="Money_bag4" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9288, 5816 )
 
 [node name="Money_bag5" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9152, 5912 )
 
 [node name="Money_bag6" parent="Glass/Loot" instance=ExtResource( 16 )]
+visible = false
 position = Vector2( 9280, 6080 )
 
 [node name="Money_bundle" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 4536, 2240 )
 
 [node name="Money_bundle2" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 4664, 2240 )
 
 [node name="Money_bundle8" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9128, 5672 )
 
 [node name="Money_bundle9" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9144, 6120 )
 
 [node name="Money_bundle10" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9144, 6120 )
 
 [node name="Money_bundle11" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9296, 5944 )
 
 [node name="Money_bundle12" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9112, 5784 )
 
 [node name="Money_bundle13" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9312, 5592 )
 
 [node name="Money_bundle14" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 9328, 5528 )
 
 [node name="Money_bundle3" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 4552, 3520 )
 
 [node name="Money_bundle4" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 4552, 4160 )
 
 [node name="Money_bundle5" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 5552, 5200 )
 
 [node name="Money_bundle6" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 6464, 5160 )
 
 [node name="Money_bundle7" parent="Glass/Loot" instance=ExtResource( 19 )]
+visible = false
 position = Vector2( 7896, 6432 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
@@ -399,107 +447,154 @@ position = Vector2( 9424, 1992 )
 [node name="Cameras" type="Node2D" parent="Objects"]
 
 [node name="Camera_left" parent="Objects/Cameras" instance=ExtResource( 28 )]
+visible = false
 position = Vector2( 5040, 3984 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upleft" parent="Objects/Cameras" instance=ExtResource( 26 )]
+visible = false
 position = Vector2( 4816, 848 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_right" parent="Objects/Cameras" instance=ExtResource( 25 )]
+visible = false
 position = Vector2( 2384, 1984 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_right2" parent="Objects/Cameras" instance=ExtResource( 25 )]
+visible = false
 position = Vector2( 5328, 2816 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_right3" parent="Objects/Cameras" instance=ExtResource( 25 )]
+visible = false
 position = Vector2( 5328, 3904 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_downright" parent="Objects/Cameras" instance=ExtResource( 30 )]
+visible = false
 position = Vector2( 2352, 1080 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_downright3" parent="Objects/Cameras" instance=ExtResource( 30 )]
+visible = false
 position = Vector2( 5200, 1024 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_downright4" parent="Objects/Cameras" instance=ExtResource( 30 )]
+visible = false
 position = Vector2( 8376, 2232 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_downright2" parent="Objects/Cameras" instance=ExtResource( 30 )]
+visible = false
 position = Vector2( 4136, 4904 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upright" parent="Objects/Cameras" instance=ExtResource( 27 )]
+visible = false
 position = Vector2( 2360, 4680 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_left2" parent="Objects/Cameras" instance=ExtResource( 28 )]
+visible = false
 position = Vector2( 5040, 3328 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_left5" parent="Objects/Cameras" instance=ExtResource( 28 )]
+visible = false
 position = Vector2( 8112, 2808 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_left3" parent="Objects/Cameras" instance=ExtResource( 28 )]
+visible = false
 position = Vector2( 5040, 2688 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_left4" parent="Objects/Cameras" instance=ExtResource( 28 )]
+visible = false
 position = Vector2( 5040, 1864 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upleft2" parent="Objects/Cameras" instance=ExtResource( 26 )]
+visible = false
 position = Vector2( 6344, 848 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upleft3" parent="Objects/Cameras" instance=ExtResource( 26 )]
+visible = false
 position = Vector2( 7112, 5584 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upleft4" parent="Objects/Cameras" instance=ExtResource( 26 )]
+visible = false
 position = Vector2( 8136, 5576 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_upleft5" parent="Objects/Cameras" instance=ExtResource( 26 )]
+visible = false
 position = Vector2( 10056, 4424 )
 z_index = 5
+can_interact = false
 
 [node name="Camera_downleft" parent="Objects/Cameras" instance=ExtResource( 29 )]
+visible = false
 position = Vector2( 8152, 1080 )
 z_index = 5
+can_interact = false
 
 [node name="WoodDoor" parent="Objects" instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 4928, 512 )
 
 [node name="WoodDoor2" parent="Objects" instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 8256, 3328 )
 
 [node name="WoodDoor3" parent="Objects" instance=ExtResource( 4 )]
+visible = false
 position = Vector2( 7232, 5248 )
 
-[node name="90MetalDoor" parent="Objects" instance=ExtResource( 6 )]
-position = Vector2( 4480, 64 )
-
-[node name="90MetalDoor2" parent="Objects" instance=ExtResource( 6 )]
+[node name="90MetalDoor2" parent="Objects" groups=["door"] instance=ExtResource( 6 )]
+visible = false
 position = Vector2( 9216, 3648 )
 
 [node name="MetalDoor" parent="Objects" instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 10176, 2560 )
 
-[node name="KeycardDoor" parent="Objects" instance=ExtResource( 9 )]
+[node name="KeycardDoor" parent="Objects" groups=["door"] instance=ExtResource( 9 )]
+visible = false
 position = Vector2( 8960, 2112 )
 can_use_ecm = true
 
-[node name="90WoodDoor" parent="Objects" instance=ExtResource( 5 )]
+[node name="90WoodDoor" parent="Objects" groups=["door"] instance=ExtResource( 5 )]
+visible = false
 position = Vector2( 4478, 4800 )
 
-[node name="MetalDoor3" parent="Objects" instance=ExtResource( 7 )]
+[node name="90MetalDoor3" parent="Objects" groups=["door"] instance=ExtResource( 6 )]
+visible = false
+position = Vector2( 4480, 64 )
+
+[node name="MetalDoor2" parent="Objects" instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 6464, 512 )
 
 [node name="Objectives" type="Node2D" parent="."]
@@ -509,80 +604,99 @@ position = Vector2( 6464, 512 )
 [node name="Safe_left" parent="Objectives/Safe_locations" instance=ExtResource( 23 )]
 visible = false
 position = Vector2( 7120, 608 )
+can_interact = false
 item_stored = "keys"
 
 [node name="Safe_left2" parent="Objectives/Safe_locations" instance=ExtResource( 23 )]
 visible = false
 position = Vector2( 9168, 1800 )
+can_interact = false
 item_stored = "keys"
 
 [node name="Notes" type="Node2D" parent="Objectives"]
 
 [node name="Note" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 4288, 2240 )
 z_index = 5
 
 [node name="Note2" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 4672, 2880 )
 z_index = 5
 
 [node name="Note3" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 4672, 4160 )
 z_index = 5
 
 [node name="Note4" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 5704, 4160 )
+visible = false
+position = Vector2( 5696, 3648 )
 z_index = 5
 
 [node name="Note5" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6464, 3648 )
+visible = false
+position = Vector2( 6464, 4160 )
 z_index = 5
 
 [node name="Note6" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6464, 2616 )
+visible = false
+position = Vector2( 7112, 2624 )
 z_index = 5
 
 [node name="Note7" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6976, 3136 )
+visible = false
+position = Vector2( 6344, 3128 )
 z_index = 5
 
 [node name="Note8" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 7104, 3648 )
 z_index = 5
 
 [node name="Note9" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 7760, 4160 )
+visible = false
+position = Vector2( 7232, 4152 )
 z_index = 5
 
 [node name="Note10" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 6088, 5176 )
 z_index = 5
 
 [node name="Note11" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 5184, 5184 )
 z_index = 5
 
 [node name="Note12" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 6656, 5192 )
 z_index = 5
 
 [node name="Note13" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6984, 1600 )
+visible = false
+position = Vector2( 6984, 2104 )
 z_index = 5
 
 [node name="Note14" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 5816, 2112 )
+visible = false
+position = Vector2( 6344, 2112 )
 z_index = 5
 
 [node name="Note15" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 6448, 1600 )
+visible = false
+position = Vector2( 5824, 1592 )
 z_index = 5
 
 [node name="Note16" parent="Objectives/Notes" instance=ExtResource( 12 )]
-position = Vector2( 7744, 1600 )
+visible = false
+position = Vector2( 7720, 2104 )
 z_index = 5
 
 [node name="Note17" parent="Objectives/Notes" instance=ExtResource( 12 )]
+visible = false
 position = Vector2( 5568, 832 )
 z_index = 5
 
@@ -591,132 +705,162 @@ z_index = 5
 [node name="Keycard_blue" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 5896, 5224 )
+can_interact = false
 
 [node name="Keycard_blue2" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 6480, 4176 )
+can_interact = false
 
 [node name="Keycard_blue3" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 6968, 4128 )
+can_interact = false
 
 [node name="Keycard_blue4" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 7760, 3616 )
+can_interact = false
 
 [node name="Keycard_blue6" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 6312, 2600 )
+can_interact = false
 
 [node name="Keycard_blue7" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 6496, 2104 )
+can_interact = false
 
 [node name="Keycard_blue8" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 5672, 1576 )
+can_interact = false
 
 [node name="Keycard_blue9" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 5088, 232 )
+can_interact = false
 
 [node name="Keycard_blue5" parent="Objectives/Keycards" instance=ExtResource( 24 )]
 visible = false
 position = Vector2( 8768, 3488 )
+can_interact = false
 
 [node name="Drill_bag" parent="Objectives" instance=ExtResource( 21 )]
 position = Vector2( 7480, 744 )
 bag_type = "drill"
 
-[node name="KeyDoor" parent="Objectives" instance=ExtResource( 9 )]
+[node name="KeyDoor" parent="Objectives" groups=["door"] instance=ExtResource( 9 )]
+visible = false
 position = Vector2( 7936, 5696 )
 item_needed_name = "Keys"
 item_needed = "keys"
 
 [node name="Phone" parent="Objectives" instance=ExtResource( 11 )]
+visible = false
 position = Vector2( 5312, 808 )
 
 [node name="Red_keycard" parent="Objectives" instance=ExtResource( 13 )]
+visible = false
 position = Vector2( 7592, 6496 )
 
 [node name="PC" parent="Objectives" instance=ExtResource( 14 )]
+visible = false
 position = Vector2( 7744, 6488 )
 z_index = 5
 
 [node name="Vault_panel" parent="Objectives" instance=ExtResource( 15 )]
+visible = false
 position = Vector2( 8848, 4456 )
 z_index = 5
 
 [node name="Vault" parent="Objectives" instance=ExtResource( 17 )]
+visible = false
 position = Vector2( 9216, 4544 )
 z_index = 5
 
 [node name="Van" parent="Objectives" instance=ExtResource( 18 )]
+visible = false
 position = Vector2( 11088, 6288 )
 
 [node name="Cars" type="Node2D" parent="."]
 
 [node name="Car" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 456, 4672 )
 rotation = 1.5708
 
 [node name="Car2" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 1712, 728 )
 rotation = 1.5708
 animation = "mini_yellow"
 
 [node name="Car3" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 448, -1064 )
 rotation = 1.5708
 animation = "4x4_blue"
 
 [node name="Car4" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 3280, -1816 )
 animation = "touring_white"
 
 [node name="Car5" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 7840, 208 )
 rotation = 3.14159
 animation = "pickup_white"
 
 [node name="Car7" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 11512, 192 )
 rotation = 3.14159
 
 [node name="Car8" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 10272, -1568 )
 rotation = -1.5708
 animation = "touring_gray"
 
 [node name="Car9" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 9440, -1584 )
 rotation = -1.5708
 animation = "cabrio_blue"
 
 [node name="Car10" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 8416, -1560 )
 rotation = -1.5708
 animation = "4x4_blue"
 
 [node name="Car11" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 11800, 3344 )
 rotation = -1.5708
 
 [node name="Car12" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 10456, 4816 )
 rotation = 1.5708
 animation = "mini_blue"
 
 [node name="Car13" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 7024, -392 )
 rotation = 1.5708
 animation = "mini_yellow"
 
 [node name="Car14" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 5704, -232 )
 animation = "4x4_green"
 
 [node name="Car6" parent="Cars" instance=ExtResource( 10 )]
+visible = false
 position = Vector2( 10064, 1472 )
 rotation = 1.5708
 animation = "4x4_green"
@@ -833,13 +977,16 @@ position = Vector2( 6144, 448 )
 position = Vector2( 8768, 2880 )
 
 [node name="Employee" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 
 [node name="Employee3" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 position = Vector2( 4872, -80 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Employee2" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 position = Vector2( 4296, 2744 )
 initial_rotation = 180.0
 is_static = true
@@ -850,16 +997,19 @@ initial_rotation = 180.0
 is_static = true
 
 [node name="Employee5" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 position = Vector2( 7104, 3776 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Employee6" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 position = Vector2( 5824, 4032 )
 initial_rotation = 90.0
 is_static = true
 
 [node name="Employee7" parent="NPCs/Employees" instance=ExtResource( 35 )]
+visible = false
 position = Vector2( 6336, 1728 )
 initial_rotation = -90.0
 is_static = true
@@ -930,41 +1080,56 @@ position = Vector2( 6720, 1120 )
 position = Vector2( 5056, 320 )
 
 [node name="Guard" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 8776, 1352 )
 initial_rotation = -90.0
 is_static = true
 is_camera_operator = true
 
 [node name="Guard2" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 9224, 4248 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Guard3" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 112, 248 )
 
 [node name="Guard4" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 536, 512 )
 
 [node name="Guard5" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 144, 480 )
 
 [node name="Guard6" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 136, 656 )
 
 [node name="Guard7" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 144, 920 )
 
 [node name="Guard8" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 144, 1104 )
 
 [node name="Guard9" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 424, 1088 )
 
 [node name="Guard10" parent="NPCs/Guards" instance=ExtResource( 31 )]
+visible = false
 position = Vector2( 752, 1088 )
 
+[node name="Guard11" parent="NPCs/Guards" instance=ExtResource( 31 )]
+position = Vector2( 552, 2744 )
+is_static = true
+
 [node name="Manager" parent="NPCs" instance=ExtResource( 33 )]
+visible = false
 position = Vector2( 7640, 6016 )
 health = 1.0
 initial_rotation = 180.0
@@ -986,16 +1151,19 @@ position = Vector2( 192, 7048 )
 position = Vector2( 1984, -2176 )
 
 [node name="Civilian" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 192, -1616 )
 start_point = NodePath("../Start1")
 end_point = NodePath("../End1")
 
 [node name="Civilian2" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 152, -480 )
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian3" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 3072, 1736 )
 initial_rotation = 90.0
 is_static = true
@@ -1003,12 +1171,14 @@ start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian4" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 2392, 2112 )
 is_static = true
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian5" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 2872, 3968 )
 initial_rotation = 180.0
 is_static = true
@@ -1016,25 +1186,22 @@ start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian6" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 2688, 4664 )
 initial_rotation = -90.0
 is_static = true
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
-[node name="Civilian7" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-position = Vector2( 4032, 4032 )
-is_static = true
-start_point = NodePath("../Start2")
-end_point = NodePath("../End2")
-
 [node name="Civilian8" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 4032, 2744 )
 is_static = true
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian9" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 5824, 4288 )
 initial_rotation = -90.0
 is_static = true
@@ -1042,6 +1209,7 @@ start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian11" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 7232, 3520 )
 initial_rotation = 90.0
 is_static = true
@@ -1049,11 +1217,23 @@ start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian10" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
 position = Vector2( 6336, 1472 )
 initial_rotation = 90.0
 is_static = true
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
+
+[node name="Civilian7" parent="NPCs/Civilians" instance=ExtResource( 36 )]
+visible = false
+position = Vector2( 4032, 4032 )
+is_static = true
+start_point = NodePath("../Start2")
+end_point = NodePath("../End2")
+
+[connection signal="npc_dead" from="NPCs/Manager" to="." method="manager_killed"]
+[connection signal="npc_hostaged" from="NPCs/Manager" to="." method="manager_hostaged"]
+[connection signal="npc_knocked" from="NPCs/Manager" to="." method="manager_killed"]
 
 [editable path="LevelZones/LevelZone"]
 [editable path="LevelZones/LevelZone2"]

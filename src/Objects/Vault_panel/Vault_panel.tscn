@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://src/Objects/Vault_panel/vault_panel.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/Objects/Vault_panel/Vault_panel.gd" type="Script" id=3]
+[ext_resource path="res://src/Objects/Vault_panel/panel.mp3" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 104, 36 )
@@ -76,4 +77,15 @@ custom_fonts/font = SubResource( 4 )
 step = 1.0
 rounded = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 4.76837e-06, -12 )
+scale = Vector2( 10.4, 3.6 )
+
+[node name="panel" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -5.0
+bus = "SFX"
+
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

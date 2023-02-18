@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/Objects/Doors/MetalDoor/metaldoor.png" type="Texture" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
@@ -6,12 +6,16 @@
 [ext_resource path="res://src/Equipment/c4.png" type="Texture" id=4]
 [ext_resource path="res://src/Game/assets/audio/c4.mp3" type="AudioStream" id=5]
 [ext_resource path="res://src/Game/assets/audio/explosion.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/Objects/Doors/lockpicking.mp3" type="AudioStream" id=7]
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 40, 128 )
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 56, 128 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 72, 128 )
+extents = Vector2( 64, 128 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 32
@@ -43,18 +47,36 @@ position = Vector2( 0, -128 )
 texture = ExtResource( 1 )
 offset = Vector2( 0.179699, 128.193 )
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="Sprite"]
+position = Vector2( -3.8147e-06, 128 )
+scale = Vector2( 5.6, 12.8 )
+
+[node name="Collision_hitbox" type="Area2D" parent="Sprite"]
+position = Vector2( 0, 128 )
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/Collision_hitbox"]
+shape = SubResource( 7 )
+
 [node name="C4" type="Sprite" parent="."]
 position = Vector2( 0, -128 )
 texture = ExtResource( 4 )
 offset = Vector2( 0.179699, 128.193 )
 
-[node name="C4_noise" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource( 5 )
-max_distance = 1000.0
+[node name="Lockpick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 10.0
+bus = "SFX"
 
-[node name="Explosion" type="AudioStreamPlayer2D" parent="."]
+[node name="C4_noise" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 10.0
+bus = "SFX"
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-max_distance = 1000.0
+volume_db = 10.0
+bus = "SFX"
 
 [node name="C4_timer" type="Timer" parent="."]
 one_shot = true
@@ -63,8 +85,7 @@ one_shot = true
 visible = false
 shape = SubResource( 1 )
 
-[node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
-visible = false
+[node name="Interaction_hitbox" type="Area2D" parent="." groups=["detectable", "door", "interactable"]]
 collision_layer = 8
 collision_mask = 0
 
@@ -121,12 +142,17 @@ step = 1.0
 rounded = true
 
 [node name="NPC_open" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="NPC_open"]
 shape = SubResource( 6 )
 
+[connection signal="screen_entered" from="Sprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="Sprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="body_entered" from="Sprite/Collision_hitbox" to="." method="_on_Collision_hitbox_body_entered"]
+[connection signal="body_exited" from="Sprite/Collision_hitbox" to="." method="_on_Collision_hitbox_body_exited"]
 [connection signal="timeout" from="C4_timer" to="." method="_on_C4_timer_timeout"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
 [connection signal="area_entered" from="NPC_open" to="." method="_on_NPC_open_area_entered"]

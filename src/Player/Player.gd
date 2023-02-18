@@ -34,6 +34,7 @@ func _ready():
 	Game.player_status = Game.player_statuses.NORMAL
 
 	$Bag.hide()
+	$Player_sprite/dead.hide()
 	
 	weapons.append(load(Global.weapon_scene_paths[Game.player_weapons[0]]).instance())
 	add_child(weapons[0])
@@ -127,7 +128,7 @@ func use_stamina() -> void:
 	if (stamina == 0):
 		Game.player_can_run = false
 		Game.player_is_running = false	
-		speed = walkSpeed
+		speed = walkSpeed * Global.armor_values[Game.player_armor]["speed"] * Global.bag_speed_penalties[Game.player_bag]
 		return
 	
 	elif (stamina > 0 && velocity != Vector2.ZERO):
@@ -137,7 +138,7 @@ func use_stamina() -> void:
 				
 		$Stamina_recovery.stop()
 		if (stamina > 0):
-			speed = runSpeed
+			speed = runSpeed * Global.armor_values[Game.player_armor]["speed"] * Global.bag_speed_penalties[Game.player_bag]
 
 func recover_stamina() -> void:
 	if (stamina < 100):
@@ -148,11 +149,10 @@ func recover_stamina() -> void:
 	
 	Game.player_is_running = false	
 	$Stamina_use.stop()
-	speed = walkSpeed	
+	speed = walkSpeed * Global.armor_values[Game.player_armor]["speed"] * Global.bag_speed_penalties[Game.player_bag]
 	
 func _on_Stamina_use_timeout() -> void:
 	if (Game.player_is_interacting || velocity == Vector2.ZERO):
-		print("vel == 0")
 		Game.player_can_run = false
 		recover_stamina()
 		return
@@ -171,7 +171,7 @@ func _on_Stamina_recovery_timeout() -> void:
 		Game.player_can_run = true
 
 func _physics_process(delta) -> void:
-	if (!Game.game_process):
+	if (!Game.game_process || Game.player_is_dead):
 		return	
 		
 	get_input()
@@ -257,7 +257,7 @@ func draw_bag() -> void:
 		$Bag.position = Vector2(-140 + bag_offset[plr_anim[1]],5)
 
 func _process(delta) -> void:
-	if (!Game.game_process):
+	if (!Game.game_process || Game.player_is_dead):
 		return
 		
 	if (current_weapon != -1):
@@ -269,10 +269,9 @@ func _process(delta) -> void:
 		Game.player_status = Game.player_statuses.COMPROMISED
 	elif (Game.suspicious_interaction):	
 		Game.player_status = Game.player_statuses.SUSPICIOUS
-	elif (current_weapon != -1 || weapons[0].is_weapon_visible || weapons[1].is_weapon_visible):
+	elif (current_weapon != -1 || weapons[0].is_weapon_visible || weapons[1].is_weapon_visible || (Game.player_armor != "Suit" && Game.player_armor != "Light")):
 		Game.player_status = Game.player_statuses.ARMED
 	elif (Game.player_collision_zones.size() != 0):
-		print(Game.player_collision_zones)
 		for zone in Game.player_collision_zones:
 			if (!zone.disguises_needed.has(Game.player_disguise)):
 				Game.player_status = Game.player_statuses.TRESPASSING
@@ -296,6 +295,36 @@ func _process(delta) -> void:
 	draw_player()
 	draw_weapons()
 	draw_bag()
+	
+func take_damage(damage: float):
+	var protection: float = Global.armor_values[Game.player_armor]["protection"]
+	var durability: float = Global.armor_values[Game.player_armor]["durability"]	
+	var dodge: float = Global.armor_values[Game.player_armor]["dodge"]
+	
+	var chance: int = int(rand_range(1,100))
+	var damage_total: float = damage
+	
+	if (chance <= dodge):
+		Game.ui.do_white_effect(0.25)
+		return
+	
+	if (armor > 0):
+		armor -= durability
+		
+		if (protection > 0):
+			damage_total -= damage_total * (protection / 100)
+	
+	Game.ui.do_red_effect(0.1)
+	health -= damage_total
+	
+	if (health <= 0 && !Game.player_is_dead):
+		weapons[0].hide()
+		weapons[1].hide()
+		
+		$Player_sprite.animation = Game.player_disguise + "_stand"
+		
+		$Player_sprite/dead.show()
+		Game.kill_player()
 	
 func _exit_tree() -> void:
 	Game.player = null

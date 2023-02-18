@@ -6,6 +6,8 @@ var has_focus: bool = false
 export var can_interact: bool = true
 
 func _ready():
+	connect("object_interaction_finished",Game.map,"interaction_finish")
+	
 	$Interaction_panel.hide()
 
 func show_panel():

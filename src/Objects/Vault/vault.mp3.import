@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/vault.mp3-47c5a083aeb20660759691f37d6b9661.mp3str"
+
+[deps]
+
+source_file="res://src/Objects/Vault/vault.mp3"
+dest_files=[ "res://.import/vault.mp3-47c5a083aeb20660759691f37d6b9661.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

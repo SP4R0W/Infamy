@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var menu_track: AudioStreamPlayer = Global.root.get_node("menu")
+
 var selected_diff: int = 0
 var selected_heist: String = ""
 
@@ -41,12 +43,15 @@ var heist_info: Dictionary = {
 }
 
 func _ready() -> void:
+	if (!menu_track.playing):
+		menu_track.play()
+	
 	$Control/CanvasLayer/Marker.hide()
 	$Control/CanvasLayer/Browser_panel.show()
 	$Control/CanvasLayer/Heist_panel.hide()
 
 func _on_Menu_btn_pressed() -> void:
-	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5)
+	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 
 func _on_HeistList_item_activated(index) -> void:
 	selected_heist = heist_ids[index]
@@ -78,8 +83,8 @@ func _on_PlayButton_pressed():
 	
 	Game.level = selected_heist
 	Game.difficulty = selected_diff
-	
-	Composer.goto_scene(Global.scene_paths["gamescene"],true,false,0.5,0.5)
+
+	Composer.goto_scene(Global.scene_paths["gamescene"],true,false,0.5,0.5,menu_track,false)
 
 func _on_BackButton_pressed():
 	$Control/CanvasLayer/Marker.hide()

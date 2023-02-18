@@ -7,48 +7,10 @@
 [ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=5]
 [ext_resource path="res://src/Weapons/M9/assets/pistolShootDry.mp3" type="AudioStream" id=6]
 [ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
+[ext_resource path="res://src/Weapons/assets/compensator3.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 116, 40 )
-
-[sub_resource type="Animation" id=2]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:rotation_degrees")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("MeleeShape:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Melee/MeleeShape:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ true ]
-}
 
 [sub_resource type="Animation" id=3]
 resource_name = "melee"
@@ -109,7 +71,12 @@ animation = "heavy"
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 2 )
 
+[node name="Barrel_attachment" parent="Sprite" index="0"]
+texture = ExtResource( 8 )
+offset = Vector2( 365, -3 )
+
 [node name="Melee" parent="." index="1"]
+visible = false
 collision_layer = 32
 collision_mask = 4
 
@@ -119,18 +86,20 @@ shape = SubResource( 5 )
 disabled = true
 
 [node name="AnimationPlayer" parent="." index="2"]
-anims/RESET = SubResource( 2 )
 anims/melee = SubResource( 3 )
 anims/reload = SubResource( 4 )
 
 [node name="Fire" parent="." index="5"]
 stream = ExtResource( 5 )
 
-[node name="Fire_dry" parent="." index="6"]
+[node name="Silenced" parent="." index="6"]
+volume_db = 0.0
+
+[node name="Fire_dry" parent="." index="7"]
 stream = ExtResource( 6 )
 
-[node name="Reload_sound" parent="." index="7"]
+[node name="Reload_sound" parent="." index="8"]
 stream = ExtResource( 7 )
 
-[node name="Reload_empty" parent="." index="8"]
+[node name="Reload_empty" parent="." index="9"]
 stream = ExtResource( 4 )

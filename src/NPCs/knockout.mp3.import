@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/knockout.mp3-79ada0d5e7890b918e14510978074188.mp3str"
+
+[deps]
+
+source_file="res://src/NPCs/knockout.mp3"
+dest_files=[ "res://.import/knockout.mp3-79ada0d5e7890b918e14510978074188.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

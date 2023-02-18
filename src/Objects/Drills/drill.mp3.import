@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/drill.mp3-59846d4bf27ab2f396a12c915be3ba5f.mp3str"
+
+[deps]
+
+source_file="res://src/Objects/Drills/drill.mp3"
+dest_files=[ "res://.import/drill.mp3-59846d4bf27ab2f396a12c915be3ba5f.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

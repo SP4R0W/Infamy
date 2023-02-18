@@ -112,6 +112,8 @@ func start_drill():
 	
 	noise_area.unpause()
 	
+	$drill.play()
+	
 func jam_drill():
 	can_interact = true
 	is_drilling = false
@@ -123,6 +125,8 @@ func jam_drill():
 	
 	noise_area.pause()
 	
+	$drill.stop()
+	$broke.play()
 	
 func resume_drill():
 	can_interact = false
@@ -133,8 +137,14 @@ func resume_drill():
 	is_drilling = true
 	
 	noise_area.unpause()	
+	
+	$drill.play()
+	$broke.stop()
 
 func _on_Drill_timer_timeout():
+	$drill.stop()
+	$broke.stop()
+	
 	noise_area.remove()
 	
 	emit_signal("drill_finished")

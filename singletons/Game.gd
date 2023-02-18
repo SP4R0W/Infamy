@@ -13,16 +13,18 @@ var alarm_codes: Dictionary = {
 	"camera_bag":"Camera spotted a suspicious bag.",
 	"camera_drill":"Camera spotted a drill.",
 	"camera_glass":"Camera spotted broken glass.",
+	"camera_door":"Camera spotted a broken door.",
 	"hostage_escaped":"Hostage escaped and raised the alarm.",
 	"guard_player":"Guard spotted a criminal.",
 	"guard_body":"Guard spotted a body.",
 	"guard_hostage":"Guard spotted a hostage.",
-	"guard_alert":"Camera spotted an alerted person.",
+	"guard_alert":"Guard spotted an alerted person.",
 	"guard_bag":"Guard spotted a suspicious bag.",
 	"guard_drill":"Guard spotted a drill.",
 	"guard_glass":"Guard spotted broken glass.",
 	"guard_camera":"Guard spotted a broken camera.",
 	"guard_noise":"Guard heard a suspicious noise.",
+	"guard_door":"Guard spotted a broken door.",
 	"civilian_player":"Civilian spotted a criminal.",
 	"civilian_body":"Civilian spotted a body.",
 	"civilian_hostage":"Civilian spotted a hostage.",
@@ -32,6 +34,7 @@ var alarm_codes: Dictionary = {
 	"civilian_glass":"Civilian spotted broken glass.",
 	"civilian_camera":"Civilian spotted a broken camera.",
 	"civilian_noise":"Civilian heard a suspicious noise.",
+	"civilian_door":"Civilian spotted a broken door.",
 }
 
 var game_scene = null
@@ -57,9 +60,14 @@ var map_escape_zone
 
 var map_assets: Array = []
 
+var max_exceptions: int = 2
+
 var player
 
 var player_weapons: Array = ["UZI","M9"]
+var player_attachments: Dictionary = {
+	
+}
 var player_armor: String = "Suit"
 var player_equipment: Array = [["Medic Bag",2],["Ammo Bag",8]]
 var player_current_equipment: int = 0
@@ -93,6 +101,7 @@ var suspicious_interaction: bool = false
 var player_is_reloading: bool = false
 var player_is_meleing: bool = false
 var player_is_running: bool = false
+var player_is_dead: bool = false
 
 var player_collision_zones: Array = []
 
@@ -108,11 +117,20 @@ var bodybags = 2
 var max_equipment_amounts: Dictionary = {
 	"Medic Bag":2,
 	"Ammo Bag":2,
-	"ECM":4,
-	"C4":9,
-	"Sentry":1,
-	"Body Bags":2
+	"ECM":1,
+	"C4":3,
+	"Sentry":1
 }
+
+func update_attachments():
+	Game.player.weapons[0].draw_attachments()
+	Game.player.weapons[1].draw_attachments()
+	
+func update_armor():
+	if (player_armor != "Suit"):
+		Game.player.armor = 100
+	else:
+		Game.player.armor = 0
 
 func turn_game_loud(code: String):
 	if (not is_game_loud):
@@ -168,3 +186,26 @@ func spawn_bag():
 	bag.has_disguise = player_bag_has_disguise
 	
 	player_bag = "empty"
+	
+func kill_player():
+	player_is_dead = true
+	
+	player_weapon = -1
+	
+	player_can_move = false
+	player_can_interact = false
+	player_can_shoot = false
+	player_can_melee = false
+	player_can_run = false
+
+	player_is_interacting = false
+	suspicious_interaction = false
+	player_is_reloading = false
+	player_is_meleing = false
+	player_is_running = false
+
+	player_collision_zones = []
+	
+	yield(get_tree().create_timer(1),"timeout")
+	
+	Game.game_scene.show_gamefail()

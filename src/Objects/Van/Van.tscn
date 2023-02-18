@@ -45,7 +45,13 @@ texture = ExtResource( 1 )
 wait_time = 2.0
 one_shot = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 32, -59.9999 )
+scale = Vector2( 28.8, 58 )
+
 [connection signal="area_entered" from="Secure_zone" to="." method="_on_Secure_zone_area_entered"]
 [connection signal="body_entered" from="Secure_zone" to="." method="_on_Secure_zone_body_entered"]
 [connection signal="body_exited" from="Secure_zone" to="." method="_on_Secure_zone_body_exited"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

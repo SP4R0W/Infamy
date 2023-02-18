@@ -149,5 +149,6 @@ text = "Exit"
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Online_btn" to="." method="_on_Online_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Inventory_btn" to="." method="_on_Inventory_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Help_btn" to="." method="_on_Help_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Settings_btn" to="." method="_on_Settings_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Credits_btn" to="." method="_on_Credits_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Exit_btn" to="." method="_on_Exit_btn_pressed"]

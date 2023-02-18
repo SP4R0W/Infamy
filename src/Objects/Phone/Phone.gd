@@ -36,6 +36,8 @@ func _process(delta):
 				$Interaction_timer.wait_time = 5
 				$Interaction_timer.start()
 				
+				$phone.play()
+				
 				$Interaction_panel/VBoxContainer/Interaction_progress.show()
 				
 				if (!disguises_needed.has(Game.player_disguise)):
@@ -46,6 +48,8 @@ func _process(delta):
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
+				
+				$phone.stop()
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
@@ -64,6 +68,8 @@ func _on_Interaction_timer_timeout():
 		
 		$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 		
+		$phone.stop()
+		
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
@@ -71,3 +77,13 @@ func _on_Interaction_timer_timeout():
 			
 		emit_signal("object_interaction_finished",self,self.action)
 	
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

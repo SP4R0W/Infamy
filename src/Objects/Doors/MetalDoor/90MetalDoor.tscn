@@ -12,10 +12,10 @@ position = Vector2( -128, 0 )
 rotation = 1.5708
 offset = Vector2( -0.0661257, -127.205 )
 
-[node name="Door_collision" parent="." index="5"]
+[node name="Door_collision" parent="." index="6"]
 rotation = 1.5708
 
-[node name="Interaction_hitbox" parent="." index="6"]
+[node name="Interaction_hitbox" parent="." index="7"]
 rotation = 1.5708
 
 [node name="CollisionShape2D" parent="NPC_open" index="0"]

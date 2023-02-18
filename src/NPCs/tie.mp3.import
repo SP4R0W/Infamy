@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/tie.mp3-86581eb84683175954d2af57c0543000.mp3str"
+
+[deps]
+
+source_file="res://src/NPCs/tie.mp3"
+dest_files=[ "res://.import/tie.mp3-86581eb84683175954d2af57c0543000.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

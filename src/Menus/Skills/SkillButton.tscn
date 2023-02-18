@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=1]
+[ext_resource path="res://src/Menus/Skills/SkillButton.gd" type="Script" id=2]
+
+[node name="SkillButton" type="Button"]
+margin_right = 12.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 300, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Skill"
+script = ExtResource( 2 )
+
+[connection signal="mouse_entered" from="." to="." method="_on_SkillButton_mouse_entered"]
+[connection signal="pressed" from="." to="." method="_on_SkillButton_pressed"]

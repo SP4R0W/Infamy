@@ -38,6 +38,7 @@ func _process(delta):
 				
 				if (action == "hack"):
 					$Interaction_timer.wait_time = 3.5
+					$keyboard.play()
 				elif (action == "code"):
 					$Interaction_timer.wait_time = 0.1
 					
@@ -49,6 +50,8 @@ func _process(delta):
 		else:
 			if (Game.player_is_interacting):
 				emit_signal("object_interaction_aborted",self,self.action)
+				
+				$keyboard.stop()
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -72,6 +75,8 @@ func _on_Interaction_timer_timeout():
 		
 		$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 		$Hacking_panel.hide()
+		
+		$keyboard.stop()
 		
 		Game.player_can_interact = false
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
@@ -98,3 +103,13 @@ func _on_Hack_timer_timeout():
 	$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to get Vault Code"
 	can_interact = true
 	action = "code"
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Objects/PC/PC.gd" type="Script" id=2]
 [ext_resource path="res://src/Objects/PC/pc.png" type="Texture" id=3]
+[ext_resource path="res://src/Objects/PC/keyboard.mp3" type="AudioStream" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 80, 24 )
@@ -153,5 +154,15 @@ custom_fonts/font = SubResource( 4 )
 step = 1.0
 rounded = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -3.8147e-06, 1.90735e-06 )
+scale = Vector2( 8, 3.2 )
+
+[node name="keyboard" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "SFX"
+
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
 [connection signal="timeout" from="Hack_timer" to="." method="_on_Hack_timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

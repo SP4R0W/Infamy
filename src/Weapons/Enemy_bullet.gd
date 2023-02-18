@@ -38,14 +38,17 @@ func kill():
 func _on_VisibilityNotifier2D_screen_exited():
 	kill()
 
-func _on_Bullet_area_entered(area):
+func _on_Enemy_bullet_area_entered(area):
 	kill()
 
-func _on_Bullet_body_entered(body):
+func _on_Enemy_bullet_body_entered(body):
 	if (body.is_in_group("glass")):
 		body.destroy()
 		
 	if (body.is_in_group("wood_door")):
 		body.destroy_door()
+		
+	if (body.is_in_group("Player")):
+		body.take_damage(damage)
 	
 	kill()

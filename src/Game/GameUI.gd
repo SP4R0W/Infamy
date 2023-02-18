@@ -28,8 +28,7 @@ onready var health_bar: TextureProgress = $Player/Health_bar
 onready var armor_bar: TextureProgress = $Player/Armor_bar
 onready var stamina_bar: TextureProgress = $Player/Stamina_bar
 
-onready var green_effect: TextureRect = $Green_effect
-onready var red_effect: TextureRect = $Red_effect
+onready var effect: ColorRect = $Effect
 
 var seconds: int = 0
 var minutes: int = 0
@@ -197,15 +196,25 @@ func _process(delta) -> void:
 	$Counters/VBoxContainer/Hostage.text = "H:" + str(Game.hostages)
 	$Counters/VBoxContainer/Kills.text = "K:" + str(Game.kills)
 	
-func do_green_effect():
-	green_effect.modulate = Color(1,1,1,1)
-	get_tree().create_tween().tween_property(green_effect,"modulate:a",0.0,0.5)
+func do_green_effect(duration=0.5):
+	effect.modulate = Color.green
+	get_tree().create_tween().tween_property(effect,"modulate:a",0.0,duration)
 
-func do_red_effect():
-	red_effect.modulate = Color(1,1,1,1)
-	get_tree().create_tween().tween_property(red_effect,"modulate:a",0.0,0.5)
+func do_red_effect(duration=0.5):
+	effect.modulate = Color.red
+	get_tree().create_tween().tween_property(effect,"modulate:a",0.0,duration)
+	
+func do_white_effect(duration=0.5):
+	effect.modulate = Color.white
+	get_tree().create_tween().tween_property(effect,"modulate:a",0.0,duration)
+	
+func do_effect(color,duration=0.5):
+	effect.modulate = color
+	get_tree().create_tween().tween_property(effect,"modulate:a",0.0,duration)
 	
 func update_objective(objective_str: String):
+	$SFX/objective.play()
+	
 	$Objective/Tween.interpolate_property(objective,"rect_scale:x",1,0,0.5)
 	$Objective/Tween.start()
 	
@@ -223,7 +232,9 @@ func update_objective(objective_str: String):
 	$Objective/Tween.interpolate_property(objective,"rect_scale:x",0,1,0.5)
 	$Objective/Tween.start()
 	
-func update_popup(message: String, duration: float):	
+func update_popup(message: String, duration: float):
+	$SFX/secure.play()	
+	
 	popup.visible = false
 	
 	$Popup_panel.rect_scale = Vector2(0,1)

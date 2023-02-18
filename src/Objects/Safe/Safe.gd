@@ -64,6 +64,8 @@ func _process(delta):
 				Game.player_is_interacting = true
 				action = "lockpick"
 				
+				$Lockpick.play()
+				
 				emit_signal("object_interaction_started",self,self.action)
 				
 				$Interaction_timer.wait_time = 10
@@ -73,7 +75,15 @@ func _process(delta):
 				
 				Game.suspicious_interaction = true
 		elif (Input.is_action_pressed("interact3") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.get_amount_of_equipment("C4") > 0):
+			if (!Game.player_is_interacting):
+				if (!Game.get_amount_of_equipment("C4") > 0):
+					Game.ui.update_popup("You have no C4 remaining!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				
 				Game.player_is_interacting = true
 				action = "c4"
 				
@@ -88,6 +98,8 @@ func _process(delta):
 		else:
 			if (Game.player_is_interacting):
 				emit_signal("object_interaction_aborted",self,self.action)
+				
+				$Lockpick.stop()
 				
 				Game.player_is_interacting = false
 				$Interaction_timer.stop()
@@ -112,6 +124,8 @@ func _on_Interaction_timer_timeout():
 		get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 		
 		Game.suspicious_interaction = false
+		
+		$Lockpick.stop()
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		
@@ -167,4 +181,3 @@ func open_safe():
 		item.scale = Vector2(0.75,0.75)
 		item.position = Vector2(0,-16)
 	
-

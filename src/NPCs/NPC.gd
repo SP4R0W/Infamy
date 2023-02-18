@@ -41,10 +41,10 @@ var action: String = "loop"
 
 var has_focus: bool = false
 
+var exceptions = []
+
 var raycasts = []
 var targets = []
-
-var exceptions = []
 
 var base_detection_speed = 0.1
 
@@ -57,12 +57,20 @@ var is_detecting_player_disguise: bool = false
 
 var is_shooting: bool = false
 var can_shoot: bool = false
+var can_shoot_visible: bool = false
 
 var was_interrogated: bool = false
 
 var is_following: bool = false
 var is_escaping: bool = false
 var is_moving: bool = false
+
+var fov_polygons: Array = [
+	PoolVector2Array([Vector2(55,-40),Vector2(1000,-900),Vector2(1000,900),Vector2(55,40)]),
+	PoolVector2Array([Vector2(55,-40),Vector2(1250,-900),Vector2(1250,900),Vector2(55,40)]),
+	PoolVector2Array([Vector2(55,-60),Vector2(1500,-1100),Vector2(1500,1100),Vector2(55,60)]),
+	PoolVector2Array([Vector2(55,-75),Vector2(1750,-1250),Vector2(1750,1250),Vector2(55,75)]),
+]
 
 func _ready():
 	connect("alerted",Game,"turn_game_loud")
@@ -77,7 +85,14 @@ func _ready():
 	
 	$AnimatedSprite.rotation_degrees = initial_rotation
 	
+	draw_fov()
+	
 	on_ready()
+	
+	get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
+	
+func draw_fov():
+	$AnimatedSprite/Detect/CollisionPolygon2D.polygon = fov_polygons[Game.difficulty]
 	
 func on_ready():
 	pass
@@ -117,18 +132,23 @@ func create_ray() -> RayCast2D:
 	return dict
 	
 func add_exception(object):
-	exceptions.append(object)
-	
-	for x in range(rays.get_child_count()):
-		var ray: RayCast2D = rays.get_child(x)
-		ray.add_exception(object)
+	if (!exceptions.has(object)):
+		exceptions.append(object)
+			
+		for x in range(rays.get_child_count()):
+			var ray: RayCast2D = rays.get_child(x)
+			ray.add_exception(object)
+			
+		if (targets.has(object)):
+			targets.erase(object)
 		
 func remove_exception(object):
-	exceptions.erase(object)
-	
-	for x in range(rays.get_child_count()):
-		var ray: RayCast2D = rays.get_child(x)
-		ray.remove_exception(object)
+	if (exceptions.has(object) && object != self.get_node("Interaction_hitbox")):
+		exceptions.erase(object)
+		
+		for x in range(rays.get_child_count()):
+			var ray: RayCast2D = rays.get_child(x)
+			ray.remove_exception(object)
 		
 func set_npc_interactions():
 	if (!can_interact):
@@ -167,8 +187,8 @@ func _physics_process(delta):
 					ray.enabled = true
 						
 					ray.look_at(target.global_position)
-					#ray.cast_to = Vector2($AnimatedSprite.global_position.distance_to(target.global_position),0)
-					#ray.force_raycast_update()
+					ray.cast_to = Vector2($AnimatedSprite.global_position.distance_to(target.global_position),0)
+					ray.force_raycast_update()
 
 					ray_dict["seeing"] = true
 					ray_dict["object"] = target
@@ -197,6 +217,7 @@ func _physics_process(delta):
 			
 		if (detecting.has(true)):
 			is_detecting = true
+			show()
 		else:
 			is_detecting = false
 
@@ -226,12 +247,16 @@ func _physics_process(delta):
 					ray.enabled = true
 						
 					ray.look_at(target.global_position)
+					ray.cast_to = Vector2($AnimatedSprite.global_position.distance_to(target.global_position),0)
+					ray.force_raycast_update()
 
 					if (ray.is_colliding()):
 						var collider = ray.get_collider()
 						if (collider.is_in_group("Player")):
 							ray_dict["seeing"] = true
 							ray_dict["object"] = collider
+							$AnimatedSprite.look_at(collider.global_position)
+							ray.force_raycast_update()
 						else:
 							ray_dict["seeing"] = false
 							ray_dict["object"] = null
@@ -251,6 +276,7 @@ func _physics_process(delta):
 				ray.enabled = false
 		
 		var values = []
+
 		for ray in raycasts:
 			values.append(ray["seeing"])
 			
@@ -259,7 +285,7 @@ func _physics_process(delta):
 		else:
 			can_shoot = false
 			
-		if (can_shoot && !is_shooting):
+		if (can_shoot && !is_shooting && can_shoot_visible):
 			shoot()
 			
 	else:
@@ -281,18 +307,18 @@ func on_physics_process(delta: float):
 func check_if_ray_sees_target(dict):
 	var target = dict["object"]
 	var ray = dict["ray_cast"]
-	
+
 	if (ray.is_colliding()):
 		var collider = ray.get_collider()
 		if (collider == target && target in targets):
 			if (target.is_in_group("Player")):
 				if (Game.player_status != Game.player_statuses.NORMAL):
 					dict["detecting"] = true
-					detection_code = npc_name + "_body"
+					detection_code = npc_name + "_player"
 					if (Game.player_status == Game.player_statuses.DISGUISED):
-						dict["detection_value"] = 2
+						dict["detection_value"] = 1.2 * ceil((float(Game.difficulty) + 1) / 2)
 					else:
-						dict["detection_value"] = 5 * (Game.difficulty + 1)		
+						dict["detection_value"] = 2.5 * (Game.difficulty + 1)
 				else:
 					dict["detecting"] = false
 					dict["object"] = null
@@ -301,37 +327,37 @@ func check_if_ray_sees_target(dict):
 				if (npc.is_dead || npc.is_unconscious):
 					dict["detecting"] = true
 					detection_code = npc_name  + "_body"
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 				elif (npc.is_hostaged || npc.is_escaping):
 					dict["detecting"] = true
 					detection_code =  npc_name  + "_hostage"
-					dict["detection_value"] = 10 * (Game.difficulty + 1)	
+					dict["detection_value"] = 3 * (Game.difficulty + 1)	
 				elif (npc.is_alerted):
 					detection_code =  npc_name  + "_alert"
 					dict["detecting"] = true
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 			elif (target.is_in_group("Camera")):
-				if (target.is_broken):
+				if (target.get_parent().is_broken && target.get_parent().visible):
 					detection_code = npc_name  + "_camera"
 					dict["detecting"] = true
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
-			elif (target.is_in_group("glass")):
-				if (target.is_broken):
-					detection_code = npc_name  + "_glass"
-					dict["detecting"] = true
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 			elif (target.is_in_group("bags")):
 					detection_code = npc_name  + "_bag"
 					dict["detecting"] = true
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 			elif (target.is_in_group("drill")):
 				if (target.get_parent().visible):
 					detection_code = npc_name  + "_drill"
 					dict["detecting"] = true
-					dict["detection_value"] = 10 * (Game.difficulty + 1)
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 				else:
 					dict["detecting"] = false
 					dict["object"] = null
+			elif (target.is_in_group("door")):
+				if (target.get_parent().is_broken):
+					detection_code = npc_name  + "_door"
+					dict["detecting"] = true
+					dict["detection_value"] = 3 * (Game.difficulty + 1)
 			else:
 				dict["detecting"] = false
 				dict["detection_value"] = 0
@@ -380,14 +406,19 @@ func on_process(delta: float):
 	pass
 		
 func _on_Detection_timer_timeout():
+
 	if (is_detecting):
 		for ray in raycasts:
 			if (ray["detecting"]):
 				if (ray["object"] in targets):
 					detection_value += ray["detection_value"]
+					
+					if (!$detection.playing):
+						$detection.play()
 							
 					if (detection_value >= 100):
-						$Detection_timer.stop()
+						$detection.stop()
+						$detected.play()
 						$Detection_timer.stop()
 						break
 				else:
@@ -424,61 +455,87 @@ func shoot():
 		Game.game_scene.add_child(bullet)
 		bullet.target = target
 		bullet.global_position = $AnimatedSprite/BulletOrigin.global_position
+		bullet.damage = 2.5 * (Game.difficulty + 1)
 		
 		var noise = noise_scene.instance()
 		noise.radius = 4000
 		noise.time = 0.1
 		Game.game_scene.add_child(noise)
 		noise.global_position = $AnimatedSprite.global_position
+		
+		$shoot.play()
 
 	$Shoot_timer.start()
 		
 func alerted():
-	pass
+	$AnimatedSprite.animation = "shoot"
+	
+	get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 			
 func kill():
-	if (is_tied_hostage):
-		Game.hostages -= 1
-	
-	can_interact = true
-	has_disguise = false
-	
-	is_following = false
-	is_escaping = false
-	is_moving = false
-	
-	is_dead = true
-	is_alerted = false
-	is_unconscious = false
-	is_hostaged = false
-	is_tied_hostage = false
-	
-	$Alert_timer.stop()
-	$Shoot_timer.stop()
-	$MoveTimer.stop()
-	$Escape_timer.stop()
-	
-	emit_signal("npc_dead",self)
+	if (!is_dead):
+		if (is_tied_hostage):
+			Game.hostages -= 1
+		
+		can_interact = true
+		has_disguise = false
+		
+		is_following = false
+		is_escaping = false
+		is_moving = false
+		
+		is_dead = true
+		is_alerted = false
+		is_unconscious = false
+		is_hostaged = false
+		is_tied_hostage = false
+		
+		$Alert_timer.stop()
+		$Shoot_timer.stop()
+		$MoveTimer.stop()
+		$Escape_timer.stop()
+		
+		$detection.stop()
+		$detected.stop()
+		
+		emit_signal("npc_dead",self)
+		get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+		
+		if (Game.is_game_loud):
+			$Dissappear.start()
+			
 	
 func knockout():
-	can_interact = true
-	
-	is_following = false
-	is_escaping = false
-	is_moving = false
-	
-	is_dead = false
-	is_alerted = false
-	is_unconscious = true
-	is_hostaged = false
-	is_tied_hostage = false
-	
-	$Alert_timer.stop()
-	$Shoot_timer.stop()
-	$MoveTimer.stop()
-	$Escape_timer.stop()	
-	
-	emit_signal("npc_knocked",self)
+	if (!is_unconscious && !is_dead):
+		if (is_tied_hostage):
+			Game.hostages -= 1
+			
+		can_interact = true
+		
+		is_following = false
+		is_escaping = false
+		is_moving = false
+		
+		is_dead = false
+		is_alerted = false
+		is_unconscious = true
+		is_hostaged = false
+		is_tied_hostage = false
+		
+		$Alert_timer.stop()
+		$Shoot_timer.stop()
+		$MoveTimer.stop()
+		$Escape_timer.stop()	
+		
+		$detection.stop()
+		$detected.stop()
+		
+		$knockout.play()
+		
+		emit_signal("npc_knocked",self)
+		
+		get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+		
 	
 func hostage():
 	can_interact = true
@@ -491,8 +548,16 @@ func hostage():
 	
 	$MoveTimer.stop()
 	$Escape_timer.start()
+	$Alert_timer.stop()
+	
+	$detection.stop()
+	
+	if (!is_alerted):
+		$detected.play()
 	
 	emit_signal("npc_hostaged",self)
+	
+	get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 
 func tie():
 	if (Game.handcuffs > 0):
@@ -511,11 +576,11 @@ func interrogate():
 func _on_Detect_area_entered(area):
 	if (!is_alerted):
 		if (area.is_in_group("detectable") && area != $Interaction_hitbox):
-			if (!targets.has(area)):
+			if (!targets.has(area) && targets.size() < Game.max_exceptions):
 				targets.append(area)
 	else:
 		if (area.is_in_group("shootable")):
-			if (!targets.has(area)):
+			if (!targets.has(area) && targets.size() < Game.max_exceptions):
 				targets.append(area)		
 				
 func _on_Detect_area_exited(area):
@@ -524,7 +589,12 @@ func _on_Detect_area_exited(area):
 
 func _on_Detect_body_entered(body):
 	if (!targets.has(body)):
-		targets.append(body)
+		if (body.is_in_group("detectable")):
+			if (targets.size() < Game.max_exceptions):
+				targets.append(body)
+			else:
+				if (body.is_in_group("Player")):
+					targets.append(body)
 
 func _on_Detect_body_exited(body):
 	if (targets.has(body)):
@@ -543,11 +613,16 @@ func alarm_on():
 	$Detection_timer.stop()
 	$MoveTimer.stop()
 	is_moving = false
+	
+	if (is_dead):
+		$Dissappear.start()
 
 func _on_Shoot_timer_timeout():
 	is_shooting = false
 
 func noise_heard():
+	$detected.play()
+	
 	detection_value = 100
 	$Detection_timer.stop()
 	
@@ -580,3 +655,18 @@ func retry_escape():
 	
 func try_escape():
 	pass
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	can_shoot_visible = true
+	show()
+
+func _on_VisibilityNotifier2D_screen_exited():
+	if (!is_dead && !is_unconscious && !is_hostaged && !is_escaping && !is_alerted && !is_detecting):
+		can_shoot_visible = false
+		hide()
+
+
+func _on_Dissappear_timeout():
+	get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+	queue_free()

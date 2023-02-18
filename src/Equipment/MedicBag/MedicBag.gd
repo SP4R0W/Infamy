@@ -46,6 +46,16 @@ func _process(delta):
 			
 		elif (Input.is_action_pressed("interact2") && Game.player_can_interact && has_medic):
 			if (!Game.player_is_interacting):
+				for item in Game.player_equipment:
+					if (item.has("medic")):
+						if (item[1] >= Game.max_equipment_amounts["medic"]):
+							Game.ui.update_popup("You can't carry more first aid kits!",2)
+							
+							Game.player_can_interact = false
+							get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+							
+							return
+				
 				Game.player_is_interacting = true
 				action = "take"
 				
@@ -89,13 +99,26 @@ func _on_Interaction_timer_timeout():
 		elif (action == "take"):
 			for item in Game.player_equipment:
 				if (item.has("medic")):
-					if (item[1] < Game.max_equipment_amounts["medic"]):
-						item[1] += 1
-						remaining_uses -= 1
+					var needed = Game.max_equipment_amounts["medic"] - item[1]
+					if (remaining_uses >= needed):
+						remaining_uses -= needed
+						item[1] += needed
 					else:
-						Game.ui.update_popup("You can't carry more first aid kits!",2)
+						item[1] += remaining_uses
+						remaining_uses = 0
 			
 		$Interaction_panel/VBoxContainer/Uses.text = "Uses left: " + str(remaining_uses) + "/" + str(max_uses)
 		
 		if (remaining_uses == 0):
 			queue_free()
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	if (name in Game.map_assets):
+		set_process(true)
+		show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)	
+	hide()

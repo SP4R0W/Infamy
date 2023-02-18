@@ -152,15 +152,35 @@ func check_interactions():
 				if (is_dead || is_unconscious):
 					action = "bag"
 					if (Game.bodybags > 0):
-						$Interaction_timer.wait_time = 5
+						if (Game.player_bag == "empty"):
+							$Interaction_timer.wait_time = 5
+							$bag.play()
+						else:
+							Game.ui.update_popup("You are already carrying a bag!",2)
+							
+							Game.player_can_interact = false
+							get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+							
+							return
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no body bags!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
 					if (Game.handcuffs > 0):
 						$Interaction_timer.wait_time = 1
+						$tie.play()
 					else:
-						$Interaction_timer.wait_time = 0.1
+						Game.ui.update_popup("You have no cable ties!",2)
+						
+						Game.player_can_interact = false
+						get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+						
+						return
 				elif (is_hostaged && is_tied_hostage && !is_following):
 					action = "move"
 					$Interaction_timer.wait_time = .5
@@ -198,6 +218,9 @@ func check_interactions():
 				
 				$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 				
+				$bag.stop()
+				$tie.stop()
+				
 				Game.suspicious_interaction = false
 				
 				emit_signal("object_interaction_aborted",self,self.action)
@@ -224,13 +247,13 @@ func finish_interactions():
 			
 		emit_signal("object_interaction_finished",self,self.action)
 		
+		$bag.stop()
+		$tie.stop()
+		
 		if (action == "bag"):
-			if (Game.bodybags > 0):
-				Game.bodybags -= 1
-				Game.carry_bag("manager",false)
-				queue_free()
-			else:
-				Game.ui.update_popup("You have no body bags!",2)
+			Game.bodybags -= 1
+			Game.carry_bag("manager",false)
+			queue_free()
 		elif (action == "tie"):
 			tie()
 		elif (action == "move"):
@@ -243,14 +266,16 @@ func finish_interactions():
 	.finish_interactions()
 	
 func knockout():
-	$AnimatedSprite.animation = "knocked"
-	
-	.knockout()
+	if (!is_unconscious && !is_dead):
+		$AnimatedSprite.animation = "knocked"
+		
+		.knockout()
 	
 func kill():
-	$AnimatedSprite.animation = "dead"
-	
-	.kill()
+	if (!is_dead):
+		$AnimatedSprite.animation = "dead"
+		
+		.kill()
 	
 func hostage():
 	$AnimatedSprite.animation = "untied"

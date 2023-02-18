@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/Equipment/c4.png" type="Texture" id=1]
 [ext_resource path="res://src/Game/assets/audio/c4.mp3" type="AudioStream" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/Objects/Safe/safe_body.png" type="Texture" id=6]
 [ext_resource path="res://src/Objects/Safe/safe_door.png" type="Texture" id=7]
 [ext_resource path="res://src/Objects/Drills/Regular/Regular_drill_right.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/Objects/Doors/lockpicking.mp3" type="AudioStream" id=9]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 48, 64 )
@@ -87,6 +88,10 @@ offset = Vector2( 0.179699, 128.193 )
 visible = false
 position = Vector2( 0, -32 )
 shape = SubResource( 2 )
+
+[node name="Lockpick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+bus = "SFX"
 
 [node name="C4_noise" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 2 )
