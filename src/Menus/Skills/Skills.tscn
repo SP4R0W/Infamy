@@ -1,13 +1,25 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/menu.jpg" type="Texture" id=3]
+[ext_resource path="res://src/Menus/Skills/Skills.gd" type="Script" id=4]
+[ext_resource path="res://src/Menus/Skills/SkillButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=6]
+[ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=7]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=9]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://assets/fonts/droid-sans/DroidSans-Bold.ttf" type="DynamicFontData" id=11]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Semibold.ttf" type="DynamicFontData" id=12]
+[ext_resource path="res://assets/sfx/wrong.mp3" type="AudioStream" id=13]
+[ext_resource path="res://assets/sfx/buy.mp3" type="AudioStream" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 200
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 11 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
@@ -15,25 +27,44 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=7]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 12 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 48
+font_data = ExtResource( 10 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 52
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 42
+font_data = ExtResource( 10 )
 
 [node name="Skills" type="Node2D"]
+script = ExtResource( 4 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="Bg" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 240.0
+texture = ExtResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer"]
 anchor_left = 0.5
@@ -44,7 +75,7 @@ margin_bottom = 420.0
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/VBoxContainer"]
 margin_right = 3839.0
-margin_bottom = 280.0
+margin_bottom = 234.0
 custom_fonts/font = SubResource( 1 )
 text = "Skills:"
 align = 1
@@ -60,164 +91,110 @@ margin_top = -660.0
 margin_right = 580.0
 margin_bottom = 601.0
 custom_fonts/font = SubResource( 2 )
+custom_styles/tab_fg = ExtResource( 6 )
+custom_styles/tab_bg = ExtResource( 6 )
+custom_styles/panel = ExtResource( 7 )
 tab_align = 0
 
 [node name="Mastermind" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 64.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 2.0
+margin_top = 58.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_styles/panel = ExtResource( 7 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Skill_panel/Mastermind"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -750.0
+margin_left = -550.0
 margin_top = -350.0
-margin_right = 750.0
+margin_right = 550.0
 margin_bottom = 350.0
 custom_constants/vseparation = 100
 custom_constants/hseparation = 100
-columns = 4
+columns = 3
 
-[node name="Button" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="1" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_right = 300.0
 margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
 text = "Tank"
 
-[node name="Button2" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="2" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 400.0
 margin_right = 700.0
 margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Hostage Taker"
 
-[node name="Button3" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="3" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 800.0
 margin_right = 1100.0
 margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "White Death"
 
-[node name="Button4" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
-margin_left = 1200.0
-margin_right = 1500.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
-
-[node name="Button5" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="4" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_top = 200.0
 margin_right = 300.0
 margin_bottom = 300.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Sharer"
 
-[node name="Button6" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="5" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 400.0
 margin_top = 200.0
 margin_right = 700.0
 margin_bottom = 300.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Controller"
 
-[node name="Button7" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="6" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 800.0
 margin_top = 200.0
 margin_right = 1100.0
 margin_bottom = 300.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Desperado"
 
-[node name="Button8" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
-margin_left = 1200.0
-margin_top = 200.0
-margin_right = 1500.0
-margin_bottom = 300.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
-
-[node name="Button9" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="7" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_top = 400.0
 margin_right = 300.0
 margin_bottom = 500.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Combat Medic"
 
-[node name="Button10" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="8" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 400.0
 margin_top = 400.0
 margin_right = 700.0
 margin_bottom = 500.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Intimidator"
 
-[node name="Button11" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="9" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 800.0
 margin_top = 400.0
 margin_right = 1100.0
 margin_bottom = 500.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Hunter"
 
-[node name="Button12" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
-margin_left = 1200.0
-margin_top = 400.0
-margin_right = 1500.0
-margin_bottom = 500.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
-
-[node name="Button13" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="10" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_top = 600.0
 margin_right = 300.0
 margin_bottom = 700.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Overdose"
 
-[node name="Button14" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="11" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 400.0
 margin_top = 600.0
 margin_right = 700.0
 margin_bottom = 700.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Cable Guy"
 
-[node name="Button15" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
+[node name="12" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer" instance=ExtResource( 5 )]
 margin_left = 800.0
 margin_top = 600.0
 margin_right = 1100.0
 margin_bottom = 700.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
-
-[node name="Button16" type="Button" parent="Control/CanvasLayer/Skill_panel/Mastermind/GridContainer"]
-margin_left = 1200.0
-margin_top = 600.0
-margin_right = 1500.0
-margin_bottom = 700.0
-rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
-text = "Tank"
+text = "Sharpshooter"
 
 [node name="Tiers" type="VBoxContainer" parent="Control/CanvasLayer/Skill_panel/Mastermind"]
 anchor_top = 0.5
@@ -229,7 +206,7 @@ margin_bottom = 350.0
 custom_constants/separation = 100
 
 [node name="4" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Tiers"]
-margin_right = 190.0
+margin_right = 266.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 0, 100 )
 custom_fonts/font = ExtResource( 1 )
@@ -237,7 +214,7 @@ text = "Tier 4:"
 
 [node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Tiers"]
 margin_top = 200.0
-margin_right = 190.0
+margin_right = 266.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 0, 100 )
 custom_fonts/font = ExtResource( 1 )
@@ -245,7 +222,7 @@ text = "Tier 3:"
 
 [node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Tiers"]
 margin_top = 400.0
-margin_right = 190.0
+margin_right = 266.0
 margin_bottom = 500.0
 rect_min_size = Vector2( 0, 100 )
 custom_fonts/font = ExtResource( 1 )
@@ -253,7 +230,7 @@ text = "Tier 2:"
 
 [node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Tiers"]
 margin_top = 600.0
-margin_right = 190.0
+margin_right = 266.0
 margin_bottom = 700.0
 rect_min_size = Vector2( 0, 100 )
 custom_fonts/font = ExtResource( 1 )
@@ -262,59 +239,664 @@ text = "Tier 1:"
 [node name="Desc" type="HBoxContainer" parent="Control/CanvasLayer/Skill_panel/Mastermind"]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -750.0
+margin_left = -550.0
 margin_top = 100.0
-margin_right = 750.0
+margin_right = 550.0
 margin_bottom = 191.0
 custom_constants/separation = 100
 
 [node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Desc"]
-margin_top = 11.0
+margin_top = 14.0
 margin_right = 300.0
-margin_bottom = 79.0
+margin_bottom = 76.0
 rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 7 )
 text = "Medic"
 align = 1
 
 [node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Desc"]
 margin_left = 400.0
-margin_top = 11.0
+margin_top = 14.0
 margin_right = 700.0
-margin_bottom = 79.0
+margin_bottom = 76.0
 rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 7 )
 text = "Controller"
 align = 1
 
 [node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Desc"]
 margin_left = 800.0
-margin_top = 11.0
+margin_top = 14.0
 margin_right = 1100.0
-margin_bottom = 79.0
+margin_bottom = 76.0
 rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 3 )
-text = "Desperado"
+custom_fonts/font = SubResource( 7 )
+text = "Sniper"
 align = 1
 
-[node name="4" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind/Desc"]
-margin_left = 1200.0
-margin_top = 11.0
-margin_right = 1500.0
-margin_bottom = 79.0
-rect_min_size = Vector2( 300, 0 )
-custom_fonts/font = SubResource( 3 )
-text = "Crew Chief"
+[node name="About" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind"]
+margin_left = 1835.0
+margin_top = 240.0
+margin_right = 2349.0
+margin_bottom = 952.0
+custom_fonts/font = SubResource( 5 )
+text = "Mastermind is all about controlling the situation and distancing themself out of combat. They're providing medical support and making sure the civilians are compliant."
 align = 1
+autowrap = true
 
 [node name="Help" type="Label" parent="Control/CanvasLayer/Skill_panel/Mastermind"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -585.0
+margin_left = -783.0
 margin_top = -210.0
-margin_right = 585.0
+margin_right = 783.0
+custom_fonts/font = SubResource( 4 )
+text = "Hover on a skill to learn its description and price.
+Click on a skill to buy it. Click again to Upgrade it.
+Right clicking will refund a skill."
+align = 1
+
+[node name="Commando" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 58.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_styles/panel = ExtResource( 7 )
+
+[node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Skill_panel/Commando"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -550.0
+margin_top = -350.0
+margin_right = 550.0
+margin_bottom = 350.0
+custom_constants/vseparation = 100
+custom_constants/hseparation = 100
+columns = 3
+
+[node name="1" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_right = 300.0
+margin_bottom = 100.0
+text = "Fully Loaded"
+
+[node name="2" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_right = 700.0
+margin_bottom = 100.0
+text = "Unbreakable"
+
+[node name="3" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_right = 1100.0
+margin_bottom = 100.0
+text = "Golden Scout"
+
+[node name="4" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 300.0
+text = "Well Stocked"
+
+[node name="5" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 300.0
+text = "Heavy Lifter"
+
+[node name="6" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 1100.0
+margin_bottom = 300.0
+text = "Crackdown"
+
+[node name="7" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+text = "Bulletstorm"
+
+[node name="8" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+text = "Portier"
+
+[node name="9" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 400.0
+margin_right = 1100.0
+margin_bottom = 500.0
+text = "Fast Hands"
+
+[node name="10" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_top = 600.0
+margin_right = 300.0
+margin_bottom = 700.0
+text = "Donor"
+
+[node name="11" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 600.0
+margin_right = 700.0
+margin_bottom = 700.0
+text = "Heavy"
+
+[node name="12" parent="Control/CanvasLayer/Skill_panel/Commando/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 600.0
+margin_right = 1100.0
+margin_bottom = 700.0
+text = "Scout"
+
+[node name="Tiers" type="VBoxContainer" parent="Control/CanvasLayer/Skill_panel/Commando"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 200.0
+margin_top = -350.0
+margin_right = 390.0
+margin_bottom = 350.0
+custom_constants/separation = 100
+
+[node name="4" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Tiers"]
+margin_right = 266.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 4:"
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Tiers"]
+margin_top = 200.0
+margin_right = 266.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 3:"
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Tiers"]
+margin_top = 400.0
+margin_right = 266.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 2:"
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Tiers"]
+margin_top = 600.0
+margin_right = 266.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 1:"
+
+[node name="Desc" type="HBoxContainer" parent="Control/CanvasLayer/Skill_panel/Commando"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -550.0
+margin_top = 100.0
+margin_right = 550.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Desc"]
+margin_top = 14.0
+margin_right = 300.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Bandolier"
+align = 1
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Desc"]
+margin_left = 400.0
+margin_top = 14.0
+margin_right = 700.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Armorer"
+align = 1
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando/Desc"]
+margin_left = 800.0
+margin_top = 14.0
+margin_right = 1100.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Shotgunner"
+align = 1
+
+[node name="About" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando"]
+margin_left = 1835.0
+margin_top = 240.0
+margin_right = 2349.0
+margin_bottom = 952.0
+custom_fonts/font = SubResource( 5 )
+text = "Commando is brought in when the mission heats up and the cops show up. They manage ammo kits and is usually wearing heavy armor alongside some heavy weapons."
+align = 1
+autowrap = true
+
+[node name="Help" type="Label" parent="Control/CanvasLayer/Skill_panel/Commando"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -783.0
+margin_top = -210.0
+margin_right = 783.0
+custom_fonts/font = SubResource( 4 )
+text = "Hover on a skill to learn its description and price.
+Click on a skill to buy it. Click again to Upgrade it.
+Right clicking will refund a skill."
+align = 1
+
+[node name="Engineer" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 58.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_styles/panel = ExtResource( 7 )
+
+[node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Skill_panel/Engineer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -550.0
+margin_top = -350.0
+margin_right = 550.0
+margin_bottom = 350.0
+custom_constants/vseparation = 100
+custom_constants/hseparation = 100
+columns = 3
+
+[node name="1" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_right = 300.0
+margin_bottom = 100.0
+text = "Deep Pockets"
+
+[node name="2" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_right = 700.0
+margin_bottom = 100.0
+text = "Maniac"
+
+[node name="3" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_right = 1100.0
+margin_bottom = 100.0
+text = "Push It"
+
+[node name="4" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 300.0
+text = "Good Tools"
+
+[node name="5" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 300.0
+text = "Breacher"
+
+[node name="6" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 1100.0
+margin_bottom = 300.0
+text = "Lock'n Load"
+
+[node name="7" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+text = "Quick Fix"
+
+[node name="8" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+text = "Demoman"
+
+[node name="9" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 400.0
+margin_right = 1100.0
+margin_bottom = 500.0
+text = "Oppressor"
+
+[node name="10" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_top = 600.0
+margin_right = 300.0
+margin_bottom = 700.0
+text = "Drill Expert"
+
+[node name="11" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 600.0
+margin_right = 700.0
+margin_bottom = 700.0
+text = "B Safety"
+
+[node name="12" parent="Control/CanvasLayer/Skill_panel/Engineer/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 600.0
+margin_right = 1100.0
+margin_bottom = 700.0
+text = "Tension"
+
+[node name="Tiers" type="VBoxContainer" parent="Control/CanvasLayer/Skill_panel/Engineer"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 200.0
+margin_top = -350.0
+margin_right = 390.0
+margin_bottom = 350.0
+custom_constants/separation = 100
+
+[node name="4" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Tiers"]
+margin_right = 266.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 4:"
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Tiers"]
+margin_top = 200.0
+margin_right = 266.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 3:"
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Tiers"]
+margin_top = 400.0
+margin_right = 266.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 2:"
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Tiers"]
+margin_top = 600.0
+margin_right = 266.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 1:"
+
+[node name="Desc" type="HBoxContainer" parent="Control/CanvasLayer/Skill_panel/Engineer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -550.0
+margin_top = 100.0
+margin_right = 550.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Desc"]
+margin_top = 14.0
+margin_right = 300.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Technician"
+align = 1
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Desc"]
+margin_left = 400.0
+margin_top = 14.0
+margin_right = 700.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Piroman"
+align = 1
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer/Desc"]
+margin_left = 800.0
+margin_top = 14.0
+margin_right = 1100.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Rifleman"
+align = 1
+
+[node name="About" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer"]
+margin_left = 1835.0
+margin_top = 240.0
+margin_right = 2349.0
+margin_bottom = 952.0
+custom_fonts/font = SubResource( 5 )
+text = "Engineer deals with equipment like drills and C4. They can speed up the mission by a lot while still being able to defend themselves efficently."
+align = 1
+autowrap = true
+
+[node name="Help" type="Label" parent="Control/CanvasLayer/Skill_panel/Engineer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -783.0
+margin_top = -210.0
+margin_right = 783.0
+custom_fonts/font = SubResource( 4 )
+text = "Hover on a skill to learn its description and price.
+Click on a skill to buy it. Click again to Upgrade it.
+Right clicking will refund a skill."
+align = 1
+
+[node name="Infiltrator" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_top = 58.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_styles/panel = ExtResource( 7 )
+
+[node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Skill_panel/Infiltrator"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -550.0
+margin_top = -350.0
+margin_right = 550.0
+margin_bottom = 350.0
+custom_constants/vseparation = 100
+custom_constants/hseparation = 100
+columns = 3
+
+[node name="1" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_right = 300.0
+margin_bottom = 100.0
+text = "Expert Jammer"
+
+[node name="2" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_right = 700.0
+margin_bottom = 100.0
+text = "Locksmith"
+
+[node name="3" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_right = 1100.0
+margin_bottom = 100.0
+text = "Sneaky Bastard"
+
+[node name="4" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 300.0
+text = "Disruptor"
+
+[node name="5" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 300.0
+text = "Hacker"
+
+[node name="6" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 1100.0
+margin_bottom = 300.0
+text = "Hitman"
+
+[node name="7" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+text = "Cleaner"
+
+[node name="8" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+text = "Blending In"
+
+[node name="9" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 400.0
+margin_right = 1100.0
+margin_bottom = 500.0
+text = "Contraband"
+
+[node name="10" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_top = 600.0
+margin_right = 300.0
+margin_bottom = 700.0
+text = "Overdrive"
+
+[node name="11" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 400.0
+margin_top = 600.0
+margin_right = 700.0
+margin_bottom = 700.0
+text = "Lighting Bolt"
+
+[node name="12" parent="Control/CanvasLayer/Skill_panel/Infiltrator/GridContainer" instance=ExtResource( 5 )]
+margin_left = 800.0
+margin_top = 600.0
+margin_right = 1100.0
+margin_bottom = 700.0
+text = "Silenced Expert"
+
+[node name="Tiers" type="VBoxContainer" parent="Control/CanvasLayer/Skill_panel/Infiltrator"]
+anchor_top = 0.5
+anchor_bottom = 0.5
+margin_left = 200.0
+margin_top = -350.0
+margin_right = 390.0
+margin_bottom = 350.0
+custom_constants/separation = 100
+
+[node name="4" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Tiers"]
+margin_right = 266.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 4:"
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Tiers"]
+margin_top = 200.0
+margin_right = 266.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 3:"
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Tiers"]
+margin_top = 400.0
+margin_right = 266.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 2:"
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Tiers"]
+margin_top = 600.0
+margin_right = 266.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 0, 100 )
+custom_fonts/font = ExtResource( 1 )
+text = "Tier 1:"
+
+[node name="Desc" type="HBoxContainer" parent="Control/CanvasLayer/Skill_panel/Infiltrator"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -550.0
+margin_top = 100.0
+margin_right = 550.0
+margin_bottom = 191.0
+custom_constants/separation = 100
+
+[node name="1" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Desc"]
+margin_top = 14.0
+margin_right = 300.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Specialist"
+align = 1
+
+[node name="2" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Desc"]
+margin_left = 400.0
+margin_top = 14.0
+margin_right = 700.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Ghost"
+align = 1
+
+[node name="3" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator/Desc"]
+margin_left = 800.0
+margin_top = 14.0
+margin_right = 1100.0
+margin_bottom = 76.0
+rect_min_size = Vector2( 300, 0 )
+custom_fonts/font = SubResource( 7 )
+text = "Killer"
+align = 1
+
+[node name="About" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator"]
+margin_left = 1835.0
+margin_top = 240.0
+margin_right = 2349.0
+margin_bottom = 952.0
+custom_fonts/font = SubResource( 5 )
+text = "Infiltrators work quietly. However, thier hacking and sneaking abilities are also helpful in loud, as they can dodge bullets and make better use of suppressed weapons."
+align = 1
+autowrap = true
+
+[node name="Help" type="Label" parent="Control/CanvasLayer/Skill_panel/Infiltrator"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -783.0
+margin_top = -210.0
+margin_right = 783.0
 custom_fonts/font = SubResource( 4 )
 text = "Hover on a skill to learn its description and price.
 Click on a skill to buy it. Click again to Upgrade it.
@@ -330,6 +912,96 @@ margin_left = -1290.0
 margin_top = -596.5
 margin_right = -90.0
 margin_bottom = 596.5
+custom_styles/panel = ExtResource( 7 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Skill_desc"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Desc" type="Label" parent="Control/CanvasLayer/Skill_desc/VBoxContainer"]
+margin_right = 1200.0
+margin_bottom = 1000.0
+rect_min_size = Vector2( 0, 1000 )
+custom_fonts/font = SubResource( 6 )
+align = 1
+autowrap = true
+
+[node name="Locked" type="Label" parent="Control/CanvasLayer/Skill_desc/VBoxContainer"]
+margin_top = 1004.0
+margin_right = 1200.0
+margin_bottom = 1204.0
+rect_min_size = Vector2( 0, 200 )
+custom_fonts/font = SubResource( 8 )
+text = "Tier 2 skills are locked. You need to spend 15 more skill points to unlock Tier 2."
+align = 1
+valign = 1
+autowrap = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -360.0
+margin_right = 200.0
+margin_bottom = -263.0
+custom_constants/separation = 50
+
+[node name="1_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/normal = ExtResource( 6 )
+text = "1"
+
+[node name="2_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_left = 150.0
+margin_right = 250.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/normal = ExtResource( 6 )
+text = "2"
+
+[node name="3_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
+margin_left = 300.0
+margin_right = 400.0
+margin_bottom = 97.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/normal = ExtResource( 6 )
+text = "3"
+
+[node name="Panel" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -160.0
+margin_right = 264.0
+margin_bottom = -55.0
+custom_styles/panel = ExtResource( 7 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/CanvasLayer/Panel"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 648.0
+margin_bottom = 103.0
+
+[node name="Points" type="Label" parent="Control/CanvasLayer/Panel/CenterContainer"]
+margin_top = 10.0
+margin_right = 646.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 1 )
+text = "Skill Points: 120"
+align = 1
 
 [node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
 anchor_left = 0.5
@@ -341,4 +1013,21 @@ margin_top = -160.0
 margin_right = 183.5
 margin_bottom = -63.0
 custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/normal = ExtResource( 6 )
 text = "Main Menu"
+
+[node name="Buy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+bus = "SFX"
+
+[node name="Wrong" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+bus = "SFX"
+
+[connection signal="tab_changed" from="Control/CanvasLayer/Skill_panel" to="." method="_on_Skill_panel_tab_changed"]
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/1_btn" to="." method="_on_1_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/2_btn" to="." method="_on_2_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/HBoxContainer/3_btn" to="." method="_on_3_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Menu_btn" to="." method="_on_Menu_btn_pressed"]

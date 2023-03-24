@@ -55,6 +55,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = false
 	else:
+		$phone.stop()
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	

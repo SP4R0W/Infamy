@@ -1,12 +1,12 @@
 extends Weapon
 
 var modification_offsets: Dictionary = {
-	"suppressor1":Vector2(325,-3),
-	"suppressor2":Vector2(300,-3),
-	"suppressor3":Vector2(360,-3),
-	"compensator1":Vector2(265,-3),
-	"compensator2":Vector2(255,-3),
-	"compensator3":Vector2(275,-3),
+	"suppressor1_pistol":Vector2(325,-3),
+	"suppressor2_pistol":Vector2(300,-3),
+	"suppressor3_pistol":Vector2(360,-3),
+	"compensator1_pistol":Vector2(265,-3),
+	"compensator2_pistol":Vector2(255,-3),
+	"compensator3_pistol":Vector2(275,-3),
 }
 
 func _ready():
@@ -18,6 +18,7 @@ func _ready():
 	base_damage = Global.weapon_base_values[name]["damage"]
 	base_accuracy = Global.weapon_base_values[name]["accuracy"]
 	base_concealment = Global.weapon_base_values[name]["concealment"]
+	type = Global.weapon_base_values[name]["type"]
 	
 	$Melee/MeleeShape.disabled = true
 	
@@ -50,6 +51,21 @@ func draw_attachments():
 		concealment += Global.attachment_values[attachments["barrel"]]["concealment"]
 		
 		if (attachments["barrel"].find("suppressor") != -1):
+			if (Game.get_skill("infiltrator",1,3) == "basic"):
+				accuracy *= 1.1
+			elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+				accuracy *= 1.2
+		
+			if (Game.get_skill("infiltrator",2,3) != "none"):
+				concealment += 1
+				if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+					concealment += 2
+	
+			if (Game.get_skill("infiltrator",3,3) == "basic"):
+				damage *= 1.15
+			elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
+				damage *= 1.3
+			
 			is_weapon_suppresed = true
 		else:
 			is_weapon_suppresed = false
@@ -69,6 +85,21 @@ func draw_attachments():
 		
 		accuracy += Global.attachment_values[attachments["stock"]]["accuracy"]
 		concealment += Global.attachment_values[attachments["stock"]]["concealment"]
+		
+	if (accuracy > 100):
+		accuracy = 100
+	elif (accuracy < 0):
+		accuracy = 0
+				
+	if (concealment > 10):
+		concealment = 10
+	elif (concealment < 0):
+		concealment = 0
+		
+	if (Game.get_skill("commando",4,1) != "none"):
+		mag_size *= 1.25
+		if (Game.get_skill("commando",4,1) == "upgraded"):	
+			ammo_count *= 1.5
 		
 	current_mag_size = mag_size
 	current_ammo_count = ammo_count

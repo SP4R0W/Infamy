@@ -1,6 +1,7 @@
 extends Area2D
 
 export var damage: float = 10
+export var type: String = ""
 
 var accuracy: float
 var spread: float
@@ -17,7 +18,7 @@ func _ready():
 func _physics_process(delta) -> void:
 	if (look_once):
 		var real_accuracy = ((100-accuracy)/100)
-		if (Game.player.velocity == Vector2.ZERO):
+		if (Game.player.velocity == Vector2.ZERO || Game.get_skill("mastermind",1,3) == "upgraded"):
 			spread = rand_range(-real_accuracy/4,real_accuracy/4)
 		else:
 			spread = rand_range(-real_accuracy/3,real_accuracy/3)
@@ -36,19 +37,35 @@ func _on_VisibilityNotifier2D_screen_exited():
 	kill()
 
 func _on_Bullet_area_entered(area):
+	if (area.is_in_group("shield")):
+		
+		var npc = area.get_parent().get_parent()
+		if (type == "sniper"):
+			if (Game.get_skill("mastermind",2,3) == "basic"):
+				npc.take_damage(damage)
+			elif (Game.get_skill("mastermind",2,3) == "upgraded"):
+				npc.take_damage(damage*2)
+			else:
+				npc.take_damage(damage/2)
+		else:
+			if ((Game.get_skill("engineer",4,2) == "basic" && type == "automatic") || Game.get_skill("engineer",4,2) == "upgraded"):
+				npc.take_damage(damage)
+			else:
+				npc.take_damage(damage * 0.35)
 	kill()
 
 func _on_Bullet_body_entered(body):
-	if (body.is_in_group("glass") && !body.is_broken):
-		body.destroy()
+	if (body.is_in_group("glass")):
+		if (!body.is_broken):
+			body.destroy()
+			kill()
+		else:
+			return
+	elif (body.is_in_group("wood_door")):
+		if (!body.is_broken && body.can_be_broken):
+			body.destroy_door()
+			kill()
+		else:
+			return
+	else:
 		kill()
-		
-		return
-		
-	if (body.is_in_group("wood_door") && !body.is_broken):
-		body.destroy_door()
-		kill()
-		
-		return
-		
-	kill()

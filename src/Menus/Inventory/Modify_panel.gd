@@ -2,7 +2,7 @@ extends TabContainer
 
 onready var parent = get_parent().get_parent().get_parent()
 
-var selected_loadout: int = 1
+var selected_loadout: String = "1"
 var selected_tab: int = 0
 
 var edited_gun: String = "M9"
@@ -22,11 +22,24 @@ var index_weapon_translations: Dictionary = {
 }
 
 func draw_modify(tab: int):
+	var mod = index_translations[tab]
+	var modifications = Global.weapon_attachments[edited_gun][mod]
+	
+	if (modifications.size() == 0):
+		current_tab = selected_tab
+		parent.get_node("Wrong").play()
+		return
+		
+	current_tab = tab
 	selected_tab = tab
 	var weapon_attachment = Savedata.player_loadouts[selected_loadout][index_weapon_translations[weapon_id]][index_translations[tab]]
 	
 	var panel = get_child(selected_tab).get_node("GridContainer")
-	var desc_panel = get_child(selected_tab).get_node("Desc")
+	var desc_panel = get_child(selected_tab).get_node("Desc/VBoxContainer")
+	
+	for node in desc_panel.get_children():
+		if (node is Label):
+			node.text = ""
 	
 	for button in panel.get_children():
 		button.hide()
@@ -34,18 +47,15 @@ func draw_modify(tab: int):
 		if (!button.is_connected("pressed",self,"_attachment_pressed")):
 			button.connect("pressed",self,"_attachment_pressed",[button])
 			
-	var button = desc_panel.get_node("VBoxContainer/Button")
+	var button = desc_panel.get_node("Button")
+	button.hide()
 
 	if (!button.is_connected("pressed",self,"_on_Button_pressed")):
 		button.connect("pressed",self,"_on_Button_pressed",[button])
 	
 	for child in panel.get_children():
 		child.hide()
-	
-	var mod = index_translations[selected_tab]
-	
-	var modifications = Global.weapon_attachments[edited_gun][mod]
-	
+
 	for attachment in modifications:
 		for btn in panel.get_children():
 			if (attachment == btn.name):
@@ -73,6 +83,20 @@ func calculate_values():
 	var base_mag = weapon_stats["magsize"]
 	var base_acc = weapon_stats["accuracy"]
 	var base_con = weapon_stats["concealment"]
+	var base_type = weapon_stats["type"]	
+	
+	if (base_type == "sniper" && Game.get_skill("mastermind",1,3) == "upgraded"):
+		base_acc *= 1.1
+	elif (base_type == "automatic" && Game.get_skill("engineer",1,3) == "upgraded"):
+		base_damage *= 1.1
+	elif (base_type == "shotgun"):	
+		if (Game.get_skill("commando",1,3) == "basic"):
+			base_damage *= 1.1
+		elif (Game.get_skill("commando",1,3) == "upgraded"):
+			base_damage *= 1.25
+			
+		if (Game.get_skill("commando",3,3) == "upgraded"):
+			base_damage *= 2
 	
 	var new_damage = base_damage
 	var new_mag = base_mag
@@ -96,6 +120,23 @@ func calculate_values():
 					
 			if (attachment_stats.keys().has("concealment")):
 				new_con += attachment_stats["concealment"]
+				
+			if (selected_attachment.find("suppressor") != -1):
+				if (Game.get_skill("infiltrator",1,3) == "basic"):
+					new_acc *= 1.1
+				elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+					new_acc *= 1.2
+					
+				if (Game.get_skill("infiltrator",2,3) != "none"):
+					new_con += 1
+					if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+						new_con += 2
+					
+				if (Game.get_skill("infiltrator",3,3) == "basic"):
+					new_damage *= 1.15
+				elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
+					new_damage *= 1.3
+				
 		else:
 			if (attachment != ""):
 				attachment_stats = Global.attachment_values[attachment]
@@ -111,6 +152,33 @@ func calculate_values():
 						
 				if (attachment_stats.keys().has("concealment")):
 					new_con += attachment_stats["concealment"]
+					
+				if (attachment.find("suppressor") != -1):
+					if (Game.get_skill("infiltrator",1,3) == "basic"):
+						new_acc *= 1.1
+					elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+						new_acc *= 1.2
+						
+					if (Game.get_skill("infiltrator",2,3) != "none"):
+						new_con += 1
+						if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+							new_con += 2
+						
+					if (Game.get_skill("infiltrator",3,3) == "basic"):
+						new_damage *= 1.15
+					elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
+						new_damage *= 1.3
+					
+	if (new_acc > 100):
+		new_acc = 100
+	elif (new_acc < 0):
+		new_acc = 0
+				
+	if (new_con > 10):
+		new_con = 10
+	elif (new_con < 0):
+		new_con = 0
+				
 				
 	var old_damage = base_damage
 	var old_mag = base_mag
@@ -133,6 +201,32 @@ func calculate_values():
 					
 			if (attachment_stats.keys().has("concealment")):
 				old_con += attachment_stats["concealment"]
+				
+			if (attachment.find("suppressor") != -1):
+				if (Game.get_skill("infiltrator",1,3) == "basic"):
+					old_acc *= 1.1
+				elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+					old_acc *= 1.2
+					
+				if (Game.get_skill("infiltrator",2,3) != "none"):
+					old_con += 1
+					if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+						old_con += 2
+					
+				if (Game.get_skill("infiltrator",3,3) == "basic"):
+					old_damage *= 1.15
+				elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
+					old_damage *= 1.3
+		
+	if (old_acc > 100):
+		old_acc = 100
+	elif (old_acc < 0):
+		old_acc = 0
+				
+	if (old_con > 10):
+		old_con = 10
+	elif (old_con < 0):
+		old_con = 0
 		
 	var old_string = "Current Statistics:\nDamage: {dmg}\nAccuracy: {acc}\nMag Size: {mag}\nConcealment: {con}".format({
 		"dmg":old_damage,
@@ -156,7 +250,7 @@ func calculate_values():
 	
 	panel.get_node("Desc/VBoxContainer/Stats").text = new_string
 	
-	panel.get_node("Desc/VBoxContainer/Price").text = "Price: " + str(Global.attachment_values[selected_attachment]["price"]) + "$"
+	panel.get_node("Desc/VBoxContainer/Price").text = "Price: " + Global.format_str_commas(str(Global.attachment_values[selected_attachment]["price"])) + "$"
 	
 	panel.get_node("Desc/VBoxContainer/Owned").text = "Owned: " + str(Savedata.owned_attachments[selected_attachment])
 
@@ -165,6 +259,9 @@ func _attachment_pressed(button):
 	var weapon_attachment = Savedata.player_loadouts[selected_loadout][index_weapon_translations[weapon_id]][index_translations[selected_tab]]
 	
 	selected_attachment = button.name
+	
+	if (!Savedata.owned_attachments.keys().has(selected_attachment)):
+		Savedata.owned_attachments[selected_attachment] = 0
 	
 	panel.get_node("Desc/VBoxContainer/Title").text = Global.weapon_attachment_names[selected_attachment]
 	panel.get_node("Desc/VBoxContainer/Price").text = "Price: 10,000$"
@@ -175,7 +272,7 @@ func _attachment_pressed(button):
 	
 	if (selected_attachment == weapon_attachment):
 		panel.get_node("Desc/VBoxContainer/Button").text = "Unequip"
-	else:
+	else:		
 		if (Savedata.owned_attachments[selected_attachment] < 1):
 			panel.get_node("Desc/VBoxContainer/Button").text = "Buy"
 		else:
@@ -187,6 +284,8 @@ func _on_Button_pressed(button):
 	
 	var weapon = Savedata.player_loadouts[selected_loadout][index_weapon_translations[weapon_id]]
 	var weapon_attachment = Savedata.player_loadouts[selected_loadout][index_weapon_translations[weapon_id]][index_translations[selected_tab]]
+	
+	var price = Global.attachment_values[selected_attachment]["price"]
 	
 	if (button.text == "Unequip"):
 		Savedata.owned_attachments[selected_attachment] += 1
@@ -203,12 +302,26 @@ func _on_Button_pressed(button):
 		calculate_values()
 		
 		button.text = "Unequip"
-	else:
-		Savedata.owned_attachments[selected_attachment] += 1
-		button.text = "Equip"
-		
-		desc_panel.get_node("VBoxContainer/Owned").text = "Owned: " + str(Savedata.owned_attachments[selected_attachment])
-		
+	elif (button.text == "Buy"):
+		if (Savedata.player_stats["money"] >= price && Savedata.owned_attachments[selected_attachment] < 100):
+			parent.get_node("Buy").play()
+			Savedata.player_stats["money"] -= price
+			Savedata.owned_attachments[selected_attachment] += 1
+			button.text = "Equip"
+			
+			desc_panel.get_node("VBoxContainer/Owned").text = "Owned: " + str(Savedata.owned_attachments[selected_attachment])
+			
+			parent.update_money()
+		else:
+			parent.get_node("Wrong").play()
+			if (Savedata.player_stats["money"] < price):
+				button.text = "Can't afford!"
+			elif (Savedata.owned_attachments[selected_attachment] >= 100):
+				Savedata.owned_attachments[selected_attachment] = 100
+				button.text = "Can't buy!"
+			
+			get_tree().create_timer(1).connect("timeout",self,"change_button",[button])
+	
 		
 	var modifications = Global.weapon_attachments[edited_gun][index_translations[selected_tab]]
 	var searched = Savedata.player_loadouts[selected_loadout][index_weapon_translations[weapon_id]][index_translations[selected_tab]]
@@ -221,3 +334,7 @@ func _on_Button_pressed(button):
 				if (attachment == searched):
 					btn.get_node("equip").show()
 				break
+
+func change_button(button):
+	if (button.text == "Can't buy!" || button.text == "Can't afford!"):
+		button.text = "Buy"

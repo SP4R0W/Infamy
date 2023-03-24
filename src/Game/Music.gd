@@ -1,12 +1,13 @@
 extends VBoxContainer
 
 var music_info: Dictionary = {
-	"bank":0
+	"bank":1
 }
 
 var music_tracks: Array = [
 	"Velocity",
-	"Assault"
+	"Assault",
+	"Pound"
 ]
 
 var selected_track = music_info[Game.level]

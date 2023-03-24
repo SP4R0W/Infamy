@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Weapons/Deagle/Deagle.gd" type="Script" id=2]
+[ext_resource path="res://src/Weapons/Deagle/assets/deagle.png" type="Texture" id=3]
+[ext_resource path="res://src/Weapons/Deagle/assets/deagle.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 270, 116.667 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.5 ),
+"transitions": PoolRealArray( 0.35, 1, 0.15, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0, -75.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Melee/MeleeShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "reload"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.8, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 0.1 ),
+"update": 0,
+"values": [ 0.0, -85.0, -85.0, 0.0 ]
+}
+
+[node name="Deagle" instance=ExtResource( 1 )]
+scale = Vector2( 0.3, 0.3 )
+script = ExtResource( 2 )
+cam_shake_intensity = 2.5
+weapon_position = Vector2( 215, 115 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+
+[node name="MeleeShape" parent="Melee" index="0"]
+visible = false
+position = Vector2( 0, 6.35783e-06 )
+shape = SubResource( 1 )
+disabled = true
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/melee = SubResource( 2 )
+anims/reload = SubResource( 3 )
+
+[node name="Fire" parent="." index="5"]
+stream = ExtResource( 4 )
+
+[node name="Reload_sound" parent="." index="8"]
+stream = ExtResource( 7 )
+
+[node name="Reload_empty" parent="." index="9"]
+stream = ExtResource( 6 )

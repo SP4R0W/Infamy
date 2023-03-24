@@ -50,9 +50,6 @@ is_static = false
 is_camera_operator = false
 speed = 500.0
 
-[node name="NavigationAgent2D" parent="." index="0"]
-avoidance_enabled = false
-
 [node name="AnimatedSprite" parent="." index="1"]
 frames = SubResource( 1 )
 animation = "shoot"
@@ -60,7 +57,13 @@ animation = "shoot"
 [node name="BulletOrigin" parent="AnimatedSprite" index="3"]
 position = Vector2( 160, 0 )
 
+[node name="ReloadTimer" type="Timer" parent="." index="13"]
+wait_time = 2.0
+one_shot = true
+
 [node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
 text = "Guard"
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
 
 [editable path="Marker"]

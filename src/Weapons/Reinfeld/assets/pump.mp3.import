@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/pump.mp3-7af49f6db46810e752b8ceba2c6abee5.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/Reinfeld/assets/pump.mp3"
+dest_files=[ "res://.import/pump.mp3-7af49f6db46810e752b8ceba2c6abee5.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

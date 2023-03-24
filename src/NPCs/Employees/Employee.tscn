@@ -39,6 +39,7 @@ animations = [ {
 [node name="Employee" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 npc_name = "civilian"
+has_penalty = true
 is_static = false
 speed = 500.0
 

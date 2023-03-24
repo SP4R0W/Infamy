@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/Equipment/c4.png" type="Texture" id=1]
+[ext_resource path="res://src/Game/assets/audio/explosion.mp3" type="AudioStream" id=2]
+[ext_resource path="res://src/Equipment/C4/C4.gd" type="Script" id=3]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 200.0
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 500.0
+
+[node name="C4" type="Sprite"]
+texture = ExtResource( 1 )
+script = ExtResource( 3 )
+
+[node name="Detect" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detect"]
+shape = SubResource( 2 )
+
+[node name="Explosion" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Explosion"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="ExplosionSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = 10.0
+bus = "SFX"
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( 1.43051e-06, 0 )
+scale = Vector2( 2.4, 3.2 )
+
+[connection signal="area_entered" from="Detect" to="." method="_on_Detect_area_entered"]
+[connection signal="area_entered" from="Explosion" to="." method="_on_Explosion_area_entered"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
-
 signal object_interaction_started(object,action)
 signal object_interaction_aborted(object,action)
 signal object_interaction_finished(object,action)
@@ -38,6 +36,8 @@ func _ready():
 	
 	$Interaction_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
+	
+	Game.add_exception($Interaction_hitbox)
 
 func show_panel():
 	has_focus = true
@@ -96,6 +96,14 @@ func _process(delta):
 				Game.suspicious_interaction = true
 		elif (Input.is_action_pressed("interact3") && Game.player_can_interact):
 			if (!Game.player_is_interacting && can_use_ecm && is_closed):
+				if (Game.get_skill("infiltrator",3,2) == "none"):
+					Game.ui.update_popup("You need the 'Hacker' Skill!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				
 				if (!Game.get_amount_of_equipment("ECM") > 0):
 					Game.ui.update_popup("You have no ECM remaining!",2)
 					
@@ -159,7 +167,6 @@ func _on_Interaction_timer_timeout():
 				$Sprite.modulate = Color(0,1,0,1)
 						
 				set_collision_layer_bit(12,false)
-				get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 			else:
 				is_closed = true
 				$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Open (requires " + item_needed_name + ")"
@@ -171,7 +178,6 @@ func _on_Interaction_timer_timeout():
 				$Sprite.modulate = Color(1,0,0,1)
 					
 				set_collision_layer_bit(12,true)
-				get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 		elif (action == "c4"):
 			Game.use_player_equipment("C4")
 			can_interact = false
@@ -191,7 +197,6 @@ func _on_Interaction_timer_timeout():
 			$Sprite.modulate = Color(0,1,0,1)
 					
 			set_collision_layer_bit(12,false)
-			get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 
 
 func _on_C4_timer_timeout():
@@ -203,45 +208,49 @@ func _on_C4_timer_timeout():
 	else:
 		$C4.hide()
 		$Explosion.play()
-
-		show()
-		set_process(true)
 		
-		is_broken = true
-		
-		var noise = noise_scene.instance()
+		var noise = Game.scene_objects["alert"].instance()
+		noise.type = "c4_object"
 		noise.radius = 4000
 		noise.time = 0.1
-		add_child(noise)
+		call_deferred("add_child",noise)
 		
-		$NPC_open.call_deferred("queue_free")
-		
-		if (is_equal_approx(original_rotation,90)):
-			$Sprite.rotation_degrees = 0
-		elif (is_equal_approx(original_rotation,0)):
-			$Sprite.rotation_degrees = 90
-					
-		set_collision_layer_bit(12,false)
-		get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+		noise.start()
 
+		destroy_door()
+		
+func destroy_door():	
+	is_broken = true
+		
+	$NPC_open.call_deferred("queue_free")
+		
+	if (is_equal_approx(original_rotation,90)):
+		$Sprite.rotation_degrees = 0
+	elif (is_equal_approx(original_rotation,0)):
+		$Sprite.rotation_degrees = 90
+					
+	set_collision_layer_bit(12,false)
+	Game.remove_exception($Interaction_hitbox)
 
 func _on_NPC_open_area_entered(area):
 	if (area.is_in_group("hitbox_npc")):
-		var npc = area.get_parent().get_parent()
-		
-		if (!npc.is_hostaged && !npc.is_dead && !npc.is_unconscious && is_closed):
-			is_closed = false
-			can_interact = false
+		if (area.is_in_group("cop")):
+			destroy_door()
+		else:
+			var npc = area.get_parent().get_parent()
 			
-			if (is_equal_approx(original_rotation,90)):
-				$Sprite.rotation_degrees = 0
-			elif (is_equal_approx(original_rotation,0)):
-				$Sprite.rotation_degrees = 90
-			
-			$Sprite.modulate = Color(1,0,0,1)
-			
-			set_collision_layer_bit(12,false)
-			get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
+			if (!npc.is_hostaged && !npc.is_dead && !npc.is_unconscious && is_closed):
+				is_closed = false
+				can_interact = false
+				
+				if (is_equal_approx(original_rotation,90)):
+					$Sprite.rotation_degrees = 0
+				elif (is_equal_approx(original_rotation,0)):
+					$Sprite.rotation_degrees = 90
+				
+				$Sprite.modulate = Color(1,0,0,1)
+				
+				set_collision_layer_bit(12,false)
 
 
 func _on_Collision_hitbox_body_entered(body):
@@ -255,12 +264,8 @@ func _on_Collision_hitbox_body_exited(body):
 
 
 func _on_VisibilityNotifier2D_screen_entered():
-	if (!is_broken):
-		show()
-		set_process(true)
-
+	show()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	if (!is_broken):
 		hide()
-		set_process(false)

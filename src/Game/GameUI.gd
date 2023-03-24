@@ -8,11 +8,11 @@ onready var timer: Label = $Status/VBoxContainer/Timer
 onready var player_status: Label = $Status/VBoxContainer/Status
 onready var player_bag: Label = $Status/VBoxContainer/Carry
 
-onready var hostage_counter: Label = $Counters/VBoxContainer/Hostage
-onready var kill_counter: Label = $Counters/VBoxContainer/Kills
+onready var inventory = $CanvasLayer2/Inventory
 
-onready var inventory: Panel = $Inventory
-onready var inventory_box: HBoxContainer = $Inventory/HBoxContainer
+onready var hostage_counter: Label = $Counters/CenterContainer/VBoxContainer/Hostage
+onready var kill_counter: Label = $Counters/CenterContainer/VBoxContainer/Kills
+onready var money_counter: Label = $Money/CenterContainer/Money
 
 onready var weapon1_text: Label = $Player/Weapon1
 onready var ammo1_text: Label = $Player/Ammo1
@@ -34,14 +34,6 @@ var seconds: int = 0
 var minutes: int = 0
 var hours: int = 0
 
-var item_textures: Dictionary = {
-	"b_keycard":"res://src/Objects/Blue_keycard/blue_keycard.png",
-	"r_keycard":"res://src/Objects/Red_keycard/vault_keycard.png",
-	"vault_code":"res://src/Objects/Vault_code/vault_code.png",
-	"keys":"res://src/Objects/Keys/keys.png",
-	"p_number":"res://src/Objects/Phone/phone_number.png"
-}
-
 var equipment_textures: Dictionary = {
 	"Medic Bag":"res://src/Equipment/medic.png",
 	"Ammo Bag":"res://src/Equipment/ammo.png",
@@ -49,13 +41,9 @@ var equipment_textures: Dictionary = {
 	"ECM":"res://src/Equipment/ecm.png",
 }
 
-var texture_rects: Array
-
 var current_subtitle_priority = -1
 
 func _ready() -> void:
-	texture_rects = inventory_box.get_children()
-	
 	popup.hide()
 	subtitle.modulate = Color(1,1,1,0)
 	
@@ -104,16 +92,6 @@ func draw_player_inventory() -> void:
 		inventory.hide()
 	else:
 		inventory.show()
-		
-		for i in range(texture_rects.size()):
-			var rect = texture_rects[i]
-			
-			if (range(Game.player_inventory.size()).has(i)):
-				var item = Game.player_inventory[i]
-				
-				rect.texture = load(item_textures[item])
-			else:
-				rect.texture = null
 	
 func draw_weapon_names() -> void:
 	weapon1_text.text = Game.player_weapons[0]
@@ -174,9 +152,41 @@ func draw_player_equipment() -> void:
 	$Player/Bags_amount.text = str(Game.bodybags) + "x"
 		
 func draw_player_bars() -> void:
+	health_bar.max_value = Game.player_max_health
+	
 	health_bar.value = 	Game.player.health
 	armor_bar.value = Game.player.armor
 	stamina_bar.value = Game.player.stamina
+	
+func update_timers():
+	var ecm = get_node_or_null("Timers/ECM")
+	var overdose = get_node_or_null("Timers/Overdose")
+	var bulletstorm = get_node_or_null("Timers/Bulletstorm")
+	var golden = get_node_or_null("Timers/Golden")
+	
+	if (ecm != null && ecm.visible):
+		ecm.get_node("Time").text = "ECM: " + str(int(Game.game_scene.get_node("Timers/ECM").time_left + 1))
+		
+	if (overdose != null && overdose.visible):
+		overdose.get_node("Time").text = "Overdose: " + str(int(Game.game_scene.get_node("Timers/Overdose").time_left + 1))
+
+	if (bulletstorm != null && bulletstorm.visible):
+		bulletstorm.get_node("Time").text = "Bulletstorm: " + str(int(Game.game_scene.get_node("Timers/Bulletstorm").time_left + 1))
+	
+	if (golden != null && golden.visible):
+		golden.get_node("Time").text = "Golden Scout: " + str(int(Game.game_scene.get_node("Timers/Golden").time_left + 1))
+	
+func update_money():
+	var money = Game.stolen_cash - Game.killed_civilians_penalty - (Global.contract_values[Game.level]["rewards_mon"] + (Global.contract_values[Game.level]["rewards_mon_bonus"] * Game.difficulty))	
+	
+	if (money == 0):
+		money_counter.modulate = Color.white
+	elif (money > 0):
+		money_counter.modulate = Color.green
+	else:
+		money_counter.modulate = Color.red
+		
+	money_counter.text = "Money: " + Global.format_str_commas(money) + "$"
 			
 func _process(delta) -> void:
 	if (!Game.game_process):
@@ -193,8 +203,11 @@ func _process(delta) -> void:
 	draw_player_equipment()
 	draw_player_bars()
 	
-	$Counters/VBoxContainer/Hostage.text = "H:" + str(Game.hostages)
-	$Counters/VBoxContainer/Kills.text = "K:" + str(Game.kills)
+	update_timers()
+	update_money()
+	
+	$Counters/CenterContainer/VBoxContainer/Hostage.text = "H:" + str(Game.hostages)
+	$Counters/CenterContainer/VBoxContainer/Kills.text = "K:" + str(Game.kills)
 	
 func do_green_effect(duration=0.5):
 	effect.modulate = Color.green
@@ -233,6 +246,7 @@ func update_objective(objective_str: String):
 	$Objective/Tween.start()
 	
 func update_popup(message: String, duration: float):
+	$Popup_panel/Timer.stop()
 	$SFX/secure.play()	
 	
 	popup.visible = false
@@ -260,6 +274,9 @@ func update_popup(message: String, duration: float):
 	popup.visible = false
 	
 func update_subtitle(subtitle_str:String, priority: int, duration: float):
+	if (!Savedata.player_settings["subtitles"]):
+		return
+		
 	if (current_subtitle_priority == -1):
 		subtitle.text = subtitle_str
 		current_subtitle_priority = priority
@@ -271,13 +288,6 @@ func update_subtitle(subtitle_str:String, priority: int, duration: float):
 		
 		$Subtitle/Timer.wait_time = duration
 		$Subtitle/Timer.start()
-		
-		yield($Subtitle/Timer,"timeout")
-		
-		current_subtitle_priority = -1
-		
-		$Subtitle/Tween.interpolate_property(subtitle,"modulate:a",1,0,0.5)
-		$Subtitle/Tween.start()			
 	else:
 		if (current_subtitle_priority <= priority):
 			subtitle.text = subtitle_str
@@ -286,14 +296,23 @@ func update_subtitle(subtitle_str:String, priority: int, duration: float):
 			
 			$Subtitle/Timer.wait_time = duration
 			$Subtitle/Timer.start()
-			
-			yield($Subtitle/Timer,"timeout")
-			
-			current_subtitle_priority = -1
-			
-			$Subtitle/Tween.interpolate_property(subtitle,"modulate:a",1,0,0.5)
-			$Subtitle/Tween.start()		
-					
 
-func _exit_tree() -> void:
-	Game.ui = null
+func end_subtitles():
+	current_subtitle_priority = -1
+	
+	$Subtitle/Tween.interpolate_property(subtitle,"modulate:a",1,0,0.5)
+	$Subtitle/Tween.start()
+
+func show_timer(name):
+	if (Savedata.player_settings["timers"]):
+		var timer = $Timers.get_node_or_null(name)
+		if (timer != null):
+			timer.show()
+	
+func hide_timer(name):
+	var timer = $Timers.get_node_or_null(name)
+	if (timer != null):
+		timer.hide()
+
+
+

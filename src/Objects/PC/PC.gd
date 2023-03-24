@@ -32,6 +32,14 @@ func _process(delta):
 	if (has_focus && can_interact):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
 			if (!Game.player_is_interacting):
+				if (Game.get_skill("infiltrator",3,2) != "upgraded"):
+					Game.ui.update_popup("You need the upgraded 'Hacker' Skill!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				
 				Game.player_is_interacting = true
 				
 				emit_signal("object_interaction_started",self,self.action)
@@ -60,6 +68,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = false
 	else:
+		$keyboard.stop()
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	

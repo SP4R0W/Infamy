@@ -78,7 +78,7 @@ func _on_Interaction_timer_timeout():
 			
 		emit_signal("object_interaction_finished",self,self.action)
 
-		var needed = Game.max_bodybags - Game.habodybagsndcuffs
+		var needed = Game.max_bodybags - Game.bodybags
 		if (remaining_uses >= needed):
 			remaining_uses -= needed
 			Game.bodybags += needed

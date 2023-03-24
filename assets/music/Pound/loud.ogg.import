@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/loud.ogg-2742b9b778fc4c29a00b0b6a0e077739.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Pound/loud.ogg"
+dest_files=[ "res://.import/loud.ogg-2742b9b778fc4c29a00b0b6a0e077739.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

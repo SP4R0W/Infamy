@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Menus/Inventory/Inventory.gd" type="Script" id=2]
@@ -8,24 +8,24 @@
 [ext_resource path="res://src/Menus/Inventory/assets/suit_preview.png" type="Texture" id=6]
 [ext_resource path="res://src/Menus/Inventory/assets/ecm_preview.png" type="Texture" id=7]
 [ext_resource path="res://src/Menus/Inventory/assets/c4_preview.png" type="Texture" id=8]
-[ext_resource path="res://src/Weapons/assets/suppressor1.png" type="Texture" id=9]
-[ext_resource path="res://src/Weapons/assets/suppressor2.png" type="Texture" id=10]
-[ext_resource path="res://src/Weapons/assets/suppressor3.png" type="Texture" id=11]
-[ext_resource path="res://src/Weapons/assets/compensator3.png" type="Texture" id=12]
-[ext_resource path="res://src/Weapons/assets/compensator2.png" type="Texture" id=13]
-[ext_resource path="res://src/Weapons/assets/compensator1.png" type="Texture" id=14]
-[ext_resource path="res://src/Weapons/assets/stock_uzi.png" type="Texture" id=15]
-[ext_resource path="res://src/Weapons/assets/acog.png" type="Texture" id=16]
-[ext_resource path="res://src/Weapons/assets/reflex.png" type="Texture" id=17]
-[ext_resource path="res://src/Weapons/assets/holo.png" type="Texture" id=18]
-[ext_resource path="res://src/Weapons/assets/extendedm9.png" type="Texture" id=19]
-[ext_resource path="res://src/Weapons/assets/extendedUzi.png" type="Texture" id=20]
-[ext_resource path="res://src/Weapons/assets/shortUzi.png" type="Texture" id=21]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/compensator2_pistol.png" type="Texture" id=9]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor3_pistol.png" type="Texture" id=10]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/sight1.png" type="Texture" id=11]
+[ext_resource path="res://src/Weapons/assets/compensator3_pistol.png" type="Texture" id=12]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor1_pistol.png" type="Texture" id=13]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor2_pistol.png" type="Texture" id=14]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/stock_uzi.png" type="Texture" id=15]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/sight2.png" type="Texture" id=16]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/sight3.png" type="Texture" id=17]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/compensator1_pistol.png" type="Texture" id=18]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/extended_m9.png" type="Texture" id=19]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/extended_mag_uzi.png" type="Texture" id=20]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/short_mag.png" type="Texture" id=21]
 [ext_resource path="res://src/Menus/Inventory/Inventory_panel.gd" type="Script" id=22]
 [ext_resource path="res://src/Menus/Inventory/Modify_panel.gd" type="Script" id=23]
 [ext_resource path="res://src/Equipment/c4.png" type="Texture" id=24]
 [ext_resource path="res://src/Equipment/ammo.png" type="Texture" id=25]
-[ext_resource path="res://src/Equipment/turret.png" type="Texture" id=26]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/g17.png" type="Texture" id=26]
 [ext_resource path="res://src/Equipment/medic.png" type="Texture" id=27]
 [ext_resource path="res://src/Equipment/ecm.png" type="Texture" id=28]
 [ext_resource path="res://src/Menus/Inventory/Equipment_panel.gd" type="Script" id=29]
@@ -38,36 +38,70 @@
 [ext_resource path="res://src/Menus/Inventory/Weapon_panel.gd" type="Script" id=36]
 [ext_resource path="res://src/Menus/Inventory/assets/weapons/m9.png" type="Texture" id=37]
 [ext_resource path="res://src/Menus/Inventory/assets/weapons/uzi.png" type="Texture" id=38]
+[ext_resource path="res://assets/menu.jpg" type="Texture" id=39]
+[ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=40]
+[ext_resource path="res://assets/fonts/droid-sans/DroidSans-Bold.ttf" type="DynamicFontData" id=41]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=42]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=43]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=44]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=45]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Semibold.ttf" type="DynamicFontData" id=46]
+[ext_resource path="res://assets/sfx/wrong.mp3" type="AudioStream" id=47]
+[ext_resource path="res://assets/sfx/buy.mp3" type="AudioStream" id=48]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/deagle.png" type="Texture" id=49]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/bronco.png" type="Texture" id=50]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/extended_g17.png" type="Texture" id=51]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/compensator2_auto.png" type="Texture" id=52]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/compensator3_auto.png" type="Texture" id=53]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor3_auto.png" type="Texture" id=54]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor1_auto.png" type="Texture" id=55]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/suppressor2_auto.png" type="Texture" id=56]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/compensator1_auto.png" type="Texture" id=57]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/m4.png" type="Texture" id=58]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/m4_extended.png" type="Texture" id=59]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/m4_short.png" type="Texture" id=60]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/short_stock.png" type="Texture" id=61]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/wide_stock.png" type="Texture" id=62]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/ak.png" type="Texture" id=63]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/mp5.png" type="Texture" id=64]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/extended_ak.png" type="Texture" id=65]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/m110.png" type="Texture" id=66]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/awp.png" type="Texture" id=67]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/reinfeld.png" type="Texture" id=68]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/saiga.png" type="Texture" id=69]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/saiga_extended.png" type="Texture" id=70]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/shotgun_suppressor.png" type="Texture" id=71]
+[ext_resource path="res://src/Menus/Inventory/assets/weapons/shotgun_compensator.png" type="Texture" id=72]
 
 [sub_resource type="DynamicFont" id=1]
 size = 200
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 41 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 34
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 45 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 45 )
 
 [sub_resource type="DynamicFont" id=8]
 size = 32
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 45 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 46 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 32
@@ -79,7 +113,7 @@ font_data = ExtResource( 1 )
 size = 42
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 45 )
 
 [node name="Inventory" type="Node2D"]
 script = ExtResource( 2 )
@@ -90,6 +124,12 @@ anchor_bottom = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
+[node name="Bg" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 240.0
+texture = ExtResource( 39 )
+
 [node name="Inventory_panel" type="Panel" parent="Control/CanvasLayer"]
 anchor_left = 0.5
 anchor_top = 0.5
@@ -99,6 +139,7 @@ margin_left = -1550.0
 margin_top = -630.5
 margin_right = 1550.0
 margin_bottom = 630.5
+custom_styles/panel = ExtResource( 40 )
 script = ExtResource( 22 )
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel"]
@@ -122,6 +163,7 @@ margin_left = 10.0
 margin_right = 610.0
 margin_bottom = 1261.0
 rect_min_size = Vector2( 600, 0 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary"]
 margin_right = 40.0
@@ -131,21 +173,21 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 91.0
+margin_bottom = 81.0
 custom_fonts/font = ExtResource( 4 )
 text = "Primary: UZI"
 align = 1
 
 [node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
-margin_top = 91.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 271.0
+margin_bottom = 261.0
 texture = ExtResource( 3 )
 
 [node name="Mods" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
-margin_top = 271.0
+margin_top = 261.0
 margin_right = 600.0
-margin_bottom = 523.0
+margin_bottom = 513.0
 rect_min_size = Vector2( 600, 252 )
 custom_fonts/font = SubResource( 7 )
 text = "Modifications:
@@ -154,9 +196,9 @@ align = 1
 valign = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
-margin_top = 523.0
+margin_top = 513.0
 margin_right = 600.0
-margin_bottom = 896.0
+margin_bottom = 886.0
 rect_min_size = Vector2( 0, 373 )
 custom_fonts/font = SubResource( 7 )
 text = "Stats:
@@ -170,33 +212,39 @@ valign = 1
 
 [node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
 modulate = Color( 1, 0, 0, 1 )
-margin_top = 896.0
+margin_top = 886.0
 margin_right = 600.0
-margin_bottom = 1021.0
+margin_bottom = 1011.0
 rect_min_size = Vector2( 0, 125 )
 custom_fonts/font = SubResource( 3 )
 text = "Visible"
 align = 1
 
 [node name="Modify" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
-margin_top = 1021.0
+margin_top = 1011.0
 margin_right = 600.0
-margin_bottom = 1118.0
+margin_bottom = 1096.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Modify"
 
 [node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 1118.0
+margin_top = 1096.0
 margin_right = 600.0
-margin_bottom = 1128.0
+margin_bottom = 1106.0
 custom_constants/separation = 10
 
 [node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer"]
-margin_top = 1128.0
+margin_top = 1106.0
 margin_right = 600.0
-margin_bottom = 1225.0
+margin_bottom = 1191.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Change"
 
 [node name="Secondary" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
@@ -204,6 +252,7 @@ margin_left = 630.0
 margin_right = 1230.0
 margin_bottom = 1261.0
 rect_min_size = Vector2( 600, 0 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary"]
 margin_right = 40.0
@@ -213,21 +262,21 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 91.0
+margin_bottom = 81.0
 custom_fonts/font = ExtResource( 4 )
 text = "Secondary: M9"
 align = 1
 
 [node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
-margin_top = 91.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 271.0
+margin_bottom = 261.0
 texture = ExtResource( 5 )
 
 [node name="Mods" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
-margin_top = 271.0
+margin_top = 261.0
 margin_right = 600.0
-margin_bottom = 523.0
+margin_bottom = 513.0
 rect_min_size = Vector2( 600, 252 )
 custom_fonts/font = SubResource( 8 )
 text = "Modifications:
@@ -236,9 +285,9 @@ align = 1
 valign = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
-margin_top = 523.0
+margin_top = 513.0
 margin_right = 600.0
-margin_bottom = 896.0
+margin_bottom = 886.0
 rect_min_size = Vector2( 0, 373 )
 custom_fonts/font = SubResource( 8 )
 text = "Stats:
@@ -252,33 +301,39 @@ valign = 1
 
 [node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
 modulate = Color( 0, 0.670588, 1, 1 )
-margin_top = 896.0
+margin_top = 886.0
 margin_right = 600.0
-margin_bottom = 1021.0
+margin_bottom = 1011.0
 rect_min_size = Vector2( 0, 125 )
 custom_fonts/font = SubResource( 3 )
 text = "Concealed"
 align = 1
 
 [node name="Modify" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
-margin_top = 1021.0
+margin_top = 1011.0
 margin_right = 600.0
-margin_bottom = 1118.0
+margin_bottom = 1096.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Modify"
 
 [node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 1118.0
+margin_top = 1096.0
 margin_right = 600.0
-margin_bottom = 1128.0
+margin_bottom = 1106.0
 custom_constants/separation = 10
 
 [node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Secondary/VBoxContainer"]
-margin_top = 1128.0
+margin_top = 1106.0
 margin_right = 600.0
-margin_bottom = 1225.0
+margin_bottom = 1191.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Change"
 
 [node name="Armor" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
@@ -286,6 +341,7 @@ margin_left = 1250.0
 margin_right = 1850.0
 margin_bottom = 1261.0
 rect_min_size = Vector2( 600, 0 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor"]
 margin_right = 40.0
@@ -295,35 +351,35 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 91.0
+margin_bottom = 81.0
 custom_fonts/font = ExtResource( 4 )
 text = "Armor: Suit"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 91.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 191.0
+margin_bottom = 181.0
 custom_constants/separation = 100
 
 [node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
-margin_top = 191.0
+margin_top = 181.0
 margin_right = 600.0
-margin_bottom = 371.0
+margin_bottom = 361.0
 texture = ExtResource( 6 )
 
 [node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 371.0
+margin_top = 361.0
 margin_right = 600.0
-margin_bottom = 480.0
+margin_bottom = 470.0
 custom_constants/separation = 109
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
-margin_top = 480.0
+margin_top = 470.0
 margin_right = 600.0
-margin_bottom = 895.0
+margin_bottom = 885.0
 rect_min_size = Vector2( 0, 415 )
 custom_fonts/font = SubResource( 3 )
 text = "Stats:
@@ -336,19 +392,22 @@ valign = 1
 
 [node name="Hidden" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
 modulate = Color( 0, 0.670588, 1, 1 )
-margin_top = 895.0
+margin_top = 885.0
 margin_right = 600.0
-margin_bottom = 1021.0
+margin_bottom = 1011.0
 rect_min_size = Vector2( 0, 126 )
 custom_fonts/font = SubResource( 3 )
 text = "Concealed"
 align = 1
 
 [node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Armor/VBoxContainer"]
-margin_top = 1021.0
+margin_top = 1011.0
 margin_right = 600.0
-margin_bottom = 1118.0
+margin_bottom = 1096.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Change"
 
 [node name="Equipment1" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
@@ -356,6 +415,7 @@ margin_left = 1870.0
 margin_right = 2470.0
 margin_bottom = 1261.0
 rect_min_size = Vector2( 600, 0 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1"]
 margin_right = 40.0
@@ -366,29 +426,29 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 91.0
+margin_bottom = 81.0
 custom_fonts/font = ExtResource( 4 )
 text = "Item 1: ECM"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 91.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 191.0
+margin_bottom = 181.0
 custom_constants/separation = 100
 
 [node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
-margin_top = 191.0
+margin_top = 181.0
 margin_right = 600.0
-margin_bottom = 371.0
+margin_bottom = 361.0
 rect_min_size = Vector2( 0, 180 )
 texture = ExtResource( 7 )
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
-margin_top = 371.0
+margin_top = 361.0
 margin_right = 600.0
-margin_bottom = 1021.0
+margin_bottom = 1011.0
 rect_min_size = Vector2( 0, 650 )
 custom_fonts/font = SubResource( 3 )
 text = "Amount: 4
@@ -398,10 +458,13 @@ valign = 1
 autowrap = true
 
 [node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment1/VBoxContainer"]
-margin_top = 1021.0
+margin_top = 1011.0
 margin_right = 600.0
-margin_bottom = 1118.0
+margin_bottom = 1096.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Change"
 
 [node name="Equipment2" type="Panel" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer"]
@@ -409,6 +472,7 @@ margin_left = 2490.0
 margin_right = 3090.0
 margin_bottom = 1261.0
 rect_min_size = Vector2( 600, 0 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2"]
 margin_right = 40.0
@@ -419,29 +483,29 @@ alignment = 1
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
 margin_right = 600.0
-margin_bottom = 91.0
+margin_bottom = 81.0
 custom_fonts/font = ExtResource( 4 )
 text = "Item 2: C4"
 align = 1
 
 [node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 91.0
+margin_top = 81.0
 margin_right = 600.0
-margin_bottom = 191.0
+margin_bottom = 181.0
 custom_constants/separation = 100
 
 [node name="TextureRect" type="TextureRect" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
-margin_top = 191.0
+margin_top = 181.0
 margin_right = 600.0
-margin_bottom = 371.0
+margin_bottom = 361.0
 rect_min_size = Vector2( 0, 180 )
 texture = ExtResource( 8 )
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
-margin_top = 371.0
+margin_top = 361.0
 margin_right = 600.0
-margin_bottom = 1021.0
+margin_bottom = 1011.0
 rect_min_size = Vector2( 0, 650 )
 custom_fonts/font = SubResource( 3 )
 text = "Amount: 8"
@@ -450,10 +514,13 @@ valign = 1
 autowrap = true
 
 [node name="Change" type="Button" parent="Control/CanvasLayer/Inventory_panel/HBoxContainer/Equipment2/VBoxContainer"]
-margin_top = 1021.0
+margin_top = 1011.0
 margin_right = 600.0
-margin_bottom = 1118.0
+margin_bottom = 1096.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Change"
 
 [node name="Modify_panel" type="TabContainer" parent="Control/CanvasLayer"]
@@ -467,16 +534,20 @@ margin_top = -630.5
 margin_right = 1550.0
 margin_bottom = 630.5
 custom_fonts/font = SubResource( 4 )
+custom_styles/tab_fg = ExtResource( 43 )
+custom_styles/tab_bg = ExtResource( 42 )
+custom_styles/panel = ExtResource( 40 )
 tab_align = 0
 script = ExtResource( 23 )
 
 [node name="Barrel" type="Panel" parent="Control/CanvasLayer/Modify_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 4.0
-margin_top = 86.0
-margin_right = -4.0
-margin_bottom = -4.0
+margin_left = 2.0
+margin_top = 74.0
+margin_right = -2.0
+margin_bottom = -2.0
+custom_styles/panel = ExtResource( 40 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Modify_panel/Barrel"]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -492,15 +563,15 @@ custom_constants/vseparation = 100
 custom_constants/hseparation = 100
 columns = 3
 
-[node name="suppressor1" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+[node name="suppressor1_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
 margin_right = 300.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 9 )
+texture_normal = ExtResource( 13 )
 expand = true
 stretch_mode = 3
 
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor1"]
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor1_pistol"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -513,16 +584,38 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="suppressor2" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+[node name="suppressor2_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
 margin_left = 400.0
 margin_right = 700.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 14 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor2_pistol"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="suppressor3_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 800.0
+margin_right = 1100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
 texture_normal = ExtResource( 10 )
 expand = true
 stretch_mode = 3
 
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor2"]
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor3_pistol"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -535,38 +628,16 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="suppressor3" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
-margin_left = 800.0
-margin_right = 1100.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 11 )
-expand = true
-stretch_mode = 3
-
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor3"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -80.5
-margin_top = -23.0
-margin_right = 80.5
-margin_bottom = 23.0
-custom_fonts/font = SubResource( 5 )
-text = "Equipped!"
-
-[node name="compensator1" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+[node name="suppressor1_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
 margin_top = 200.0
 margin_right = 300.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 14 )
+texture_normal = ExtResource( 55 )
 expand = true
 stretch_mode = 3
 
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator1"]
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor1_auto"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -579,17 +650,17 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="compensator2" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+[node name="suppressor2_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
 margin_left = 400.0
 margin_top = 200.0
 margin_right = 700.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 13 )
+texture_normal = ExtResource( 56 )
 expand = true
 stretch_mode = 3
 
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator2"]
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor2_auto"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -602,17 +673,198 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="compensator3" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+[node name="suppressor3_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
 margin_left = 800.0
 margin_top = 200.0
 margin_right = 1100.0
 margin_bottom = 300.0
 rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 54 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor3_auto"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="suppressor_shotgun" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 71 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/suppressor_shotgun"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator1_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 18 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator1_pistol"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator2_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 800.0
+margin_top = 400.0
+margin_right = 1100.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 9 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator2_pistol"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator3_pistol" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_top = 600.0
+margin_right = 300.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
 texture_normal = ExtResource( 12 )
 expand = true
 stretch_mode = 3
 
-[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator3"]
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator3_pistol"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator1_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 400.0
+margin_top = 600.0
+margin_right = 700.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 57 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator1_auto"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator2_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 800.0
+margin_top = 600.0
+margin_right = 1100.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 52 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator2_auto"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator3_auto" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_top = 800.0
+margin_right = 300.0
+margin_bottom = 900.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 53 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator3_auto"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="compensator_shotgun" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer"]
+margin_left = 400.0
+margin_top = 800.0
+margin_right = 700.0
+margin_bottom = 900.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 72 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/GridContainer/compensator_shotgun"]
 visible = false
 anchor_left = 0.5
 anchor_top = 0.5
@@ -630,16 +882,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 743.0
-margin_bottom = 1164.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 752.0
+margin_bottom = 1183.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc/VBoxContainer"]
-margin_right = 736.0
+margin_right = 750.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -647,7 +900,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 736.0
+margin_right = 750.0
 margin_bottom = 438.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -655,7 +908,7 @@ align = 1
 
 [node name="Old_stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc/VBoxContainer"]
 margin_top = 473.0
-margin_right = 736.0
+margin_right = 750.0
 margin_bottom = 785.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -663,7 +916,7 @@ align = 1
 
 [node name="Price" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc/VBoxContainer"]
 margin_top = 820.0
-margin_right = 736.0
+margin_right = 750.0
 margin_bottom = 880.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -671,7 +924,7 @@ align = 1
 
 [node name="Owned" type="Label" parent="Control/CanvasLayer/Modify_panel/Barrel/Desc/VBoxContainer"]
 margin_top = 915.0
-margin_right = 736.0
+margin_right = 750.0
 margin_bottom = 975.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -683,6 +936,9 @@ margin_top = 1010.0
 margin_right = 736.0
 margin_bottom = 1107.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Sights" type="Panel" parent="Control/CanvasLayer/Modify_panel"]
@@ -690,9 +946,10 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 86.0
+margin_top = 72.0
 margin_right = -4.0
 margin_bottom = -4.0
+custom_styles/panel = ExtResource( 40 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Modify_panel/Sights"]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -712,7 +969,7 @@ columns = 3
 margin_right = 300.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 17 )
+texture_normal = ExtResource( 11 )
 expand = true
 stretch_mode = 3
 
@@ -734,7 +991,7 @@ margin_left = 400.0
 margin_right = 700.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 18 )
+texture_normal = ExtResource( 16 )
 expand = true
 stretch_mode = 3
 
@@ -756,7 +1013,7 @@ margin_left = 800.0
 margin_right = 1100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 16 )
+texture_normal = ExtResource( 17 )
 expand = true
 stretch_mode = 3
 
@@ -778,16 +1035,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Modify_panel/Sights/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 743.0
-margin_bottom = 1164.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 748.0
+margin_bottom = 1183.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Modify_panel/Sights/Desc/VBoxContainer"]
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -795,7 +1053,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Sights/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 438.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -803,7 +1061,7 @@ align = 1
 
 [node name="Old_stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Sights/Desc/VBoxContainer"]
 margin_top = 473.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 785.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -811,7 +1069,7 @@ align = 1
 
 [node name="Price" type="Label" parent="Control/CanvasLayer/Modify_panel/Sights/Desc/VBoxContainer"]
 margin_top = 820.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 880.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -819,7 +1077,7 @@ align = 1
 
 [node name="Owned" type="Label" parent="Control/CanvasLayer/Modify_panel/Sights/Desc/VBoxContainer"]
 margin_top = 915.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 975.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -831,6 +1089,9 @@ margin_top = 1010.0
 margin_right = 736.0
 margin_bottom = 1107.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Magazines" type="Panel" parent="Control/CanvasLayer/Modify_panel"]
@@ -838,9 +1099,10 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 86.0
+margin_top = 72.0
 margin_right = -4.0
 margin_bottom = -4.0
+custom_styles/panel = ExtResource( 40 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Modify_panel/Magazines"]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -877,9 +1139,31 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="extended_uzi" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+[node name="extended_g17" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
 margin_left = 400.0
 margin_right = 700.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 51 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer/extended_g17"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="extended_uzi" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+margin_left = 800.0
+margin_right = 1100.0
 margin_bottom = 100.0
 rect_min_size = Vector2( 300, 100 )
 texture_normal = ExtResource( 20 )
@@ -900,9 +1184,9 @@ custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
 [node name="short_uzi" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
-margin_left = 800.0
-margin_right = 1100.0
-margin_bottom = 100.0
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 300.0
 rect_min_size = Vector2( 300, 100 )
 texture_normal = ExtResource( 21 )
 expand = true
@@ -921,21 +1205,113 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
+[node name="extended_m4" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+margin_left = 400.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 59 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer/extended_m4"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="extended_ak" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 1100.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 65 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer/extended_ak"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="short_m4" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 60 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer/short_m4"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="extended_saiga" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer"]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 70 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/GridContainer/extended_saiga"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
 [node name="Desc" type="PanelContainer" parent="Control/CanvasLayer/Modify_panel/Magazines"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 743.0
-margin_bottom = 1164.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 748.0
+margin_bottom = 1183.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc/VBoxContainer"]
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -943,7 +1319,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 438.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -951,7 +1327,7 @@ align = 1
 
 [node name="Old_stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc/VBoxContainer"]
 margin_top = 473.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 785.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -959,7 +1335,7 @@ align = 1
 
 [node name="Price" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc/VBoxContainer"]
 margin_top = 820.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 880.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -967,7 +1343,7 @@ align = 1
 
 [node name="Owned" type="Label" parent="Control/CanvasLayer/Modify_panel/Magazines/Desc/VBoxContainer"]
 margin_top = 915.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 975.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -979,6 +1355,9 @@ margin_top = 1010.0
 margin_right = 736.0
 margin_bottom = 1107.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Stocks" type="Panel" parent="Control/CanvasLayer/Modify_panel"]
@@ -986,9 +1365,10 @@ visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
-margin_top = 86.0
+margin_top = 72.0
 margin_right = -4.0
 margin_bottom = -4.0
+custom_styles/panel = ExtResource( 40 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Modify_panel/Stocks"]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -1025,21 +1405,66 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
+[node name="wide_stock" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Stocks/GridContainer"]
+margin_left = 400.0
+margin_right = 700.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 62 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/GridContainer/wide_stock"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="short_stock" type="TextureButton" parent="Control/CanvasLayer/Modify_panel/Stocks/GridContainer"]
+margin_left = 800.0
+margin_right = 1100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 61 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/GridContainer/short_stock"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = -23.0
+margin_right = 80.5
+margin_bottom = 23.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
 [node name="Desc" type="PanelContainer" parent="Control/CanvasLayer/Modify_panel/Stocks"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 743.0
-margin_bottom = 1164.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 748.0
+margin_bottom = 1183.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc/VBoxContainer"]
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -1047,7 +1472,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 438.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -1055,7 +1480,7 @@ align = 1
 
 [node name="Old_stats" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc/VBoxContainer"]
 margin_top = 473.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 785.0
 rect_min_size = Vector2( 0, 312 )
 custom_fonts/font = SubResource( 6 )
@@ -1063,7 +1488,7 @@ align = 1
 
 [node name="Price" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc/VBoxContainer"]
 margin_top = 820.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 880.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -1071,7 +1496,7 @@ align = 1
 
 [node name="Owned" type="Label" parent="Control/CanvasLayer/Modify_panel/Stocks/Desc/VBoxContainer"]
 margin_top = 915.0
-margin_right = 736.0
+margin_right = 746.0
 margin_bottom = 975.0
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = SubResource( 6 )
@@ -1083,6 +1508,9 @@ margin_top = 1010.0
 margin_right = 736.0
 margin_bottom = 1107.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Weapon_panel" type="Panel" parent="Control/CanvasLayer"]
@@ -1095,6 +1523,7 @@ margin_left = -1550.0
 margin_top = -630.5
 margin_right = 1550.0
 margin_bottom = 630.5
+custom_styles/panel = ExtResource( 40 )
 script = ExtResource( 36 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Control/CanvasLayer/Weapon_panel"]
@@ -1103,15 +1532,16 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -600.0
-margin_top = -250.0
+margin_top = -400.0
 margin_right = 500.0
-margin_bottom = 250.0
-rect_min_size = Vector2( 1100, 500 )
+margin_bottom = 400.0
+rect_min_size = Vector2( 1100, 800 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer"]
 self_modulate = Color( 0, 0, 0, 1 )
-margin_right = 700.0
-margin_bottom = 100.0
+margin_right = 1100.0
+margin_bottom = 800.0
+rect_min_size = Vector2( 1100, 800 )
 custom_constants/vseparation = 100
 custom_constants/hseparation = 100
 columns = 3
@@ -1137,10 +1567,168 @@ margin_bottom = 69.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="M9" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+[node name="M4" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
 margin_left = 400.0
 margin_right = 700.0
 margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 58 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/M4"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="AK" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 800.0
+margin_right = 1100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 63 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/AK"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="MP5" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_top = 200.0
+margin_right = 300.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 64 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/MP5"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="AWP" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 400.0
+margin_top = 200.0
+margin_right = 700.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 67 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/AWP"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="M110" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 800.0
+margin_top = 200.0
+margin_right = 1100.0
+margin_bottom = 300.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 66 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/M110"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="Saiga" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_top = 400.0
+margin_right = 300.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 69 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/Saiga"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="Reinfeld" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 400.0
+margin_top = 400.0
+margin_right = 700.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 68 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/Reinfeld"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="M9" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 800.0
+margin_top = 400.0
+margin_right = 1100.0
+margin_bottom = 500.0
 rect_min_size = Vector2( 300, 100 )
 texture_normal = ExtResource( 37 )
 expand = true
@@ -1159,21 +1747,90 @@ margin_bottom = 69.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
+[node name="G17" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_top = 600.0
+margin_right = 300.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 26 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/G17"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="Deagle" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 400.0
+margin_top = 600.0
+margin_right = 700.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 49 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/Deagle"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
+[node name="Bronco" type="TextureButton" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer"]
+margin_left = 800.0
+margin_top = 600.0
+margin_right = 1100.0
+margin_bottom = 700.0
+rect_min_size = Vector2( 300, 100 )
+texture_normal = ExtResource( 50 )
+expand = true
+stretch_mode = 3
+
+[node name="equip" type="Label" parent="Control/CanvasLayer/Weapon_panel/ScrollContainer/GridContainer/Bronco"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.5
+margin_top = 23.0
+margin_right = 80.5
+margin_bottom = 69.0
+custom_fonts/font = SubResource( 5 )
+text = "Equipped!"
+
 [node name="Desc" type="PanelContainer" parent="Control/CanvasLayer/Weapon_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Weapon_panel/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 751.0
-margin_bottom = 1254.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 756.0
+margin_bottom = 1259.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Weapon_panel/Desc/VBoxContainer"]
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -1181,7 +1838,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Weapon_panel/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 538.0
 rect_min_size = Vector2( 0, 412 )
 custom_fonts/font = SubResource( 6 )
@@ -1191,7 +1848,7 @@ autowrap = true
 
 [node name="Old" type="Label" parent="Control/CanvasLayer/Weapon_panel/Desc/VBoxContainer"]
 margin_top = 573.0
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 985.0
 rect_min_size = Vector2( 0, 412 )
 custom_fonts/font = SubResource( 6 )
@@ -1201,18 +1858,21 @@ autowrap = true
 
 [node name="Price" type="Label" parent="Control/CanvasLayer/Weapon_panel/Desc/VBoxContainer"]
 margin_top = 1020.0
-margin_right = 744.0
-margin_bottom = 1080.0
+margin_right = 754.0
+margin_bottom = 1074.0
 custom_fonts/font = SubResource( 6 )
 align = 1
 valign = 1
 autowrap = true
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Weapon_panel/Desc/VBoxContainer"]
-margin_top = 1115.0
-margin_right = 744.0
-margin_bottom = 1212.0
+margin_top = 1109.0
+margin_right = 754.0
+margin_bottom = 1194.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Armor_panel" type="Panel" parent="Control/CanvasLayer"]
@@ -1225,6 +1885,7 @@ margin_left = -1550.0
 margin_top = -630.5
 margin_right = 1550.0
 margin_bottom = 630.5
+custom_styles/panel = ExtResource( 40 )
 script = ExtResource( 35 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Armor_panel"]
@@ -1356,16 +2017,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Armor_panel/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 751.0
-margin_bottom = 1254.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 756.0
+margin_bottom = 1259.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Armor_panel/Desc/VBoxContainer"]
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -1373,7 +2035,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Armor_panel/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 588.0
 rect_min_size = Vector2( 0, 462 )
 custom_fonts/font = SubResource( 6 )
@@ -1383,7 +2045,7 @@ autowrap = true
 
 [node name="Old" type="Label" parent="Control/CanvasLayer/Armor_panel/Desc/VBoxContainer"]
 margin_top = 623.0
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 1085.0
 rect_min_size = Vector2( 0, 462 )
 custom_fonts/font = SubResource( 6 )
@@ -1393,9 +2055,12 @@ autowrap = true
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Armor_panel/Desc/VBoxContainer"]
 margin_top = 1120.0
-margin_right = 744.0
-margin_bottom = 1217.0
+margin_right = 754.0
+margin_bottom = 1205.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="Equipment_panel" type="Panel" parent="Control/CanvasLayer"]
@@ -1408,6 +2073,7 @@ margin_left = -1550.0
 margin_top = -630.5
 margin_right = 1550.0
 margin_bottom = 630.5
+custom_styles/panel = ExtResource( 40 )
 script = ExtResource( 29 )
 
 [node name="GridContainer" type="GridContainer" parent="Control/CanvasLayer/Equipment_panel"]
@@ -1511,44 +2177,22 @@ margin_bottom = 23.0
 custom_fonts/font = SubResource( 5 )
 text = "Equipped!"
 
-[node name="Sentry" type="TextureButton" parent="Control/CanvasLayer/Equipment_panel/GridContainer"]
-margin_left = 400.0
-margin_top = 200.0
-margin_right = 700.0
-margin_bottom = 300.0
-rect_min_size = Vector2( 300, 100 )
-texture_normal = ExtResource( 26 )
-expand = true
-stretch_mode = 3
-
-[node name="equip" type="Label" parent="Control/CanvasLayer/Equipment_panel/GridContainer/Sentry"]
-visible = false
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -80.5
-margin_top = -23.0
-margin_right = 80.5
-margin_bottom = 23.0
-custom_fonts/font = SubResource( 5 )
-text = "Equipped!"
-
 [node name="Desc" type="PanelContainer" parent="Control/CanvasLayer/Equipment_panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2342.0
 rect_min_size = Vector2( 750, 1171 )
+custom_styles/panel = ExtResource( 40 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Equipment_panel/Desc"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 751.0
-margin_bottom = 1254.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 756.0
+margin_bottom = 1259.0
 custom_constants/separation = 35
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Equipment_panel/Desc/VBoxContainer"]
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 91.0
 rect_min_size = Vector2( 0, 91 )
 custom_fonts/font = ExtResource( 4 )
@@ -1557,7 +2201,7 @@ align = 1
 
 [node name="Stats" type="Label" parent="Control/CanvasLayer/Equipment_panel/Desc/VBoxContainer"]
 margin_top = 126.0
-margin_right = 744.0
+margin_right = 754.0
 margin_bottom = 1062.0
 rect_min_size = Vector2( 0, 936 )
 custom_fonts/font = SubResource( 6 )
@@ -1569,9 +2213,12 @@ autowrap = true
 
 [node name="Button" type="Button" parent="Control/CanvasLayer/Equipment_panel/Desc/VBoxContainer"]
 margin_top = 1097.0
-margin_right = 744.0
-margin_bottom = 1194.0
+margin_right = 754.0
+margin_bottom = 1182.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Buy"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer"]
@@ -1590,6 +2237,9 @@ margin_right = 100.0
 margin_bottom = 97.0
 rect_min_size = Vector2( 100, 0 )
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "1"
 
 [node name="2_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
@@ -1598,6 +2248,9 @@ margin_right = 250.0
 margin_bottom = 97.0
 rect_min_size = Vector2( 100, 0 )
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "2"
 
 [node name="3_btn" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
@@ -1606,6 +2259,9 @@ margin_right = 400.0
 margin_bottom = 97.0
 rect_min_size = Vector2( 100, 0 )
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "3"
 
 [node name="Back_button" type="Button" parent="Control/CanvasLayer/HBoxContainer"]
@@ -1615,6 +2271,9 @@ margin_right = 850.0
 margin_bottom = 97.0
 rect_min_size = Vector2( 400, 0 )
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Back"
 
 [node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
@@ -1627,7 +2286,43 @@ margin_top = -160.0
 margin_right = 183.5
 margin_bottom = -63.0
 custom_fonts/font = ExtResource( 4 )
+custom_styles/hover = ExtResource( 44 )
+custom_styles/pressed = ExtResource( 43 )
+custom_styles/normal = ExtResource( 42 )
 text = "Main Menu"
+
+[node name="Panel" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = -160.0
+margin_right = 264.0
+margin_bottom = -55.0
+custom_styles/panel = ExtResource( 40 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/CanvasLayer/Panel"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 242.0
+margin_bottom = 103.0
+
+[node name="Money" type="Label" parent="Control/CanvasLayer/Panel/CenterContainer"]
+modulate = Color( 0.254902, 1, 0, 1 )
+margin_left = 6.0
+margin_top = 10.0
+margin_right = 234.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 4 )
+text = "Money:"
+align = 1
+
+[node name="Buy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 48 )
+bus = "SFX"
+
+[node name="Wrong" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 47 )
+bus = "SFX"
 
 [connection signal="pressed" from="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Modify" to="." method="_on_Modify_primary_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Inventory_panel/HBoxContainer/Primary/VBoxContainer/Change" to="." method="_on_Change_pweapon_pressed"]

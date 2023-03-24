@@ -10,13 +10,28 @@ extents = Vector2( 128, 192 )
 [node name="Sprite" parent="." index="0"]
 position = Vector2( -128, 0 )
 rotation = 1.5708
-offset = Vector2( -0.578363, -127.387 )
+offset = Vector2( 0, -128 )
+
+[node name="VisibilityNotifier2D" parent="Sprite" index="0"]
+position = Vector2( 0, -128 )
+
+[node name="Collision_hitbox" parent="Sprite" index="1"]
+position = Vector2( 0, -128 )
 
 [node name="Door_collision" parent="." index="1"]
+visible = true
 rotation = 1.5708
 
 [node name="Interaction_hitbox" parent="." index="6"]
+visible = false
 rotation = 1.5708
+
+[node name="Interaction_panel" parent="." index="8"]
+margin_top = -344.0
+margin_bottom = -80.0
+
+[node name="NPC_open" parent="." index="9"]
+visible = false
 
 [node name="CollisionShape2D" parent="NPC_open" index="0"]
 shape = SubResource( 1 )

@@ -1,0 +1,112 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/Weapons/Weapons.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/Weapons/Reinfeld/assets/reinfeld.png" type="Texture" id=2]
+[ext_resource path="res://src/Weapons/Reinfeld/Reinfeld.gd" type="Script" id=3]
+[ext_resource path="res://src/Weapons/Reinfeld/assets/reload.mp3" type="AudioStream" id=4]
+[ext_resource path="res://src/Weapons/Reinfeld/assets/shoot.mp3" type="AudioStream" id=5]
+[ext_resource path="res://src/Weapons/Reinfeld/assets/pump.mp3" type="AudioStream" id=6]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 550, 101.667 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.5 ),
+"transitions": PoolRealArray( 0.35, 1, 0.15, 1 ),
+"update": 0,
+"values": [ 0.0, 15.0, -75.0, 0.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Melee/MeleeShape:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "reload"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -55.0 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "reload_finish"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 0.1 ),
+"update": 0,
+"values": [ -55.0, 0.0 ]
+}
+
+[node name="Reinfeld" instance=ExtResource( 1 )]
+rotation = -0.959931
+scale = Vector2( 0.3, 0.3 )
+script = ExtResource( 3 )
+cam_shake_intensity = 3.5
+weapon_position = Vector2( 200, 105 )
+animation = "heavy"
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )
+
+[node name="Barrel_attachment" parent="Sprite" index="0"]
+offset = Vector2( 585, 0 )
+
+[node name="Stock_attachment" parent="Sprite" index="1"]
+offset = Vector2( -645, 0 )
+
+[node name="MeleeShape" parent="Melee" index="0"]
+position = Vector2( 0, -1.66667 )
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/melee = SubResource( 2 )
+anims/reload = SubResource( 3 )
+anims/reload_finish = SubResource( 4 )
+
+[node name="Fire" parent="." index="5"]
+stream = ExtResource( 5 )
+
+[node name="Reload_sound" parent="." index="8"]
+stream = ExtResource( 4 )
+
+[node name="Reload_empty" parent="." index="9"]
+stream = ExtResource( 4 )
+
+[node name="Pump" type="AudioStreamPlayer" parent="." index="11"]
+stream = ExtResource( 6 )
+bus = "SFX"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

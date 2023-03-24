@@ -27,6 +27,11 @@ func show_panel():
 func hide_panel():
 	has_focus = false
 	$Interaction_panel.hide()
+	
+func cable_guy_skill():
+	remaining_uses = 24
+	max_uses = 24
+	$Interaction_panel/VBoxContainer/Uses.text = "Ties left: " + str(remaining_uses) + "/" + str(max_uses)
 
 func _process(delta):
 	if (has_focus && can_interact):

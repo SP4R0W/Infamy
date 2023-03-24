@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/NPCs/Cops/Spawner/Spawner.gd" type="Script" id=1]
+
+[node name="Cop_spawner" type="Node2D"]
+script = ExtResource( 1 )
+cop_amount = 4
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="One" type="Position2D" parent="."]
+position = Vector2( -64, -64 )
+
+[node name="Two" type="Position2D" parent="."]
+position = Vector2( -64, 64 )
+
+[node name="Three" type="Position2D" parent="."]
+position = Vector2( 64, 64 )
+
+[node name="Four" type="Position2D" parent="."]
+position = Vector2( 64, -64 )

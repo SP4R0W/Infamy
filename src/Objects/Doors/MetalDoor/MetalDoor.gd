@@ -1,7 +1,5 @@
 extends StaticBody2D
 
-var noise_scene = preload("res://src/Zones/AlertZone/AlertZone.tscn")
-
 signal object_interaction_started(object,action)
 signal object_interaction_aborted(object,action)
 signal object_interaction_finished(object,action)
@@ -29,6 +27,8 @@ func _ready():
 	
 	$Interaction_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
+	
+	Game.add_exception($Interaction_hitbox)
 
 func show_panel():
 	has_focus = true
@@ -45,16 +45,21 @@ func _process(delta):
 			if (!is_player_inside):
 				if (!Game.player_is_interacting):
 					Game.player_is_interacting = true
-					action = "open"
 					
 					$Lockpick.play()
 					
 					emit_signal("object_interaction_started",self,self.action)
 					
 					if (!is_lockpicked):
-						$Interaction_timer.wait_time = 5
+						action = "lockpick"
 						Game.suspicious_interaction = true
+						
+						if (Game.get_skill("infiltrator",4,2) != "none"):
+							$Interaction_timer.wait_time = 5
+						else:
+							$Interaction_timer.wait_time = 10
 					else:
+						action = "open"	
 						$Interaction_timer.wait_time = .5
 						
 					$Interaction_timer.start()
@@ -101,6 +106,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = false
 	else:
+		$Lockpick.stop()
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	
@@ -120,7 +126,7 @@ func _on_Interaction_timer_timeout():
 		
 		$Lockpick.stop()
 		
-		if (action == "open"):
+		if (action == "open" || action == "lockpick"):
 			if (!is_lockpicked):
 				is_lockpicked = true
 				$Interaction_panel/VBoxContainer/Action2.hide()
@@ -135,7 +141,6 @@ func _on_Interaction_timer_timeout():
 					$Sprite.rotation_degrees = 90
 						
 				set_collision_layer_bit(12,false)
-				get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
 			else:
 				is_closed = true
 				$Interaction_panel/VBoxContainer/Action1.text = "Hold [F] to Open"
@@ -143,7 +148,6 @@ func _on_Interaction_timer_timeout():
 				$Sprite.rotation_degrees = original_rotation
 						
 				set_collision_layer_bit(12,true)
-				get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
 		elif (action == "c4"):
 			Game.use_player_equipment("C4")
 			can_interact = false
@@ -163,50 +167,55 @@ func _on_C4_timer_timeout():
 		$C4.hide()
 		$Explosion.play()
 		
-		is_broken = true
-		
-		var noise = noise_scene.instance()
+		var noise = Game.scene_objects["alert"].instance()
+		noise.type = "c4_object"
 		noise.radius = 4000
 		noise.time = 0.1
-		add_child(noise)
+		call_deferred("add_child",noise)
 		
-		$NPC_open.call_deferred("queue_free")
+		noise.start()
 		
-		if (is_equal_approx(original_rotation,90)):
-			$Sprite.rotation_degrees = 0
-		elif (is_equal_approx(original_rotation,0)):
-			$Sprite.rotation_degrees = 90
-					
-		set_collision_layer_bit(12,false)
-		get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+		destroy_door()
 
+func destroy_door():
+	is_broken = true
+		
+	$NPC_open.call_deferred("queue_free")
+		
+	if (is_equal_approx(original_rotation,90)):
+		$Sprite.rotation_degrees = 0
+	elif (is_equal_approx(original_rotation,0)):
+		$Sprite.rotation_degrees = 90
+					
+	set_collision_layer_bit(12,false)
+	Game.remove_exception($Interaction_hitbox)
 
 func _on_NPC_open_area_entered(area):
 	if (area.is_in_group("hitbox_npc")):	
-		var npc = area.get_parent().get_parent()
-		
-		if (!npc.is_hostaged && !npc.is_dead && !npc.is_unconscious && is_closed):
-			is_closed = false
-			show()
-			set_process(true)
+		if (area.is_in_group("cop")):
+			destroy_door()
+		else:
+			var npc = area.get_parent().get_parent()
 			
-			if (is_equal_approx(original_rotation,90)):
-				$Sprite.rotation_degrees = 0
-			elif (is_equal_approx(original_rotation,0)):
-				$Sprite.rotation_degrees = 90
+			if (!npc.is_hostaged && !npc.is_dead && !npc.is_unconscious && is_closed):
+				is_closed = false
+				show()
 				
-			set_collision_layer_bit(12,false)
-			get_tree().call_group("Detection","add_exception",$Interaction_hitbox)
-			
-			yield(get_tree().create_timer(2),"timeout")
-			
-			is_closed = true
-			
-			$Sprite.rotation_degrees = original_rotation
+				if (is_equal_approx(original_rotation,90)):
+					$Sprite.rotation_degrees = 0
+				elif (is_equal_approx(original_rotation,0)):
+					$Sprite.rotation_degrees = 90
+					
+				set_collision_layer_bit(12,false)
 				
-			set_collision_layer_bit(12,true)
-			get_tree().call_group("Detection","remove_exception",$Interaction_hitbox)
+				$Close.start()
 
+func end_close():
+	is_closed = true
+				
+	$Sprite.rotation_degrees = original_rotation
+					
+	set_collision_layer_bit(12,true)
 
 func _on_Collision_hitbox_body_entered(body):
 	if (body.is_in_group("Player")):
@@ -219,13 +228,11 @@ func _on_Collision_hitbox_body_exited(body):
 
 
 func _on_VisibilityNotifier2D_screen_entered():
-	if (!is_broken):
-		show()
-		set_process(true)
-
+	show()
 
 func _on_VisibilityNotifier2D_screen_exited():
 	if (!is_broken):
 		hide()
-		set_process(false)
+
+
 

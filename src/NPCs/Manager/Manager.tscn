@@ -39,6 +39,7 @@ animations = [ {
 [node name="Manager" instance=ExtResource( 3 )]
 script = ExtResource( 2 )
 has_disguise = false
+has_penalty = true
 speed = 500.0
 
 [node name="AnimatedSprite" parent="." index="1"]

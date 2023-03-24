@@ -102,3 +102,10 @@ func _on_Interaction_timer_timeout():
 		elif (action == "disguise"):
 			has_disguise = false
 			Game.change_player_disguise(self.bag_type)
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	show()
+	
+func _on_VisibilityNotifier2D_screen_exited():
+	hide()

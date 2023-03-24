@@ -9,12 +9,13 @@
 extents = Vector2( 104, 36 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
@@ -42,37 +43,37 @@ one_shot = true
 [node name="Interaction_panel" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -212.0
-margin_top = -240.0
-margin_right = 12.0
-margin_bottom = -74.0
+margin_left = -252.0
+margin_top = -288.0
+margin_right = 60.0
+margin_bottom = -64.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 217.0
-margin_bottom = 159.0
+margin_right = 305.0
+margin_bottom = 217.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_right = 210.0
-margin_bottom = 46.0
+margin_right = 298.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 2 )
 text = "Vault Panel"
 align = 1
 
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 50.0
-margin_right = 210.0
-margin_bottom = 125.0
+margin_top = 72.0
+margin_right = 298.0
+margin_bottom = 183.0
 custom_fonts/font = SubResource( 3 )
 text = "Hold [F] to Open Vault (requires vault keycard and code)"
 align = 1
 autowrap = true
 
 [node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
-margin_top = 129.0
-margin_right = 210.0
-margin_bottom = 152.0
+margin_top = 187.0
+margin_right = 298.0
+margin_bottom = 210.0
 custom_fonts/font = SubResource( 4 )
 step = 1.0
 rounded = true

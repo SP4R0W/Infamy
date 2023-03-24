@@ -1,7 +1,7 @@
 extends Panel
 
 var maps: Dictionary = {
-	"bank":"res://src/Menus/Lobby/assets/map.png"
+	"bank":"res://src/Game/Maps/bank/blueprint.png"
 }
 
 func _ready():

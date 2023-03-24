@@ -21,14 +21,16 @@ onready var armor_3: TextureRect = $HBoxContainer/Panel3/VBoxContainer/armor
 onready var item1_3: TextureRect = $HBoxContainer/Panel3/VBoxContainer/Items/item1
 onready var item2_3: TextureRect = $HBoxContainer/Panel3/VBoxContainer/Items/item2
 
-var selected_loadout: int = 1
+var selected_loadout: String = "1"
 
 func _ready():
+	selected_loadout = Savedata.player_stats["preffered_loadout"]
+	
 	draw_loadouts()
 	select_loadout()	
 	
 func draw_loadouts():
-	var loadout1 = Savedata.player_loadouts[1]
+	var loadout1 = Savedata.player_loadouts["1"]
 	primary_1.texture = load(Global.item_previews[loadout1["primary"]])
 	secondary_1.texture = load(Global.item_previews[loadout1["secondary"]])
 	armor_1.texture = load(Global.item_previews[loadout1["armor"]])
@@ -43,7 +45,7 @@ func draw_loadouts():
 	else:
 		item2_1.texture = null
 	
-	var loadout2 = Savedata.player_loadouts[2]	
+	var loadout2 = Savedata.player_loadouts["2"]	
 
 	primary_2.texture = load(Global.item_previews[loadout2["primary"]])
 	secondary_2.texture = load(Global.item_previews[loadout2["secondary"]])
@@ -59,7 +61,7 @@ func draw_loadouts():
 	else:
 		item2_2.texture = null
 	
-	var loadout3 = Savedata.player_loadouts[3]
+	var loadout3 = Savedata.player_loadouts["3"]
 	
 	primary_3.texture = load(Global.item_previews[loadout3["primary"]])
 	secondary_3.texture = load(Global.item_previews[loadout3["secondary"]])
@@ -79,28 +81,41 @@ func draw_loadouts():
 	equipped_2.hide()
 	equipped_3.hide()
 	
-	if (selected_loadout == 1):
+	if (selected_loadout == "1"):
 		equipped_1.show()
-	elif (selected_loadout == 2):
+	elif (selected_loadout == "2"):
 		equipped_2.show()
 	else:
 		equipped_3.show()
 		
 func select_loadout():
+	Savedata.player_stats["preffered_loadout"] = selected_loadout
 	var loadout = Savedata.player_loadouts[selected_loadout]
 		
 	Game.player_weapons[0] = loadout["primary"]
 	Game.player_weapons[1] = loadout["secondary"]
 	Game.player_armor = loadout["armor"]
 	Game.player_equipment[0][0] = loadout["equipment1"]
-	Game.player_equipment[0][1] = Game.max_equipment_amounts[loadout["equipment1"]]
+	
+	if (loadout["equipment1"] != "none"):
+		Game.player_equipment[0][1] = Game.max_equipment_amounts[loadout["equipment1"]]
+	else:
+		Game.player_equipment[0][1] = 0
+		
 	Game.player_equipment[1][0] = loadout["equipment2"]
-	Game.player_equipment[1][1] = Game.max_equipment_amounts[loadout["equipment2"]]
+	
+	if (loadout["equipment2"] != "none"):
+		Game.player_equipment[1][1] = Game.max_equipment_amounts[loadout["equipment2"]]
+	else:
+		Game.player_equipment[1][1] = 0
+		
 	Game.player_attachments[loadout["primary"]] = loadout["attachments_primary"]
 	Game.player_attachments[loadout["secondary"]] = loadout["attachments_secondary"]
 	
+	Game.player_skills = Savedata.skill_loadouts[selected_loadout]
+	
 func _on_Button1_pressed():
-	selected_loadout = 1
+	selected_loadout = "1"
 	
 	select_loadout()
 	
@@ -109,7 +124,7 @@ func _on_Button1_pressed():
 	equipped_3.hide()
 
 func _on_Button2_pressed():
-	selected_loadout = 2
+	selected_loadout = "2"
 	
 	select_loadout()	
 	
@@ -118,7 +133,7 @@ func _on_Button2_pressed():
 	equipped_3.hide()
 
 func _on_Button3_pressed():
-	selected_loadout = 3
+	selected_loadout = "3"
 	
 	select_loadout()	
 	

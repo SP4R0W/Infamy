@@ -1,9 +1,25 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=21 format=2]
 
-[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/fonts/droid-sans/DroidSans-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/Menus/MainMenu/MainMenu.gd" type="Script" id=4]
+[ext_resource path="res://assets/menu.jpg" type="Texture" id=5]
+[ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=6]
+[ext_resource path="res://assets/DarkTheme/Dark.theme" type="Theme" id=7]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=9]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=10]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonDisabled.stylebox" type="StyleBox" id=11]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonFocus.stylebox" type="StyleBox" id=12]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Semibold.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=14]
+
+[sub_resource type="DynamicFont" id=2]
+size = 164
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -11,14 +27,45 @@ use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=3]
+size = 56
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 48
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 14 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 36
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 52
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 13 )
+
 [node name="MainMenu" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="Control" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+theme = ExtResource( 7 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="Bg" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 240.0
+texture = ExtResource( 5 )
 
 [node name="Title_panel" type="PanelContainer" parent="Control/CanvasLayer"]
 anchor_left = 1.0
@@ -29,25 +76,27 @@ margin_left = -824.0
 margin_top = -830.0
 margin_right = -100.0
 margin_bottom = -300.0
+custom_styles/panel = ExtResource( 6 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Title_panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 717.0
-margin_bottom = 523.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 722.0
+margin_bottom = 551.0
+custom_constants/separation = 15
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
-margin_right = 710.0
-margin_bottom = 231.0
-custom_fonts/font = ExtResource( 1 )
+margin_right = 720.0
+margin_bottom = 192.0
+custom_fonts/font = SubResource( 2 )
 text = "INFAMY"
 align = 1
 valign = 1
 
 [node name="Level" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
-margin_top = 235.0
-margin_right = 710.0
-margin_bottom = 326.0
+margin_top = 207.0
+margin_right = 720.0
+margin_bottom = 288.0
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 1 )
 text = "Level: 100"
@@ -55,22 +104,32 @@ align = 1
 valign = 1
 
 [node name="Money" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
-margin_top = 330.0
-margin_right = 710.0
-margin_bottom = 421.0
+margin_top = 303.0
+margin_right = 720.0
+margin_bottom = 375.0
 custom_colors/font_color = Color( 0.254902, 1, 0, 1 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "Money: 100,000,000$"
 align = 1
 valign = 1
 
 [node name="XP" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
-margin_top = 425.0
-margin_right = 710.0
-margin_bottom = 516.0
+margin_top = 390.0
+margin_right = 720.0
+margin_bottom = 462.0
 custom_colors/font_color = Color( 0.101961, 0.662745, 1, 1 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 3 )
 text = "XP: 100,000/100,000"
+align = 1
+valign = 1
+
+[node name="Points" type="Label" parent="Control/CanvasLayer/Title_panel/VBoxContainer"]
+margin_top = 477.0
+margin_right = 720.0
+margin_bottom = 549.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 3 )
+text = "Skill points: 0"
 align = 1
 valign = 1
 
@@ -79,6 +138,7 @@ margin_left = 3013.0
 margin_top = 815.0
 margin_right = 3737.0
 margin_bottom = 1825.0
+custom_styles/panel = ExtResource( 6 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Option_panel"]
 anchor_left = 0.5
@@ -89,65 +149,175 @@ margin_left = -305.0
 margin_top = -458.0
 margin_right = 305.0
 margin_bottom = 458.0
-custom_constants/separation = 20
+custom_constants/separation = 30
 
 [node name="Online_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
 margin_right = 610.0
-margin_bottom = 97.0
+margin_bottom = 85.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Play"
 
 [node name="Tutorial_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 117.0
+margin_top = 115.0
 margin_right = 610.0
-margin_bottom = 214.0
+margin_bottom = 200.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Tutorial"
 
 [node name="Inventory_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 234.0
+margin_top = 230.0
 margin_right = 610.0
-margin_bottom = 331.0
+margin_bottom = 315.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Inventory"
 
 [node name="Skills_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 351.0
+margin_top = 345.0
 margin_right = 610.0
-margin_bottom = 448.0
+margin_bottom = 430.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Skills"
 
 [node name="Help_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 468.0
+margin_top = 460.0
 margin_right = 610.0
-margin_bottom = 565.0
+margin_bottom = 545.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Help"
 
 [node name="Settings_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 585.0
+margin_top = 575.0
 margin_right = 610.0
-margin_bottom = 682.0
+margin_bottom = 660.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Settings"
 
 [node name="Credits_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 702.0
+margin_top = 690.0
 margin_right = 610.0
-margin_bottom = 799.0
+margin_bottom = 775.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Credits"
 
 [node name="Exit_btn" type="Button" parent="Control/CanvasLayer/Option_panel/VBoxContainer"]
-margin_top = 819.0
+margin_top = 805.0
 margin_right = 610.0
-margin_bottom = 916.0
+margin_bottom = 890.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 10 )
+custom_styles/focus = ExtResource( 12 )
+custom_styles/disabled = ExtResource( 11 )
+custom_styles/normal = ExtResource( 8 )
 text = "Exit"
 
+[node name="Update_Log" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = -695.0
+margin_right = 725.0
+margin_bottom = -170.0
+rect_min_size = Vector2( 625, 525 )
+custom_styles/panel = ExtResource( 6 )
+
+[node name="UpdateText" type="RichTextLabel" parent="Control/CanvasLayer/Update_Log"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 623.0
+margin_bottom = 523.0
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center]Changelog:
+- Released the game!"
+text = "Changelog:
+- Released the game!"
+
+[node name="Version" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 100.0
+margin_top = -160.0
+margin_right = 423.0
+margin_bottom = -88.0
+rect_min_size = Vector2( 625, 80 )
+custom_styles/panel = ExtResource( 6 )
+
+[node name="VersionText" type="Label" parent="Control/CanvasLayer/Version"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 623.0
+margin_bottom = 77.0
+rect_min_size = Vector2( 400, 75 )
+custom_fonts/font = SubResource( 4 )
+text = "Version : 0.9"
+align = 1
+valign = 1
+
+[node name="Welcome" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -957.0
+margin_top = -360.0
+margin_right = 957.0
+margin_bottom = -219.0
+rect_min_size = Vector2( 405, 80 )
+custom_styles/panel = ExtResource( 6 )
+
+[node name="VersionText" type="Label" parent="Control/CanvasLayer/Welcome"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 1912.0
+margin_bottom = 279.0
+rect_min_size = Vector2( 400, 75 )
+custom_fonts/font = SubResource( 6 )
+text = "BAIN: Hello there! You seem to be new here and have no cash. I recommend checking out the Tutorial first. I marked it with green for you. Finish it, and I'll transfer some money to your account. Have fun!"
+align = 1
+valign = 1
+autowrap = true
+
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Online_btn" to="." method="_on_Online_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Tutorial_btn" to="." method="_on_Tutorial_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Inventory_btn" to="." method="_on_Inventory_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Skills_btn" to="." method="_on_Skills_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Help_btn" to="." method="_on_Help_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Settings_btn" to="." method="_on_Settings_btn_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel/VBoxContainer/Credits_btn" to="." method="_on_Credits_btn_pressed"]

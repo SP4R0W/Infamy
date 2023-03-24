@@ -1,8 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://src/Main/Main.gd" type="Script" id=1]
 [ext_resource path="res://assets/music/menu/menu.mp3" type="AudioStream" id=2]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/sfx/rollover6.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/click1.ogg" type="AudioStream" id=5]
+[ext_resource path="res://src/Main/Warning.gd" type="Script" id=6]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Bold.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 92
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 72
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 8 )
 
 [node name="Main" type="Node2D"]
 script = ExtResource( 1 )
@@ -25,7 +42,66 @@ margin_bottom = 14.0
 custom_fonts/font = ExtResource( 3 )
 text = "FPS: "
 
+[node name="Warning" type="PanelContainer" parent="Control/CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -777.0
+margin_top = -126.0
+margin_right = 777.0
+margin_bottom = 126.0
+script = ExtResource( 6 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Warning"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1547.0
+margin_bottom = 478.0
+
+[node name="Title" type="Label" parent="Control/CanvasLayer/Warning/VBoxContainer"]
+margin_right = 1540.0
+margin_bottom = 117.0
+custom_fonts/font = SubResource( 1 )
+text = "ERROR!"
+align = 1
+
+[node name="Message" type="Label" parent="Control/CanvasLayer/Warning/VBoxContainer"]
+margin_top = 121.0
+margin_right = 1540.0
+margin_bottom = 238.0
+custom_fonts/font = SubResource( 1 )
+text = "Couldn't open the save file."
+align = 1
+
+[node name="Error" type="Label" parent="Control/CanvasLayer/Warning/VBoxContainer"]
+margin_top = 242.0
+margin_right = 1540.0
+margin_bottom = 359.0
+custom_fonts/font = SubResource( 1 )
+text = "Error message:"
+align = 1
+autowrap = true
+
+[node name="Button" type="Button" parent="Control/CanvasLayer/Warning/VBoxContainer"]
+margin_top = 363.0
+margin_right = 1540.0
+margin_bottom = 471.0
+custom_fonts/font = SubResource( 2 )
+text = "OK"
+
 [node name="Tween" type="Tween" parent="."]
 
 [node name="menu" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
+bus = "Music"
+
+[node name="click" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+bus = "SFX"
+
+[node name="hover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+bus = "SFX"
+
+[connection signal="pressed" from="Control/CanvasLayer/Warning/VBoxContainer/Button" to="Control/CanvasLayer/Warning" method="_on_Button_pressed"]

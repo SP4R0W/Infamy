@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/NPCs/NPC.gd" type="Script" id=1]
 [ext_resource path="res://src/Objects/Detection_marker/Detection_marker.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://src/NPCs/tie.mp3" type="AudioStream" id=7]
 [ext_resource path="res://src/NPCs/knockout.mp3" type="AudioStream" id=8]
 [ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=9]
+[ext_resource path="res://src/NPCs/SoftCollision.tscn" type="PackedScene" id=11]
 
 [sub_resource type="CapsuleShape2D" id=6]
 radius = 91.43
@@ -23,12 +24,13 @@ font_data = ExtResource( 3 )
 extents = Vector2( 76, 96 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
@@ -38,7 +40,7 @@ z_index = 4
 script = ExtResource( 1 )
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-avoidance_enabled = true
+radius = 60.0
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 0.35, 0.35 )
@@ -47,6 +49,7 @@ scale = Vector2( 0.35, 0.35 )
 scale = Vector2( 2.85, 2.85 )
 
 [node name="Hitbox" type="Area2D" parent="AnimatedSprite" groups=["hitbox_npc"]]
+visible = false
 collision_layer = 4
 collision_mask = 96
 
@@ -55,6 +58,7 @@ position = Vector2( -4, 0 )
 shape = SubResource( 6 )
 
 [node name="Detect" type="Area2D" parent="AnimatedSprite"]
+visible = false
 position = Vector2( -200, 0 )
 scale = Vector2( 2.85, 2.85 )
 collision_layer = 256
@@ -71,6 +75,8 @@ position = Vector2( 114.286, 0 )
 scale = Vector2( 2.85, 2.85 )
 cast_to = Vector2( 1000, 0 )
 
+[node name="SoftCollision" parent="AnimatedSprite" instance=ExtResource( 11 )]
+
 [node name="Marker" parent="." instance=ExtResource( 2 )]
 position = Vector2( 0, -150 )
 z_index = 10
@@ -80,12 +86,10 @@ position = Vector2( 0, -9 )
 
 [node name="Detection_bar" type="ProgressBar" parent="."]
 margin_left = -104.0
-margin_top = -96.0
+margin_top = -104.0
 margin_right = 106.0
-margin_bottom = -73.0
+margin_bottom = -81.0
 custom_fonts/font = SubResource( 1 )
-step = 1.0
-rounded = true
 
 [node name="Interaction_hitbox" type="Area2D" parent="." groups=["detectable", "interactable", "npc"]]
 visible = false
@@ -122,56 +126,59 @@ one_shot = true
 wait_time = 5.0
 one_shot = true
 
+[node name="DefferedTimer" type="Timer" parent="."]
+autostart = true
+
 [node name="Interaction_panel" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -112.0
-margin_top = -280.0
-margin_right = 112.0
-margin_bottom = -114.0
+margin_left = -144.0
+margin_top = -376.0
+margin_right = 152.0
+margin_bottom = -112.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 217.0
-margin_bottom = 187.0
+margin_right = 289.0
+margin_bottom = 257.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_right = 210.0
-margin_bottom = 46.0
+margin_right = 282.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 3 )
 text = "NPC"
 align = 1
 
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 50.0
-margin_right = 210.0
-margin_bottom = 73.0
+margin_top = 72.0
+margin_right = 282.0
+margin_bottom = 107.0
 custom_fonts/font = SubResource( 4 )
 text = "Hold [F] to Tie"
 align = 1
 
 [node name="Action2" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 77.0
-margin_right = 210.0
-margin_bottom = 100.0
+margin_top = 111.0
+margin_right = 282.0
+margin_bottom = 146.0
 custom_fonts/font = SubResource( 4 )
 text = "Hold [X] to Interrogate"
 align = 1
 
 [node name="Action3" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 104.0
-margin_right = 210.0
-margin_bottom = 153.0
+margin_top = 150.0
+margin_right = 282.0
+margin_bottom = 223.0
 custom_fonts/font = SubResource( 4 )
 text = "Approach with a gun to hostage"
 align = 1
 autowrap = true
 
 [node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
-margin_top = 157.0
-margin_right = 210.0
-margin_bottom = 180.0
+margin_top = 227.0
+margin_right = 282.0
+margin_bottom = 250.0
 custom_fonts/font = SubResource( 1 )
 step = 1.0
 rounded = true
@@ -222,6 +229,7 @@ bus = "SFX"
 [connection signal="timeout" from="MoveTimer" to="." method="_on_MoveTimer_timeout"]
 [connection signal="timeout" from="Escape_timer" to="." method="_on_Escape_timer_timeout"]
 [connection signal="timeout" from="Dissappear" to="." method="_on_Dissappear_timeout"]
+[connection signal="timeout" from="DefferedTimer" to="." method="_on_DefferedTimer_timeout"]
 [connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 

@@ -1,15 +1,15 @@
 extends Button
 
-export var index: int = 0
-
-
 func _ready():
 	pass
 
-
 func _on_SkillButton_mouse_entered():
-	pass # Replace with function body.
+	Global.skillMenu.show_desc(int(self.name))
 
-
-func _on_SkillButton_pressed():
-	pass # Replace with function body.
+func _on_SkillButton_gui_input(event):
+	if (event is InputEventMouseButton):
+		if (event.is_pressed()):
+			if (event.button_index == BUTTON_LEFT):
+				Global.skillMenu.buy_skill(int(self.name))
+			elif (event.button_index == BUTTON_RIGHT):
+				Global.skillMenu.refund_skill(int(self.name))

@@ -9,31 +9,38 @@ var is_entering_scene: bool = false
 func end_music(music: AudioStreamPlayer,resume: bool):
 	var root = Global.root	
 	
+	# smooth transition from current volume to 0
 	var tween: Tween = root.get_node("Tween")
 	tween.interpolate_property(music,"volume_db",music.volume_db,-80,1,Tween.TRANS_SINE,Tween.EASE_IN)
 	tween.start()
 	
 	yield(tween, "tween_all_completed")
-
+	
+	# get the previous audio position when music faded out
 	Global.music_skip = music.get_playback_position()
 	
 	music.stop()
 	
+	# if we dont want to resume the current music (possibly changing over to a new track) then bring back the old audio volume
 	if (!resume):
-		music.volume_db = Savedata.music_volume
+		music.volume_db = linear2db(Savedata.player_settings["music_volume"]/100)
 
 func resume_music(music: AudioStreamPlayer):
 	var root = Global.root	
 	
 	music.play()
 	
+	# smooth transition over to regular volume
 	var tween: Tween = root.get_node("Tween")
-	tween.interpolate_property(music,"volume_db",-80,Savedata.music_volume,1,Tween.TRANS_SINE,Tween.EASE_IN)
+	tween.interpolate_property(music,"volume_db",-80,linear2db(Savedata.player_settings["music_volume"]/100),1,Tween.TRANS_SINE,Tween.EASE_IN)
 	tween.start()
 	
+	# set the audio position to when we faded out
 	music.seek(Global.music_skip)
 
 func goto_scene(new_scene: String, animated: bool, sound_on: bool, fade_in_duration: float, fade_out_duration: float, track: AudioStreamPlayer = null,resume: bool = true) -> void:
+	var root = Global.root
+
 	#don't try to enter a new scene if you're already in a process of transitioning to another.
 	if (is_entering_scene):
 		return
@@ -43,7 +50,7 @@ func goto_scene(new_scene: String, animated: bool, sound_on: bool, fade_in_durat
 		
 	#play sound (i.e button click)
 	if (sound_on):
-		pass
+		root.get_node("click").play()
 		
 	#make sure to claim our process so no one interrupts it
 	is_entering_scene = true

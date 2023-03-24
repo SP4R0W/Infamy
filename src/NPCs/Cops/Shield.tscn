@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/NPCs/Cops/Shield.gd" type="Script" id=1]
+[ext_resource path="res://src/NPCs/Cops/Cop.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/Weapons/UZI/assets/uzi.png" type="Texture" id=3]
+[ext_resource path="res://src/NPCs/Cops/dead.png" type="Texture" id=4]
+[ext_resource path="res://src/NPCs/Cops/stand.png" type="Texture" id=5]
+[ext_resource path="res://src/NPCs/Cops/shield.png" type="Texture" id=6]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 4 ) ],
+"loop": true,
+"name": "dead",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 6 ) ],
+"loop": true,
+"name": "shoot",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 5 ) ],
+"loop": true,
+"name": "stand",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 52.1429, 218.571 )
+
+[node name="Shield" instance=ExtResource( 2 )]
+script = ExtResource( 1 )
+weapon_name = "M9"
+
+[node name="AnimatedSprite" parent="." index="2"]
+frames = SubResource( 2 )
+
+[node name="Shield" type="Area2D" parent="AnimatedSprite" index="3" groups=["shield"]]
+position = Vector2( 200, 0 )
+collision_layer = 0
+collision_mask = 64
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite/Shield" index="0"]
+position = Vector2( -50.7143, -4.28571 )
+shape = SubResource( 1 )
+
+[node name="Weapon" parent="AnimatedSprite" index="6"]
+position = Vector2( 135, 150 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 3 )
+
+[node name="Interaction_hitbox" parent="." index="5"]
+visible = false
+
+[node name="Interaction_panel" parent="." index="15"]
+margin_top = -192.0
+margin_bottom = -110.0
+
+[node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
+text = "Shield"
+
+[editable path="Marker"]

@@ -40,8 +40,11 @@ func _process(delta):
 				Game.player_is_interacting = true
 
 				emit_signal("object_interaction_started",self,self.action)
-
-				$Interaction_timer.wait_time = 2
+				
+				if (Game.get_skill("commando",2,2) == "none"):
+					$Interaction_timer.wait_time = 4
+				else:
+					$Interaction_timer.wait_time = 2
 
 				$bag.play()
 
@@ -63,6 +66,7 @@ func _process(delta):
 
 				Game.suspicious_interaction = false
 	else:
+		$bag.stop()
 		hide_panel()
 
 	if (Game.player_is_interacting && has_focus):

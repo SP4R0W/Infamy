@@ -130,6 +130,8 @@ animations = [ {
 script = ExtResource( 2 )
 health = 1.0
 npc_name = "civilian"
+has_disguise = false
+has_penalty = true
 civ_type = 1
 is_static = false
 speed = 500.0
@@ -139,9 +141,6 @@ end_point = NodePath("")
 [node name="AnimatedSprite" parent="." index="1"]
 frames = SubResource( 1 )
 animation = "4_untied"
-
-[node name="Detect" parent="AnimatedSprite" index="2"]
-visible = false
 
 [node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
 text = "Civilian"

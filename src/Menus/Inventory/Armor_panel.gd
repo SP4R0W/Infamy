@@ -4,7 +4,7 @@ onready var parent = get_parent().get_parent().get_parent()
 onready var panel = $GridContainer
 onready var desc_panel = $Desc
 
-var selected_loadout: int = 1
+var selected_loadout: String = "1"
 
 var selected_armor = ""
 
@@ -39,18 +39,34 @@ func _attachment_pressed(button):
 	else:
 		desc_panel.get_node("VBoxContainer/Title").text = selected_armor
 		
-	var new_string = "Stats:\nProtection: {dmg}%\nDurability: {acc}%\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
-		"dmg":new_armor_stats["protection"],
-		"acc":new_armor_stats["durability"],
-		"mag":str(abs(new_armor_stats["speed"] - 1) * 100),
+	var protection = new_armor_stats["protection"]
+	var durability = new_armor_stats["durability"]
+	
+	if (Game.get_skill("commando",1,2) != "none" && selected_armor != "Suit"):
+		protection += 10
+		if (Game.get_skill("commando",1,2) == "upgraded"):
+			durability -= 2.5
+		
+	var new_string = "Stats:\nAbsorption: {dmg}%\nStrength: {acc}\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
+		"dmg":protection,
+		"acc":durability,
+		"mag":str(new_armor_stats["speed"] * 100),
 		"con":new_armor_stats["dodge"],
 	})
 	
 	desc_panel.get_node("VBoxContainer/Stats").text = new_string
+	
+	protection = cur_armor_stats["protection"]
+	durability = cur_armor_stats["durability"]
+	
+	if (Game.get_skill("commando",1,2) != "none" && cur_armor != "Suit"):
+		protection += 10
+		if (Game.get_skill("commando",1,2) == "upgraded"):
+			durability -= 2.5
 		
-	var old_string = "Current Armor:\nProtection: {dmg}%\nDurability: {acc}%\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
-		"dmg":cur_armor_stats["protection"],
-		"acc":cur_armor_stats["durability"],
+	var old_string = "Current Armor:\nAbsorption: {dmg}%\nStrength: {acc}\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
+		"dmg":protection,
+		"acc":durability,
 		"mag":str(abs(cur_armor_stats["speed"] - 1) * 100),
 		"con":cur_armor_stats["dodge"],
 	})
@@ -59,13 +75,23 @@ func _attachment_pressed(button):
 		
 	desc_panel.get_node("VBoxContainer/Button").show()
 	
-	desc_panel.get_node("VBoxContainer/Button").text = "Equip"
-
+	if (selected_armor != cur_armor):
+		desc_panel.get_node("VBoxContainer/Button").text = "Equip"
+	else:
+		desc_panel.get_node("VBoxContainer/Button").text = "Equipped"
 
 func _on_Button_pressed(button):
 	var cur_armor = Savedata.player_loadouts[selected_loadout]["armor"]
 	
 	if (button.text == "Equip"):
+		if (selected_armor == "Full"):
+			if (Game.get_skill("commando",4,2) == "none"):
+				parent.get_node("Wrong").play()
+				button.text = "Need 'Unbreakable'!"
+				
+				get_tree().create_timer(1).connect("timeout",self,"change_button",[button])
+				return
+		
 		Savedata.player_loadouts[selected_loadout]["armor"] = selected_armor
 		
 	cur_armor = Savedata.player_loadouts[selected_loadout]["armor"]
@@ -76,3 +102,7 @@ func _on_Button_pressed(button):
 			btn.get_node("equip").show()
 	
 	draw_equip()
+
+func change_button(button):
+	if (button.text == "Need 'Unbreakable'!"):
+		button.text = "Equip"

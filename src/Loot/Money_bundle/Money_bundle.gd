@@ -27,6 +27,8 @@ func _process(delta):
 				Game.player_can_interact = false
 				get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
 				
+				Game.stolen_cash += 1000
+				Game.stolen_cash_loose += 1000
 				Game.ui.update_popup("Secured: 1000$",2.5)
 
 

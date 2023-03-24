@@ -5,9 +5,9 @@
 [ext_resource path="res://src/Weapons/M9/M9.gd" type="Script" id=3]
 [ext_resource path="res://src/Weapons/M9/assets/pistolReloadEmpty.mp3" type="AudioStream" id=4]
 [ext_resource path="res://src/Weapons/M9/assets/pistolShoot.mp3" type="AudioStream" id=5]
-[ext_resource path="res://src/Weapons/M9/assets/pistolShootDry.mp3" type="AudioStream" id=6]
+[ext_resource path="res://src/Weapons/assets/dry_shoot.mp3" type="AudioStream" id=6]
 [ext_resource path="res://src/Weapons/M9/assets/pistolReload.mp3" type="AudioStream" id=7]
-[ext_resource path="res://src/Weapons/assets/compensator3.png" type="Texture" id=8]
+[ext_resource path="res://src/Weapons/assets/compensator3_pistol.png" type="Texture" id=8]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 226.667, 106.667 )
@@ -58,13 +58,7 @@ tracks/0/keys = {
 [node name="M9" instance=ExtResource( 1 )]
 scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 3 )
-base_firerate = 100.0
-base_empty_reload_time = 1.5
 cam_shake_intensity = 0.5
-base_mag_size = 8
-base_ammo_count = 80
-base_accuracy = 60
-base_concealment = 9
 weapon_position = Vector2( 185, 115 )
 
 [node name="Sprite" parent="." index="0"]

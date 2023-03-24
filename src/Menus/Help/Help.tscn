@@ -1,9 +1,21 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=2]
+[ext_resource path="res://assets/fonts/droid-sans/DroidSans-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=3]
 [ext_resource path="res://src/Menus/Help/Help.gd" type="Script" id=4]
+[ext_resource path="res://assets/menu.jpg" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=7]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=8]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=9]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=10]
+
+[sub_resource type="DynamicFont" id=3]
+size = 164
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 96
@@ -15,7 +27,7 @@ font_data = ExtResource( 1 )
 size = 72
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 1 )
+font_data = ExtResource( 6 )
 
 [node name="Help" type="Node2D"]
 script = ExtResource( 4 )
@@ -26,19 +38,18 @@ anchor_bottom = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
-[node name="Title_panel" type="PanelContainer" parent="Control/CanvasLayer"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -362.0
-margin_right = 362.0
-margin_bottom = 245.0
+[node name="Bg" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 240.0
+texture = ExtResource( 5 )
 
-[node name="Title" type="Label" parent="Control/CanvasLayer/Title_panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 717.0
-margin_bottom = 238.0
-custom_fonts/font = ExtResource( 2 )
+[node name="Title" type="Label" parent="Control/CanvasLayer"]
+margin_left = 1560.0
+margin_top = 26.0
+margin_right = 2280.0
+margin_bottom = 218.0
+custom_fonts/font = SubResource( 3 )
 text = "Help:"
 align = 1
 valign = 1
@@ -52,12 +63,13 @@ margin_left = -1500.0
 margin_top = -505.0
 margin_right = 1500.0
 margin_bottom = 505.0
+custom_styles/panel = ExtResource( 7 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Control/CanvasLayer/Option_panel"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 2993.0
-margin_bottom = 1003.0
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 2998.0
+margin_bottom = 1008.0
 custom_fonts/bold_font = SubResource( 1 )
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
@@ -75,9 +87,13 @@ Interaction 3: 'C' key
 Switch equipment (if you have two equipped): 'X' key
 Drop bag/equipment (if not carrying any bags): 'G'
 Use selected equipment: 'E'
+Leave the heist: 'ESC'
 
 Specific mechanics:
-- To hostage a person, walk to them with a gun equipped. You cannot hostage an alerted guard.[/center]"
+- To hostage a person, walk to them with a gun equipped. You cannot hostage an alerted guard.
+- Armor Absorption means how much of the total damage will be absorped by your armor. This is calculated after damage reduction calculations.
+- Armor Strength means how much damage the armor takes when being hit. This means no matter how much damage you will take, your armor value will always be subtracted by the Strength value.
+- Warning! Guards do not trigger any skill effects that require killing cops.[/center]"
 text = "In-game Controls:
 Move: WASD keys
 Sprint: 'Left Shift' key
@@ -92,9 +108,13 @@ Interaction 3: 'C' key
 Switch equipment (if you have two equipped): 'X' key
 Drop bag/equipment (if not carrying any bags): 'G'
 Use selected equipment: 'E'
+Leave the heist: 'ESC'
 
 Specific mechanics:
-- To hostage a person, walk to them with a gun equipped. You cannot hostage an alerted guard."
+- To hostage a person, walk to them with a gun equipped. You cannot hostage an alerted guard.
+- Armor Absorption means how much of the total damage will be absorped by your armor. This is calculated after damage reduction calculations.
+- Armor Strength means how much damage the armor takes when being hit. This means no matter how much damage you will take, your armor value will always be subtracted by the Strength value.
+- Warning! Guards do not trigger any skill effects that require killing cops."
 scroll_following = true
 
 [node name="Option_panel2" type="PanelContainer" parent="Control/CanvasLayer"]
@@ -106,18 +126,17 @@ margin_left = -362.0
 margin_top = -210.0
 margin_right = 362.0
 margin_bottom = -99.0
+custom_styles/panel = ExtResource( 7 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Option_panel2"]
-margin_left = 7.0
-margin_top = 7.0
-margin_right = 717.0
-margin_bottom = 104.0
-custom_constants/separation = 20
-
-[node name="Back_btn" type="Button" parent="Control/CanvasLayer/Option_panel2/VBoxContainer"]
-margin_right = 710.0
-margin_bottom = 97.0
+[node name="Back_btn" type="Button" parent="Control/CanvasLayer/Option_panel2"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 722.0
+margin_bottom = 109.0
 custom_fonts/font = ExtResource( 3 )
+custom_styles/hover = ExtResource( 9 )
+custom_styles/pressed = ExtResource( 8 )
+custom_styles/normal = ExtResource( 10 )
 text = "Main Menu"
 
-[connection signal="pressed" from="Control/CanvasLayer/Option_panel2/VBoxContainer/Back_btn" to="." method="_on_Back_btn_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Option_panel2/Back_btn" to="." method="_on_Back_btn_pressed"]

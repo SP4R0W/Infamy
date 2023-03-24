@@ -16,12 +16,13 @@ animations = [ {
 extents = Vector2( 56, 28 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
@@ -51,27 +52,27 @@ one_shot = true
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -176.0
-margin_top = -184.0
+margin_top = -208.0
 margin_right = 48.0
-margin_bottom = -64.0
+margin_bottom = -60.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 217.0
-margin_bottom = 113.0
+margin_bottom = 141.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
 margin_right = 210.0
-margin_bottom = 46.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 3 )
 text = "Bag"
 align = 1
 
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 50.0
+margin_top = 72.0
 margin_right = 210.0
-margin_bottom = 73.0
+margin_bottom = 107.0
 custom_fonts/font = SubResource( 4 )
 text = "Hold [F] to Carry"
 align = 1
@@ -86,11 +87,17 @@ text = "Hold [X] to Take Disguise"
 align = 1
 
 [node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
-margin_top = 77.0
+margin_top = 111.0
 margin_right = 210.0
-margin_bottom = 100.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 5 )
 step = 1.0
 rounded = true
 
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -3.8147e-06, -1.90735e-06 )
+scale = Vector2( 5.6, 4.8 )
+
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

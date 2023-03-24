@@ -9,3 +9,35 @@ rotation = -1.5708
 
 [node name="Interaction_hitbox" parent="." index="1"]
 rotation = -1.5708
+
+[node name="Drill_panel" parent="." index="4"]
+margin_top = -200.0
+margin_bottom = -79.0
+
+[node name="VBoxContainer" parent="Drill_panel" index="0"]
+margin_bottom = 114.0
+
+[node name="Title" parent="Drill_panel/VBoxContainer" index="0"]
+margin_bottom = 68.0
+
+[node name="Action" parent="Drill_panel/VBoxContainer" index="1"]
+margin_top = 72.0
+margin_bottom = 107.0
+
+[node name="VBoxContainer" parent="Interaction_panel" index="0"]
+margin_right = 223.0
+margin_bottom = 141.0
+
+[node name="Title" parent="Interaction_panel/VBoxContainer" index="0"]
+margin_right = 216.0
+margin_bottom = 68.0
+
+[node name="Action1" parent="Interaction_panel/VBoxContainer" index="1"]
+margin_top = 72.0
+margin_right = 216.0
+margin_bottom = 107.0
+
+[node name="Interaction_progress" parent="Interaction_panel/VBoxContainer" index="2"]
+margin_top = 111.0
+margin_right = 216.0
+margin_bottom = 134.0

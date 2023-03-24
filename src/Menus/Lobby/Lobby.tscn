@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/fonts/Poppins.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=2]
@@ -6,12 +6,22 @@
 [ext_resource path="res://src/Menus/Lobby/Lobby.gd" type="Script" id=4]
 [ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=5]
 [ext_resource path="res://src/Menus/Lobby/assets/location.png" type="Texture" id=6]
+[ext_resource path="res://assets/menu.jpg" type="Texture" id=7]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Bold.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://assets/fonts/droid-sans/DroidSans-Bold.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=11]
+[ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=12]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=13]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=14]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Semibold.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://assets/DarkTheme/Dark.theme" type="Theme" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 200
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 9 )
 
 [sub_resource type="DynamicFont" id=9]
 size = 72
@@ -23,31 +33,31 @@ font_data = ExtResource( 2 )
 size = 84
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 8 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 10 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 42
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 10 )
 
 [sub_resource type="DynamicFont" id=5]
 size = 64
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 8 )
 
 [sub_resource type="DynamicFont" id=6]
 size = 48
 use_mipmaps = true
 use_filter = true
-font_data = ExtResource( 2 )
+font_data = ExtResource( 15 )
 
 [sub_resource type="DynamicFont" id=7]
 size = 48
@@ -70,15 +80,15 @@ anchor_bottom = 1.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Control"]
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer"]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -1919.0
-margin_right = 1920.0
-margin_bottom = 420.0
+[node name="Bg" type="TextureRect" parent="Control/CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 240.0
+texture = ExtResource( 7 )
 
-[node name="Title" type="Label" parent="Control/CanvasLayer/VBoxContainer"]
-margin_right = 3839.0
+[node name="Title" type="Label" parent="Control/CanvasLayer"]
+margin_left = 1.0
+margin_right = 3840.0
 margin_bottom = 280.0
 custom_fonts/font = SubResource( 1 )
 text = "//CRIME.NET VER. 1.0.0.0//"
@@ -103,6 +113,7 @@ margin_left = 50.0
 margin_top = -630.0
 margin_right = 1789.0
 margin_bottom = 631.0
+custom_styles/panel = ExtResource( 12 )
 
 [node name="Label" type="Label" parent="Control/CanvasLayer/Browser_panel"]
 anchor_left = 0.5
@@ -125,18 +136,22 @@ margin_top = -375.0
 margin_right = 519.5
 margin_bottom = 375.0
 custom_fonts/font = SubResource( 9 )
+custom_styles/selected = ExtResource( 13 )
+custom_styles/bg = ExtResource( 11 )
 items = [ "Downtown Hit", null, false ]
 allow_reselect = true
 auto_height = true
 same_column_width = true
 
 [node name="Heist_panel" type="Panel" parent="Control/CanvasLayer"]
+visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 50.0
 margin_top = -620.0
 margin_right = 1789.0
 margin_bottom = 660.0
+custom_styles/panel = ExtResource( 12 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/Heist_panel"]
 anchor_left = 0.5
@@ -150,7 +165,7 @@ margin_bottom = 630.5
 
 [node name="Title" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 margin_right = 1739.0
-margin_bottom = 119.0
+margin_bottom = 106.0
 custom_fonts/font = SubResource( 2 )
 text = "Heist title:"
 align = 1
@@ -158,15 +173,15 @@ valign = 1
 
 [node name="HSeparator" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 123.0
+margin_top = 110.0
 margin_right = 1739.0
-margin_bottom = 153.0
+margin_bottom = 140.0
 custom_constants/separation = 30
 
 [node name="Description" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 157.0
+margin_top = 144.0
 margin_right = 1739.0
-margin_bottom = 296.0
+margin_bottom = 336.0
 custom_fonts/font = SubResource( 3 )
 text = "A small bank downtown. Mediocre security, but lots of stuff in its vault, because their transport \"miraculously\" couldn't visit them. You in?"
 align = 1
@@ -175,15 +190,15 @@ autowrap = true
 
 [node name="HSeparator2" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 300.0
+margin_top = 340.0
 margin_right = 1739.0
-margin_bottom = 330.0
+margin_bottom = 370.0
 custom_constants/separation = 30
 
 [node name="Plan" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 334.0
+margin_top = 374.0
 margin_right = 1739.0
-margin_bottom = 709.0
+margin_bottom = 713.0
 custom_fonts/font = SubResource( 4 )
 text = "Plan:
 - Scout the area
@@ -197,15 +212,15 @@ autowrap = true
 
 [node name="HSeparator3" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 713.0
+margin_top = 717.0
 margin_right = 1739.0
-margin_bottom = 743.0
+margin_bottom = 747.0
 custom_constants/separation = 30
 
 [node name="Total" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 747.0
+margin_top = 751.0
 margin_right = 1739.0
-margin_bottom = 838.0
+margin_bottom = 832.0
 custom_fonts/font = SubResource( 5 )
 text = "Potential rewards: 100,000$ & 3000 XP"
 align = 1
@@ -214,26 +229,41 @@ autowrap = true
 
 [node name="HSeparator4" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 842.0
+margin_top = 836.0
 margin_right = 1739.0
-margin_bottom = 872.0
+margin_bottom = 866.0
 custom_constants/separation = 30
 
 [node name="Difficulty" type="Label" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 876.0
+margin_top = 870.0
 margin_right = 1739.0
-margin_bottom = 936.0
+margin_bottom = 924.0
 custom_fonts/font = SubResource( 4 )
 text = "Selected difficulty:"
 align = 1
 valign = 1
 autowrap = true
 
-[node name="Difficulty_selector" type="OptionButton" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 940.0
+[node name="Control3" type="Control" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 928.0
 margin_right = 1739.0
-margin_bottom = 1014.0
+margin_bottom = 996.0
+rect_min_size = Vector2( 0, 68 )
+
+[node name="Difficulty_selector" type="OptionButton" parent="Control/CanvasLayer/Heist_panel/VBoxContainer/Control3"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -34.0
+margin_right = 250.0
+margin_bottom = 34.0
+theme = ExtResource( 16 )
 custom_fonts/font = SubResource( 6 )
+custom_styles/hover = ExtResource( 14 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 13 )
 text = "Easy"
 align = 1
 items = [ "Easy", null, false, 0, null, "Normal", null, false, 1, null, "Hard", null, false, 2, null, "Very Hard", null, false, 3, null ]
@@ -241,30 +271,58 @@ selected = 0
 
 [node name="HSeparator5" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 1018.0
+margin_top = 1000.0
 margin_right = 1739.0
-margin_bottom = 1048.0
+margin_bottom = 1030.0
 custom_constants/separation = 30
 
-[node name="PlayButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 1052.0
+[node name="Control" type="Control" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1034.0
 margin_right = 1739.0
-margin_bottom = 1126.0
+margin_bottom = 1106.0
+rect_min_size = Vector2( 0, 72 )
+
+[node name="PlayButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer/Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -36.0
+margin_right = 250.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 7 )
+custom_styles/hover = ExtResource( 14 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 11 )
 text = "Play"
 
 [node name="HSeparator6" type="HSeparator" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
 modulate = Color( 1, 1, 1, 0 )
-margin_top = 1130.0
+margin_top = 1110.0
 margin_right = 1739.0
-margin_bottom = 1160.0
+margin_bottom = 1140.0
 custom_constants/separation = 30
 
-[node name="BackButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
-margin_top = 1164.0
+[node name="Control2" type="Control" parent="Control/CanvasLayer/Heist_panel/VBoxContainer"]
+margin_top = 1144.0
 margin_right = 1739.0
-margin_bottom = 1238.0
+margin_bottom = 1216.0
+rect_min_size = Vector2( 0, 72 )
+
+[node name="BackButton" type="Button" parent="Control/CanvasLayer/Heist_panel/VBoxContainer/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -250.0
+margin_top = -36.0
+margin_right = 250.0
+margin_bottom = 36.0
 custom_fonts/font = SubResource( 8 )
+custom_styles/hover = ExtResource( 14 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 11 )
 text = "Back"
 
 [node name="Menu_btn" type="Button" parent="Control/CanvasLayer"]
@@ -277,6 +335,9 @@ margin_top = -260.0
 margin_right = 250.0
 margin_bottom = -110.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/hover = ExtResource( 14 )
+custom_styles/pressed = ExtResource( 13 )
+custom_styles/normal = ExtResource( 11 )
 text = "Main Menu"
 
 [node name="Marker" type="TextureRect" parent="Control/CanvasLayer"]
@@ -289,7 +350,7 @@ texture = ExtResource( 6 )
 [node name="Tween" type="Tween" parent="."]
 
 [connection signal="item_activated" from="Control/CanvasLayer/Browser_panel/HeistList" to="." method="_on_HeistList_item_activated"]
-[connection signal="item_selected" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Difficulty_selector" to="." method="_on_Difficulty_selector_item_selected"]
-[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/PlayButton" to="." method="_on_PlayButton_pressed"]
-[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="item_selected" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Control3/Difficulty_selector" to="." method="_on_Difficulty_selector_item_selected"]
+[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Control/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/Heist_panel/VBoxContainer/Control2/BackButton" to="." method="_on_BackButton_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Menu_btn" to="." method="_on_Menu_btn_pressed"]

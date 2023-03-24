@@ -1,15 +1,32 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/fonts/Button_Poppins.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Semibold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://src/Menus/Skills/SkillButton.gd" type="Script" id=2]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=3]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=4]
+[ext_resource path="res://assets/DarkTheme/StyleBox/ButtonNormal.stylebox" type="StyleBox" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 1 )
 
 [node name="SkillButton" type="Button"]
 margin_right = 12.0
 margin_bottom = 20.0
 rect_min_size = Vector2( 300, 100 )
-custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_focus = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_hover = Color( 1, 1, 1, 1 )
+custom_colors/font_color_pressed = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/normal = ExtResource( 5 )
 text = "Skill"
 script = ExtResource( 2 )
 
+[connection signal="gui_input" from="." to="." method="_on_SkillButton_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_SkillButton_mouse_entered"]
-[connection signal="pressed" from="." to="." method="_on_SkillButton_pressed"]

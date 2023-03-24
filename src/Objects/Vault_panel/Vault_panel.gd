@@ -28,7 +28,29 @@ func hide_panel():
 func _process(delta):
 	if (has_focus && can_interact):
 		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
-			if (!Game.player_is_interacting && Game.player_inventory.has("vault_code") && Game.player_inventory.has("r_keycard")):
+			if (!Game.player_is_interacting):
+				if (!Game.player_inventory.has("vault_code") && !Game.player_inventory.has("r_keycard")):
+					Game.ui.update_popup("You need the Vault Code and Red Keycard!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				elif (!Game.player_inventory.has("vault_code")):
+					Game.ui.update_popup("You need the Vault Code!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				elif (!Game.player_inventory.has("r_keycard")):
+					Game.ui.update_popup("You need the Red Keycard!",2)
+					
+					Game.player_can_interact = false
+					get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
+					
+					return
+				
 				Game.player_is_interacting = true
 				
 				emit_signal("object_interaction_started",self,self.action)
@@ -55,6 +77,7 @@ func _process(delta):
 				
 				Game.suspicious_interaction = false
 	else:
+		$panel.stop()
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	

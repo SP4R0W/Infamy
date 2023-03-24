@@ -8,12 +8,13 @@
 extents = Vector2( 40, 32 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
@@ -34,27 +35,27 @@ shape = SubResource( 1 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -144.0
-margin_top = -144.0
+margin_top = -160.0
 margin_right = 80.0
-margin_bottom = -48.0
+margin_bottom = -39.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 217.0
-margin_bottom = 89.0
+margin_bottom = 114.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
 margin_right = 210.0
-margin_bottom = 46.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 2 )
 text = "Keycard"
 align = 1
 
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 50.0
+margin_top = 72.0
 margin_right = 210.0
-margin_bottom = 73.0
+margin_bottom = 107.0
 custom_fonts/font = SubResource( 3 )
 text = "Press [F] to Take"
 align = 1

@@ -27,13 +27,19 @@ onready var item2_title: Label = $HBoxContainer/Equipment2/VBoxContainer/Title
 onready var item2_img: TextureRect = $HBoxContainer/Equipment2/VBoxContainer/TextureRect
 onready var item2_stats: Label = $HBoxContainer/Equipment2/VBoxContainer/Stats
 
-var selected_loadout: int = 1
+var selected_loadout: String = "1"
 var edited_gun: String = ""
 
 func _ready():
+	selected_loadout = Savedata.player_stats["preffered_loadout"]
+	
+	Game.check_skills()
+	
 	redraw_inventory()
 	
 func redraw_inventory():
+	selected_loadout = Savedata.player_stats["preffered_loadout"]
+	
 	$Title.text = "Your selected loadout (" + str(selected_loadout) + "):"
 	var loadout = Savedata.player_loadouts[selected_loadout]
 	
@@ -48,6 +54,7 @@ func redraw_inventory():
 	var base_acc
 	var base_con
 	var base_ammo
+	var base_type
 	
 	var mod_string = "Modifications:"
 	var stat_string = ""
@@ -66,6 +73,7 @@ func redraw_inventory():
 	base_acc = weapon_stats_primary["accuracy"]
 	base_con = weapon_stats_primary["concealment"]
 	base_ammo = weapon_stats_primary["ammo_count"]
+	base_type = weapon_stats_primary["type"]
 	
 	for type in cur_attachments_primary:
 		var attachment = cur_attachments_primary[type]
@@ -83,6 +91,40 @@ func redraw_inventory():
 					
 			if (attachment_stats.keys().has("concealment")):
 				base_con += attachment_stats["concealment"]
+				
+			if (attachment.find("suppressor") != -1):
+				if (Game.get_skill("infiltrator",1,3) == "basic"):
+					base_acc *= 1.1
+				elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+					base_acc *= 1.2
+					
+				if (Game.get_skill("infiltrator",2,3) != "none"):
+					base_con += 1
+					if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+						base_con += 2
+				
+	if (base_type == "sniper" && Game.get_skill("mastermind",1,3) == "upgraded"):
+		base_acc *= 1.1
+	elif (base_type == "automatic" && Game.get_skill("engineer",1,3) == "upgraded"):
+		base_damage *= 1.1
+	elif (base_type == "shotgun"):	
+		if (Game.get_skill("commando",1,3) == "basic"):
+			base_damage *= 1.1
+		elif (Game.get_skill("commando",1,3) == "upgraded"):
+			base_damage *= 1.25
+			
+		if (Game.get_skill("commando",3,3) == "upgraded"):
+			base_damage *= 2
+				
+	if (base_acc > 100):
+		base_acc = 100
+	elif (base_acc < 0):
+		base_acc = 0
+				
+	if (base_con > 10):
+		base_con = 10
+	elif (base_con < 0):
+		base_con = 0
 				
 	stat_string = "Stats:\nDamage: {dmg}\nAccuracy: {acc}\nConcealment: {con}\nMag Size: {mag}\nAmmo Count: {ammo}".format({
 		"dmg":base_damage,
@@ -135,6 +177,32 @@ func redraw_inventory():
 			if (attachment_stats.keys().has("concealment")):
 				base_con += attachment_stats["concealment"]
 				
+			if (attachment.find("suppressor") != -1):
+				if (Game.get_skill("infiltrator",1,3) == "basic"):
+					base_acc *= 1.1
+				elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
+					base_acc *= 1.2
+					
+				if (Game.get_skill("infiltrator",2,3) != "none"):
+					base_con += 1
+					if (Game.get_skill("infiltrator",2,3) == "upgraded"):
+						base_con += 2
+					
+				if (Game.get_skill("infiltrator",3,3) == "basic"):
+					base_damage *= 1.15
+				elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
+					base_damage *= 1.3
+				
+	if (base_acc > 100):
+		base_acc = 100
+	elif (base_acc < 0):
+		base_acc = 0
+				
+	if (base_con > 10):
+		base_con = 10
+	elif (base_con < 0):
+		base_con = 0
+				
 	stat_string = "Stats:\nDamage: {dmg}\nAccuracy: {acc}\nConcealment: {con}\nMag Size: {mag}\nAmmo Count: {ammo}".format({
 		"dmg":base_damage,
 		"acc":base_acc,
@@ -155,10 +223,18 @@ func redraw_inventory():
 	armor_title.text = loadout["armor"]
 	armor_img.texture = load(Global.item_previews[loadout["armor"]])
 	
-	var armor_stats_str = "Protection: {dmg}%\nDurability: {acc}%\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
-		"dmg":Global.armor_values[loadout["armor"]]["protection"],
-		"acc":Global.armor_values[loadout["armor"]]["durability"],
-		"mag":str(abs(Global.armor_values[loadout["armor"]]["speed"] - 1) * 100),
+	var protection = Global.armor_values[loadout["armor"]]["protection"]
+	var durability = Global.armor_values[loadout["armor"]]["durability"]
+	
+	if (Game.get_skill("commando",1,2) != "none" && loadout["armor"] != "Suit"):
+		protection += 10
+		if (Game.get_skill("commando",1,2) == "upgraded"):
+			durability -= 2.5
+	
+	var armor_stats_str = "Absorption: {dmg}%\nStrength: {acc}\nSpeed reduction: {mag}%\nDodge chance: {con}%".format({
+		"dmg":protection,
+		"acc":durability,
+		"mag":str(Global.armor_values[loadout["armor"]]["speed"] * 100),
 		"con":Global.armor_values[loadout["armor"]]["dodge"],
 	})
 	
@@ -171,24 +247,74 @@ func redraw_inventory():
 		armor_hidden.text = "Concealed"
 		armor_hidden.modulate = Color.dodgerblue		
 	
+	var description = get_description(loadout["equipment1"])
+	
 	if (loadout["equipment1"] != "none"):
 		item1_title.text = loadout["equipment1"]
 		item1_img.texture = load(Global.item_previews[loadout["equipment1"]])
-		item1_stats.text = "Amount: " + str(Global.item_amounts[loadout["equipment1"]]) + "\n" + Global.item_info[loadout["equipment1"]]
+		item1_stats.text = "Amount: " + str(Game.max_equipment_amounts[loadout["equipment1"]]) + "\n" + description
 	else:
 		item1_title.text = "Empty"
 		item1_img.texture = null
 		item1_stats.text = ""
 	
-	if (loadout["equipment2"] != "none"):
-		item2_title.text = loadout["equipment2"]
-		item2_img.texture = load(Global.item_previews[loadout["equipment2"]])
-		item2_stats.text = "Amount: " + str(Global.item_amounts[loadout["equipment2"]]) + "\n" + Global.item_info[loadout["equipment2"]]
+	description = get_description(loadout["equipment2"])
+	
+	if (Game.get_skill("engineer",4,1) != "none"):
+		$HBoxContainer/Equipment2.show()
+		if (loadout["equipment2"] != "none"):
+			item2_title.text = loadout["equipment2"]
+			item2_img.texture = load(Global.item_previews[loadout["equipment2"]])
+			
+			var amount = 0
+			
+			if (Game.get_skill("engineer",4,1) == "basic"):
+				amount = ceil(Game.max_equipment_amounts[loadout["equipment2"]] / 2)
+			else:
+				amount = Game.max_equipment_amounts[loadout["equipment2"]]
+				
+			if (amount == 0):
+				amount = 1
+			
+			item2_stats.text = "Amount: " + str(amount) + "\n" + description
+		else:
+			item2_title.text = "Empty"
+			item2_img.texture = null
+			item2_stats.text = ""
 	else:
-		item2_title.text = "Empty"
-		item2_img.texture = null
-		item2_stats.text = ""
+		$HBoxContainer/Equipment2.hide()
 
+func get_description(item) -> String:
+	if (item != "none"):
+		if (item == "Medic Bag"):
+			var tier3_1 = Game.get_skill("mastermind",3,1)
+			
+			if (tier3_1 != "none"):
+				if (tier3_1 == "basic"):
+					return "Heals for 50% health"
+				else:
+					return "Heals for 85% health"
+			else:
+				return "Heals for 25% health"
+		elif (item == "Ammo Bag"):
+			var tier2_1 = Game.get_skill("commando",2,1)
+			
+			if (tier2_1 != "none"):
+				return "Refills ammo for both weapons"
+			else:
+				return "Refills ammo for carried weapon only"
+		elif (item == "ECM"):
+			if (Game.get_skill("infiltrator",4,1) != "none"):
+				return "Lasts for 15s"
+			elif (Game.get_skill("infiltrator",1,1) == "upgraded"):
+				return "Lasts for 10s"
+			else:
+				return "Lasts for 6s"
+		
+		return Global.item_info[item]
+	
+	return ""
+	
 func goto_inventory():
 	$Control/CanvasLayer/Inventory_panel.show()
 	$Control/CanvasLayer/Modify_panel.hide()

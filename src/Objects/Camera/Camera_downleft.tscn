@@ -19,4 +19,8 @@ rotation = 2.35619
 [node name="AnimatedSprite" parent="." index="3"]
 rotation = 2.35619
 
+[node name="Interaction_panel" parent="." index="9"]
+margin_top = -240.0
+margin_bottom = -120.0
+
 [editable path="Marker"]

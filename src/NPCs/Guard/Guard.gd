@@ -11,12 +11,17 @@ var velocity: Vector2 = Vector2.ZERO
 
 var cur_pos: int = 0
 
+var weapon_mag = 0
+
 func on_ready():
+	damage = 2.5 * (Game.difficulty + 1)
+	
 	$AnimatedSprite.animation = "stand"
 	
 	yield(get_tree().create_timer(0.5),"timeout")
 	
-	agent.set_navigation(Game.map_nav)
+	if (Game.map_nav != null):
+		agent.set_navigation(Game.map_nav)
 	
 	spawn_guard()
 	.on_ready()
@@ -196,7 +201,11 @@ func check_interactions():
 					action = "bag"
 					if (Game.bodybags > 0):
 						if (Game.player_bag == "empty"):
-							$Interaction_timer.wait_time = 5
+							if (Game.get_skill("infiltrator",2,1) != "none"):
+								$Interaction_timer.wait_time = 2.5
+							else:
+								$Interaction_timer.wait_time = 5
+								
 							$bag.play()
 						else:
 							Game.ui.update_popup("You are already carrying a bag!",2)
@@ -212,7 +221,11 @@ func check_interactions():
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
 					if (Game.handcuffs > 0):
-						$Interaction_timer.wait_time = 1
+						if (Game.get_skill("mastermind",1,2) != "upgraded"):
+							$Interaction_timer.wait_time = 2
+						else:
+							$Interaction_timer.wait_time = 1
+							
 						$tie.play()
 					else:
 						Game.ui.update_popup("You have no cable ties!",2)
@@ -242,7 +255,10 @@ func check_interactions():
 				if (is_unconscious && has_disguise):
 					if (Game.player_disguise != "guard"):
 						action = "disguise"
-						$Interaction_timer.wait_time = 5
+						if (Game.get_skill("infiltrator",2,2) != "none"):
+							$Interaction_timer.wait_time = 4
+						else:
+							$Interaction_timer.wait_time = 7.5
 					else:
 						Game.ui.update_popup("You already have this disguise!",2)
 						
@@ -277,9 +293,14 @@ func check_interactions():
 				
 				emit_signal("object_interaction_aborted",self,self.action)
 	elif (has_focus && !can_interact):
+		$bag.stop()
+		$tie.stop()
+		
 		$Interaction_panel/VBoxContainer/Action1.hide()
 		$Interaction_panel/VBoxContainer/Action3.show()
 	else:
+		$bag.stop()
+		$tie.stop()
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	
@@ -316,6 +337,7 @@ func finish_interactions():
 			Game.change_player_disguise("guard")
 			has_disguise = false
 		elif (action == "interrogate"):
+			was_interrogated = true
 			Game.map.interrogated(info)
 	
 	.finish_interactions()
@@ -325,7 +347,7 @@ func alerted():
 	
 	.alerted()
 	
-func kill():
+func kill(damage: float = 0,type: String = "none"):
 	if (!is_dead):
 		if (is_camera_operator):
 			get_tree().call_group("Camera","alarm_on")
@@ -333,15 +355,21 @@ func kill():
 		Game.kills += 1
 			
 		$AnimatedSprite.animation = "dead"
-		
-		.kill()
+
+		if (cur_pos != 0):
+			Game.map_guard_restpoints.set_free(cur_pos)
+
+		.kill(damage,type)
 
 func knockout():
-	if (!is_unconscious && !is_dead):
+	if (!is_unconscious && !is_dead && can_knock):
 		if (is_camera_operator):
 			get_tree().call_group("Camera","alarm_on")
 			
 		$AnimatedSprite.animation = "knocked"
+
+		if (cur_pos != 0):
+			Game.map_guard_restpoints.set_free(cur_pos)
 		
 		.knockout()
 
@@ -350,6 +378,8 @@ func hostage():
 		get_tree().call_group("Camera","alarm_on")
 		
 	$AnimatedSprite.animation = "untied"
+	if (cur_pos != 0):
+		Game.map_guard_restpoints.set_free(cur_pos)
 	
 	.hostage()
 	
@@ -371,3 +401,15 @@ func alarm_on():
 		
 	
 	.alarm_on()
+
+func shoot(target,damage):
+	weapon_mag -= 1
+	if (weapon_mag <= 0):
+		can_shoot = false
+		$ReloadTimer.start()
+	
+	.shoot(target,damage)
+
+func _on_ReloadTimer_timeout():
+	weapon_mag = 8
+	can_shoot = true

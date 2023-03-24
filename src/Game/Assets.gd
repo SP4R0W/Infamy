@@ -1,5 +1,11 @@
 extends Panel
 
+onready var van = get_parent().get_node("Map/Van")
+onready var medic = get_parent().get_node("Map/Medic")
+onready var ammo = get_parent().get_node("Map/Ammo")
+onready var cable = get_parent().get_node("Map/Cable")
+onready var body = get_parent().get_node("Map/Body")
+
 var preplanning_info: Dictionary = {
 	"bank":{
 		"max_favors":10,
@@ -40,7 +46,7 @@ var preplanning_info: Dictionary = {
 				"max":1,
 				"price":2,
 				"name":"Extra Handcuffs",
-				"desc":"12 extra handcuffs for when you need to control a large crowd.",
+				"desc":"Extra handcuffs for when you need to control a large crowd.",
 				"locations":[
 					{
 						"name":"Lobby",
@@ -84,8 +90,22 @@ var preplanning_info: Dictionary = {
 	}
 }
 
+var marker_locations: Dictionary = {
+	"medic1":Vector2(930,555),
+	"medic2":Vector2(1055,240),
+	"ammo1":Vector2(685,150),
+	"ammo2":Vector2(1115,485),
+	"cables1":Vector2(400,485),
+	"cables2":Vector2(1025,415),
+	"bodies1":Vector2(830,150),
+	"bodies2":Vector2(1145,205),
+	"van1":Vector2(125,625),
+	"van2":Vector2(1280,600)
+}
+
 var remaining_favors: int = 0
 var current_item: String = ""
+
 
 func _ready():
 	remaining_favors = preplanning_info[Game.level]["max_favors"]
@@ -98,6 +118,8 @@ func show():
 			
 		child.hide()
 		
+	redraw_markers()
+		
 	$Asset_info/Favours.text = "Available favours: " + str(remaining_favors) + "/" + str(preplanning_info[Game.level]["max_favors"])
 		
 	var assets: Dictionary = preplanning_info[Game.level]["assets"]
@@ -105,6 +127,32 @@ func show():
 		get_node("Asset_info/Asset_list/HBoxContainer/"+asset).show()
 	
 	.show()
+	
+func redraw_markers():
+	van.show()
+	medic.hide()
+	ammo.hide()
+	body.hide()
+	cable.hide()
+		
+	for asset in Game.map_assets:
+		if (asset == "medic1" || asset == "medic2"):
+			medic.show()
+			medic.rect_position = marker_locations[asset]	
+		elif (asset == "ammo1" || asset == "ammo2"):
+			ammo.show()
+			ammo.rect_position = marker_locations[asset]
+		elif (asset == "cables1" || asset == "cables2"):
+			cable.show()
+			cable.rect_position = marker_locations[asset]
+		elif (asset == "bodies1" || asset == "bodies2"):
+			body.show()
+			body.rect_position = marker_locations[asset]
+			
+	if (Game.map_assets.has("van")):
+		van.rect_position = marker_locations["van2"]
+	else:
+		van.rect_position = marker_locations["van1"]
 
 func show_asset(asset: String) -> void:
 	current_item = asset
@@ -196,6 +244,9 @@ func _on_Locations_item_activated(index):
 			remaining_favors -= price
 			Game.map_assets.append(asset["id"])
 			$Asset_desc/Locations.set_item_text(index,asset["name"] + "- Remove")
+			$Buy.play()
+			
+	redraw_markers()
 			
 	$Asset_info/Favours.text = "Available favours: " + str(remaining_favors) + "/" + str(preplanning_info[Game.level]["max_favors"])	
 		
@@ -211,5 +262,8 @@ func _on_Button_pressed():
 			remaining_favors -= price
 			Game.map_assets.append(current_item)
 			$Asset_desc/Button.text = "Remove"
+			$Buy.play()	
+			
+	redraw_markers()
 			
 	$Asset_info/Favours.text = "Available favours: " + str(remaining_favors) + "/" + str(preplanning_info[Game.level]["max_favors"])	

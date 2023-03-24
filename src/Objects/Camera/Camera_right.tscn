@@ -82,12 +82,13 @@ animations = [ {
 extents = Vector2( 76, 48 )
 
 [sub_resource type="DynamicFont" id=11]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=12]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
@@ -148,6 +149,9 @@ scale = Vector2( 8, 4.4 )
 wait_time = 0.1
 autostart = true
 
+[node name="Deffered_timer" type="Timer" parent="."]
+autostart = true
+
 [node name="Alert_timer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
@@ -162,35 +166,35 @@ one_shot = true
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -112.0
-margin_top = -216.0
+margin_top = -240.0
 margin_right = 112.0
-margin_bottom = -96.0
+margin_bottom = -92.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Interaction_panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 217.0
-margin_bottom = 113.0
+margin_bottom = 141.0
 
 [node name="Title" type="Label" parent="Interaction_panel/VBoxContainer"]
 margin_right = 210.0
-margin_bottom = 46.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 11 )
 text = "Camera"
 align = 1
 
 [node name="Action1" type="Label" parent="Interaction_panel/VBoxContainer"]
-margin_top = 50.0
+margin_top = 72.0
 margin_right = 210.0
-margin_bottom = 73.0
+margin_bottom = 107.0
 custom_fonts/font = SubResource( 12 )
 text = "Hold [F] to Loop"
 align = 1
 
 [node name="Interaction_progress" type="ProgressBar" parent="Interaction_panel/VBoxContainer"]
-margin_top = 77.0
+margin_top = 111.0
 margin_right = 210.0
-margin_bottom = 100.0
+margin_bottom = 134.0
 custom_fonts/font = SubResource( 13 )
 step = 1.0
 rounded = true
@@ -211,8 +215,10 @@ bus = "SFX"
 [connection signal="screen_entered" from="AnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="AnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="Detection_timer" to="." method="_on_Detection_timer_timeout"]
+[connection signal="timeout" from="Deffered_timer" to="." method="_on_Deffered_timer_timeout"]
 [connection signal="timeout" from="Alert_timer" to="." method="_on_Alert_timer_timeout"]
 [connection signal="timeout" from="Loop_timer" to="." method="_on_Loop_timer_timeout"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
+[connection signal="finished" from="detected" to="." method="_on_detection_finished"]
 
 [editable path="Marker"]

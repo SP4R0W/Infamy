@@ -10,12 +10,13 @@
 extents = Vector2( 128, 136 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 32
+size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 24
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 2 )
@@ -49,31 +50,35 @@ one_shot = true
 wait_time = 30.0
 one_shot = true
 
+[node name="Repair_timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [node name="Drill_panel" type="PanelContainer" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -112.0
-margin_top = -176.0
+margin_top = -200.0
 margin_right = 112.0
-margin_bottom = -88.0
+margin_bottom = -79.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Drill_panel"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 217.0
-margin_bottom = 81.0
+margin_bottom = 114.0
 
 [node name="Title" type="Label" parent="Drill_panel/VBoxContainer"]
 margin_right = 210.0
-margin_bottom = 46.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 2 )
 text = "Drill"
 align = 1
 
 [node name="Action" type="Label" parent="Drill_panel/VBoxContainer"]
-margin_top = 50.0
+margin_top = 72.0
 margin_right = 210.0
-margin_bottom = 73.0
+margin_bottom = 107.0
 custom_fonts/font = SubResource( 3 )
 text = "Drilling... (60s)"
 align = 1
@@ -126,3 +131,4 @@ bus = "SFX"
 
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
 [connection signal="timeout" from="Drill_timer" to="." method="_on_Drill_timer_timeout"]
+[connection signal="timeout" from="Repair_timer" to="." method="_on_Repair_timer_timeout"]

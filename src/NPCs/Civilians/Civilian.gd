@@ -7,8 +7,11 @@ export(int, 4) var civ_type = 1
 export var is_static: bool = false
 export var speed: float = 500
 
-export(NodePath) onready var start_point = get_node(start_point) as Position2D
-export(NodePath) onready var end_point = get_node(end_point) as Position2D
+export(NodePath) onready var start_point = get_node_or_null(start_point) as Position2D
+export(NodePath) onready var end_point = get_node_or_null(end_point) as Position2D
+
+var start_point_alt
+var end_point_alt
 
 var velocity: Vector2 = Vector2.ZERO
 
@@ -17,7 +20,8 @@ func on_ready():
 	
 	yield(get_tree().create_timer(0.5),"timeout")
 	
-	agent.set_navigation(Game.map_nav)
+	if (Game.map_nav != null):
+		agent.set_navigation(Game.map_nav)
 	
 	random_look()
 	spawn_civ()
@@ -29,10 +33,22 @@ func random_look():
 	$AnimatedSprite.animation = str(civ_type) + "_stand"
 	
 func spawn_civ():
-	if (!is_static):
+	if (!is_static && is_instance_valid(start_point) && is_instance_valid(end_point)):
 		global_position = start_point.global_position
 		
+		if (agent == null):
+			agent = get_node("NavigationAgent2D")
+			
 		agent.set_target_location(end_point.global_position)
+		
+		is_moving = true
+	elif (!is_static && is_instance_valid(start_point_alt) && is_instance_valid(end_point_alt)):
+		global_position = start_point_alt.global_position
+		
+		if (agent == null):
+			agent = get_node("NavigationAgent2D")
+			
+		agent.set_target_location(end_point_alt.global_position)
 		
 		is_moving = true
 	
@@ -85,9 +101,14 @@ func reached():
 func on_move():
 	random_look()
 	
-	global_position = start_point.global_position
-		
-	agent.set_target_location(end_point.global_position)
+	if (start_point != null && end_point != null):
+		global_position = start_point.global_position
+			
+		agent.set_target_location(end_point.global_position)
+	elif (start_point_alt != null && end_point_alt != null):
+		global_position = start_point_alt.global_position
+			
+		agent.set_target_location(end_point_alt.global_position)
 		
 	is_moving = true
 	can_see = true
@@ -167,8 +188,11 @@ func check_interactions():
 				if (is_dead || is_unconscious):
 					action = "bag"
 					if (Game.bodybags > 0):
-						if (Game.player_bag == "empty"):			
-							$Interaction_timer.wait_time = 5
+						if (Game.player_bag == "empty"):
+							if (Game.get_skill("infiltrator",2,1) != "none"):
+								$Interaction_timer.wait_time = 2.5
+							else:
+								$Interaction_timer.wait_time = 5
 							$bag.play()
 						else:
 							Game.ui.update_popup("You are already carrying a bag!",2)
@@ -176,7 +200,7 @@ func check_interactions():
 							Game.player_can_interact = false
 							get_tree().create_timer(1).connect("timeout",Game,"stop_interaction_grace")
 							
-							return							
+							return
 					else:
 						Game.ui.update_popup("You have no body bags!",2)
 						
@@ -187,7 +211,11 @@ func check_interactions():
 				elif (is_hostaged && !is_tied_hostage):
 					action = "tie"
 					if (Game.handcuffs > 0):
-						$Interaction_timer.wait_time = 1
+						if (Game.get_skill("mastermind",1,2) != "upgraded"):
+							$Interaction_timer.wait_time = 2
+						else:
+							$Interaction_timer.wait_time = 1
+							
 						$tie.play()
 					else:
 						Game.ui.update_popup("You have no cable ties!",2)
@@ -227,9 +255,15 @@ func check_interactions():
 				
 				emit_signal("object_interaction_aborted",self,self.action)
 	elif (has_focus && !can_interact):
+		$bag.stop()
+		$tie.stop()
+		
 		$Interaction_panel/VBoxContainer/Action1.hide()
 		$Interaction_panel/VBoxContainer/Action3.show()
 	else:
+		$bag.stop()
+		$tie.stop()
+		
 		hide_panel()
 	
 	if (Game.player_is_interacting && has_focus):	
@@ -265,16 +299,16 @@ func finish_interactions():
 	
 	.finish_interactions()
 	
-func kill():	
+func kill(damage: float = 0,type: String = "none"):	
 	if (!is_dead):
 		$AnimatedSprite.animation = str(civ_type) + "_dead"
 		
-		.kill()
+		.kill(damage,type)
 
 func knockout():	
 	if (!is_unconscious && !is_dead):
 		$AnimatedSprite.animation = str(civ_type) + "_knocked"
-		
+
 		.knockout()
 
 func hostage():
@@ -297,3 +331,5 @@ func alarm_on():
 		can_interact = false
 	
 	.alarm_on()
+
+

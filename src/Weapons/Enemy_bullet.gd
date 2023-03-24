@@ -43,12 +43,19 @@ func _on_Enemy_bullet_area_entered(area):
 
 func _on_Enemy_bullet_body_entered(body):
 	if (body.is_in_group("glass")):
-		body.destroy()
-		
-	if (body.is_in_group("wood_door")):
-		body.destroy_door()
-		
-	if (body.is_in_group("Player")):
+		if (!body.is_broken):
+			body.destroy()
+			kill()
+		else:
+			return
+	elif (body.is_in_group("wood_door")):
+		if (!body.is_broken):
+			body.destroy_door()
+			kill()
+		else:
+			return
+	elif (body.is_in_group("Player")):
 		body.take_damage(damage)
-	
-	kill()
+		
+	else:
+		kill()
