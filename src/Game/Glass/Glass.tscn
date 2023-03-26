@@ -31,9 +31,11 @@ frames = SubResource( 1 )
 animation = "normal"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource( 2 )
 
 [node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+visible = false
 position = Vector2( -1.90735e-06, 3.8147e-06 )
 scale = Vector2( 3.2, 6.4 )
 
