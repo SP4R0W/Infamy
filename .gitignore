@@ -1,2 +1,7 @@
-
+.mono/
+.vscode/
+.import/
+.godot/
+export.cfg
 export_presets.cfg
+*.import
