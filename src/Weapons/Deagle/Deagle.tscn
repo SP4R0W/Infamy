@@ -63,7 +63,6 @@ weapon_position = Vector2( 215, 115 )
 texture = ExtResource( 3 )
 
 [node name="MeleeShape" parent="Melee" index="0"]
-visible = false
 position = Vector2( 0, 6.35783e-06 )
 shape = SubResource( 1 )
 disabled = true

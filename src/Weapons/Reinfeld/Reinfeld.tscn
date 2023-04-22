@@ -71,7 +71,6 @@ tracks/0/keys = {
 }
 
 [node name="Reinfeld" instance=ExtResource( 1 )]
-rotation = -0.959931
 scale = Vector2( 0.3, 0.3 )
 script = ExtResource( 3 )
 cam_shake_intensity = 3.5
@@ -90,6 +89,7 @@ offset = Vector2( -645, 0 )
 [node name="MeleeShape" parent="Melee" index="0"]
 position = Vector2( 0, -1.66667 )
 shape = SubResource( 1 )
+disabled = true
 
 [node name="AnimationPlayer" parent="." index="2"]
 anims/melee = SubResource( 2 )
@@ -108,5 +108,3 @@ stream = ExtResource( 4 )
 [node name="Pump" type="AudioStreamPlayer" parent="." index="11"]
 stream = ExtResource( 6 )
 bus = "SFX"
-
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
