@@ -469,7 +469,7 @@ func take_damage(damage: float):
 		return
 
 	if (armor > 0):
-		armor -= durability
+		armor -= (durability * (0.25 * (Game.difficulty + 1)))
 
 		if (protection > 0):
 			damage_total -= damage_total * (protection / 100)

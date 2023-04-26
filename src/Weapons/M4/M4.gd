@@ -1,12 +1,12 @@
 extends Weapon
 
 var modification_offsets: Dictionary = {
-	"suppressor1_auto":Vector2(540,0),
-	"suppressor2_auto":Vector2(550,0),
-	"suppressor3_auto":Vector2(560,0),
-	"compensator1_auto":Vector2(520,-2),
-	"compensator2_auto":Vector2(530,0),
-	"compensator3_auto":Vector2(540,0),
+	"suppressor1_auto":Vector2(520,0),
+	"suppressor2_auto":Vector2(530,0),
+	"suppressor3_auto":Vector2(540,0),
+	"compensator1_auto":Vector2(500,-2),
+	"compensator2_auto":Vector2(510,0),
+	"compensator3_auto":Vector2(520,0),
 	"default_m4_stock":Vector2(-550,0),
 	"short_stock":Vector2(-575,0),
 	"wide_stock":Vector2(-595,0),

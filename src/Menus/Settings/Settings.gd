@@ -44,11 +44,11 @@ func _ready():
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/Timers/Timers.text = "Hide Timers"
 	else:
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/Timers/Timers.text = "Show Timers"
-		
-	$Control/CanvasLayer/VBoxContainer/HBoxContainer4.show()
 
 func _on_Back_btn_pressed():
-	Savedata.save_data()
+	if (!Savedata.has_cheat_on):
+		Savedata.save_data()
+		
 	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 
 func _on_MasterSlider_drag_ended(value_changed):
@@ -116,7 +116,5 @@ func _on_Timers_pressed():
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/Timers/Timers.text = "Show Timers"
 
 
-
-
-
-
+func _on_Cheat_pressed():
+	Savedata.turn_cheat_on()

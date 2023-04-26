@@ -235,7 +235,7 @@ func set_cops():
 				spawner.cop_amount = 1
 				if (spawner.cop_type == "normal"):
 					spawner.cop_health = 75
-					spawner.delay = 8.5
+					spawner.delay = 10
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 0
 					spawner.cop_health = 65
@@ -249,42 +249,42 @@ func set_cops():
 				spawner.cop_amount = 2
 				if (spawner.cop_type == "normal"):
 					spawner.cop_health = 145
-					spawner.delay = 7.5
+					spawner.delay = 8.5
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_health = 125
-					spawner.delay = 10
+					spawner.delay = 15
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 1
 					spawner.cop_health = 450
-					spawner.delay = 30
+					spawner.delay = 60
 		2:
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 3
 				if (spawner.cop_type == "normal"):
 					spawner.cop_health = 205
-					spawner.delay = 6.5
+					spawner.delay = 7.5
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 2
 					spawner.cop_health = 175
-					spawner.delay = 8.5
+					spawner.delay = 10
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 1	
 					spawner.cop_health = 600
-					spawner.delay = 25
+					spawner.delay = 50
 		3:
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 4
 				if (spawner.cop_type == "normal"):
 					spawner.cop_health = 275
-					spawner.delay = 5
+					spawner.delay = 7.5
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 3
 					spawner.cop_health = 250
-					spawner.delay = 7.5
+					spawner.delay = 10
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 2
 					spawner.cop_health = 850
-					spawner.delay = 20
+					spawner.delay = 45
 
 func set_assets():
 	for asset in $Assets.get_children():
@@ -456,7 +456,7 @@ func _on_SpawnTimer_timeout():
 		"BAIN: Police has just arrived! You gotta fight'em!"
 	]
 	
-	Game.ui.update_subtitle(quotes[randi() % quotes.size()],0,7.5)
+	Game.ui.update_subtitle(quotes[randi() % quotes.size()],2,7.5)
 	
 	is_wave_break = false
 	Game.can_spawn = true

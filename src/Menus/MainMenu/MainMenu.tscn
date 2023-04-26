@@ -265,9 +265,11 @@ margin_bottom = 523.0
 custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center]Changelog:
-- Released the game!"
+- Fixed small visual issues
++ Added a new cheat which gives you max stats. The cheat automatically resets and goes back to your previous save when you close the game, so please don't use reset progress function to get rid of it."
 text = "Changelog:
-- Released the game!"
+- Fixed small visual issues
++ Added a new cheat which gives you max stats. The cheat automatically resets and goes back to your previous save when you close the game, so please don't use reset progress function to get rid of it."
 
 [node name="Version" type="PanelContainer" parent="Control/CanvasLayer"]
 anchor_top = 1.0

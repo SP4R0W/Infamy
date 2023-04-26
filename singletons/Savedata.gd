@@ -2,6 +2,8 @@ extends Node
 
 # This file stores data loaded from save file and manages the function for saving, loading and modifying save data.
 
+var has_cheat_on: bool = false
+
 var player_stats: Dictionary = {
 	"money":0,
 	"total_xp":0,
@@ -461,3 +463,19 @@ func reset_progress():
 	
 	# save after cleaning	
 	save_data()
+
+func turn_cheat_on():
+	has_cheat_on = true
+	
+	player_stats["money"] = 999_999_999
+	player_stats["level"] = 100 
+	
+	skill_loadouts["1"]["skill_points"] = 120
+	skill_loadouts["2"]["skill_points"] = 120
+	skill_loadouts["3"]["skill_points"] = 120
+	
+	for key in skill_loadouts.keys():
+		for key2 in skill_loadouts[key].keys():
+			if (key2 != "skill_points"):
+				for x in range(0,skill_loadouts[key][key2].size()):
+					skill_loadouts[key][key2][x] = "none"

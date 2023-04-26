@@ -1232,7 +1232,7 @@ margin_top = 300.0
 margin_right = 234.0
 margin_bottom = 305.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 5 )
 
@@ -1250,7 +1250,7 @@ margin_top = 372.0
 margin_right = 234.0
 margin_bottom = 377.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 4 )
 
@@ -1268,7 +1268,7 @@ margin_top = 444.0
 margin_right = 234.0
 margin_bottom = 449.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 1 )
 

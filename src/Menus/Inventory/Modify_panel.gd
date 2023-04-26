@@ -63,7 +63,6 @@ func draw_modify(tab: int):
 				if (attachment == weapon_attachment):
 					btn.get_node("equip").show()
 					_attachment_pressed(btn)
-				break
 				
 func calculate_values():
 	var panel = get_child(selected_tab)
@@ -333,7 +332,6 @@ func _on_Button_pressed(button):
 				btn.get_node("equip").hide()
 				if (attachment == searched):
 					btn.get_node("equip").show()
-				break
 
 func change_button(button):
 	if (button.text == "Can't buy!" || button.text == "Can't afford!"):

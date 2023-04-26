@@ -125,7 +125,9 @@ func _on_Menu_btn_pressed() -> void:
 	$Audio/success.stop()
 	$Audio/fail.stop()
 	
-	Savedata.save_data()
+	if (!Savedata.has_cheat_on):
+		Savedata.save_data()
+		
 	Composer.goto_scene(Global.scene_paths["lobby"],true,true,0.5,0.5,$Audio/briefing,false)
 
 func show_preplanning() -> void:

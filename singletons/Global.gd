@@ -12,13 +12,13 @@ onready var root: Node = get_tree().root.get_node_or_null("Main")
 
 onready var skillMenu: Node2D = null
 
-onready var version = 1.0
+onready var version = 1.1
 
 onready var item_textures: Dictionary = {
 	"b_keycard":"res://src/Objects/Blue_keycard/blue_keycard.png",
 	"r_keycard":"res://src/Objects/Red_keycard/vault_keycard.png",
 	"vault_code":"res://src/Objects/Vault_code/vault_code.png",
-	"keys":"res://src/Objects/Keys/keys.png",
+	"keys":"res://src/Objects/Keys/keys_inv.png",
 	"p_number":"res://src/Objects/Phone/phone_number.png",
 	"safe_code":"res://src/Objects/Safe_code/password.png",
 }

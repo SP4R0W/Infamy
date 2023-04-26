@@ -64,9 +64,6 @@ animation = "heavy"
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 3 )
 
-[node name="Barrel_attachment" parent="Sprite" index="0"]
-position = Vector2( 520, 0 )
-
 [node name="Stock_attachment" parent="Sprite" index="1"]
 offset = Vector2( -575, 0 )
 

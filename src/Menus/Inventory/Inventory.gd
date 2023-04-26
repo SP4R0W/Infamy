@@ -15,7 +15,9 @@ func _ready():
 	update_money()
 
 func _on_Menu_btn_pressed():
-	Savedata.save_data()
+	if (!Savedata.has_cheat_on):
+		Savedata.save_data()
+		
 	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 	
 func update_money():

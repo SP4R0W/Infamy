@@ -217,6 +217,28 @@ custom_styles/pressed = ExtResource( 7 )
 custom_styles/normal = ExtResource( 5 )
 text = "Reset Progress"
 
+[node name="HBoxContainer6" type="HBoxContainer" parent="Control/CanvasLayer/VBoxContainer"]
+margin_top = 756.0
+margin_right = 2600.0
+margin_bottom = 841.0
+custom_constants/separation = 500
+alignment = 1
+
+[node name="Cheat" type="VBoxContainer" parent="Control/CanvasLayer/VBoxContainer/HBoxContainer6"]
+margin_left = 900.0
+margin_right = 1700.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 800, 0 )
+
+[node name="Cheat" type="Button" parent="Control/CanvasLayer/VBoxContainer/HBoxContainer6/Cheat"]
+margin_right = 800.0
+margin_bottom = 85.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 8 )
+custom_styles/pressed = ExtResource( 7 )
+custom_styles/normal = ExtResource( 5 )
+text = "Max Stats"
+
 [node name="Option_panel2" type="PanelContainer" parent="Control/CanvasLayer"]
 anchor_left = 0.5
 anchor_top = 1.0
@@ -248,4 +270,5 @@ text = "Main Menu"
 [connection signal="pressed" from="Control/CanvasLayer/VBoxContainer/HBoxContainer3/FPS/FPS" to="." method="_on_FPS_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/VBoxContainer/HBoxContainer3/Timers/Timers" to="." method="_on_Timers_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/VBoxContainer/HBoxContainer5/Restart/Reset" to="." method="_on_Reset_pressed"]
+[connection signal="pressed" from="Control/CanvasLayer/VBoxContainer/HBoxContainer6/Cheat/Cheat" to="." method="_on_Cheat_pressed"]
 [connection signal="pressed" from="Control/CanvasLayer/Option_panel2/Back_btn" to="." method="_on_Back_btn_pressed"]

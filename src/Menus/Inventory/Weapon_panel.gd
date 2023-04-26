@@ -174,7 +174,6 @@ func _on_Button_pressed(button):
 		btn.get_node("equip").hide()
 		if (btn.name == cur_weapon):
 			btn.get_node("equip").show()
-			break
 
 func change_button(button):
 	if (button.text == "Can't afford!"):

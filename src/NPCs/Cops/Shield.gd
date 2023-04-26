@@ -8,7 +8,7 @@ var weapon_stats: Dictionary = {
 		"firerate":0.5,
 		"reload_time":1.5,
 		"mag_size":8,
-		"damage":5,
+		"damage":1.5,
 		"position":Vector2(160,135)
 	},
 	"UZI":{
@@ -16,7 +16,7 @@ var weapon_stats: Dictionary = {
 		"firerate":0.2,
 		"reload_time":2,
 		"mag_size":15,
-		"damage":3.5,
+		"damage":2,
 		"position":Vector2(135,150)
 	}
 }
