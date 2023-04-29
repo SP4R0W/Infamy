@@ -1,0 +1,42 @@
+extends Sprite
+
+signal object_interaction_finished(object,action)
+
+var has_focus: bool = false
+export var can_interact: bool = true
+
+func _ready():
+	$Interaction_panel.hide()
+
+func show_panel():
+	has_focus = true
+	$Interaction_panel.show()
+
+func hide_panel():
+	has_focus = false
+	$Interaction_panel.hide()
+
+func _process(delta):
+	if (has_focus):
+		if (Input.is_action_pressed("interact1") && Game.player_can_interact):
+			if (!Game.player_is_interacting):
+				emit_signal("object_interaction_finished",self,"steal")
+
+				queue_free()
+
+				Game.player_can_interact = false
+				get_tree().create_timer(0.2).connect("timeout",Game,"stop_interaction_grace")
+
+				Game.stolen_cash += 1000
+				Game.stolen_cash_loose += 1000
+				Game.ui.update_popup("Secured: 1000$",2.5)
+
+
+func _on_VisibilityNotifier2D_screen_entered():
+	set_process(true)
+	show()
+
+
+func _on_VisibilityNotifier2D_screen_exited():
+	set_process(false)
+	hide()
