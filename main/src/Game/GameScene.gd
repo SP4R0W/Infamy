@@ -9,31 +9,31 @@ var level_paths: Dictionary = {
 
 func _ready():
 	Game.game_scene = self
-	
+
 	Global.root.get_node("menu").stop()
 	$Audio/briefing.play()
 
 	load_level()
-	
+
 	restart_game()
 
 	show_preplanning()
 
 func restart_game():
 	Game.can_spawn = false
-	
+
 	Game.max_targets = 3
 	Game.current_cops = 0
-	
+
 	Game.stolen_cash = Global.contract_values[Game.level]["rewards_mon"] + (Global.contract_values[Game.level]["rewards_mon_bonus"] * Game.difficulty)
 	Game.xp_earned = Global.contract_values[Game.level]["rewards_xp"] + (Global.contract_values[Game.level]["rewards_xp_bonus"] * Game.difficulty)
-	
+
 	Game.killed_civilians_penalty = 0
 	Game.stolen_cash_bags = 0
 	Game.stolen_cash_loose = 0
 	Game.xp_earned_stealth = 0
 	Game.xp_earned_bags = 0
-	
+
 	Game.map_assets = []
 
 	Game.player_current_equipment = 0
@@ -69,15 +69,15 @@ func restart_game():
 
 	Game.handcuffs = Game.max_handcuffs
 	Game.bodybags = Game.max_bodybags
-	
+
 	Game.player_damage_reduction = 0
-	
+
 	Game.player.health = Game.player_max_health
 	Game.player.stamina = Game.player_max_stamina
-	
+
 	Game.desperado_kill_counter = 0
 	Game.desperado_active = false
-	
+
 	Game.donor_kill_counter = 0
 
 	Game.is_bulletstorm_active = false
@@ -87,10 +87,10 @@ func restart_game():
 	Game.locknload_active = false
 
 	Game.unbreakable_cooldown = false
-	
+
 	Game.golden_kill_counter = 0
 	Game.golden_active = false
-	
+
 func load_level() -> void:
 	var level = load(level_paths[Game.level]).instance()
 	add_child(level)
@@ -111,11 +111,11 @@ func start_game() -> void:
 
 func _on_Start_btn_pressed() -> void:
 	Game.map.check_skills()
-	
+
 	Game.check_skills()
-	
+
 	Game.player.add_weapons()
-	
+
 	start_game()
 
 func _on_Menu_btn_pressed() -> void:
@@ -124,10 +124,10 @@ func _on_Menu_btn_pressed() -> void:
 
 	$Audio/success.stop()
 	$Audio/fail.stop()
-	
+
 	if (!Savedata.has_cheat_on):
 		Savedata.save_data()
-		
+
 	Composer.goto_scene(Global.scene_paths["lobby"],true,true,0.5,0.5,$Audio/briefing,false)
 
 func show_preplanning() -> void:
@@ -135,7 +135,7 @@ func show_preplanning() -> void:
 	$Control/CanvasLayer/GameUI.hide()
 	$Control/CanvasLayer/Heist_success.hide()
 	$Control/CanvasLayer/Heist_fail.hide()
-	
+
 	$Control/CanvasLayer/GameUI/CanvasLayer2/Inventory.hide()
 
 	$Control/CanvasLayer/Start_btn.show()
@@ -155,15 +155,15 @@ func show_gamewin() -> void:
 	if (Game.player_bag != "none"):
 		if (Global.bag_base_values.keys().has(Game.player_bag)):
 			var bag_value = Global.bag_base_values[Game.player_bag] * (Game.difficulty + 1)
-			
+
 			Game.stolen_cash += bag_value
 			Game.stolen_cash_bags += bag_value
-			
+
 			Game.xp_earned += 1000
 			Game.xp_earned_bags += 1000
-			
+
 	$Control/CanvasLayer/GameUI/CanvasLayer2/Inventory.hide()
-	
+
 	$EcmSound.stop()
 	Game.game_process = false
 
@@ -183,7 +183,7 @@ func show_gamewin() -> void:
 
 func show_gamefail() -> void:
 	$Control/CanvasLayer/GameUI/CanvasLayer2/Inventory.hide()
-	
+
 	$EcmSound.stop()
 	Game.game_process = false
 
@@ -191,8 +191,8 @@ func show_gamefail() -> void:
 	$Audio/loud.stop()
 
 	Game.map.queue_free()
-	
-	$Audio/fail.play()	
+
+	$Audio/fail.play()
 
 	$Control/CanvasLayer/Heist_fail.show()
 	$Control/CanvasLayer/Heist_fail.draw_fail()
@@ -200,16 +200,16 @@ func show_gamefail() -> void:
 	$Control/CanvasLayer/GameUI.queue_free()
 
 	$Control/CanvasLayer/Menu_btn.show()
-	
+
 func _process(delta):
 	if (!Game.game_process):
 		return
-		
+
 	if (Input.is_action_just_pressed("reset") && !Game.player_is_dead):
 		$EcmSound.stop()
 		$Audio/stealth.stop()
 		$Audio/loud.stop()
-		
+
 		Composer.goto_scene(Global.scene_paths["gamescene"],true,false,0.5,0.5)
 
 
@@ -231,7 +231,7 @@ func _on_PushIt_timeout():
 func _on_Golden_timeout():
 	Game.golden_active = false
 	Game.golden_kill_counter = 0
-	
+
 	Game.ui.hide_timer("Golden")
 
 func _on_Golden2_timeout():

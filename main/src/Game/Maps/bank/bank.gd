@@ -125,7 +125,7 @@ func _ready():
 	randomize_cameras()
 	set_difficulty()
 	set_cops()
-	
+
 	randomize_note()
 	randomize_safe()
 	randomize_blue_keycard()
@@ -133,7 +133,7 @@ func _ready():
 
 func loud_ready():
 	$Alarm.play()
-	
+
 	if (current_objective < 8):
 		update_objective(8)
 	else:
@@ -152,22 +152,22 @@ func loud_ready():
 
 	get_tree().call_group("Camera","alarm_on")
 	get_tree().call_group("npc","alarm_on")
-	
+
 	$AlarmTimer.start()
-	
+
 	if (Game.map_assets.has("delay")):
 		$SpawnTimer.wait_time = 60
 	else:
 		$SpawnTimer.wait_time = 30
-	
+
 	$SpawnTimer.start()
-	
+
 func randomize_safe_code():
 	var guards_with_code = 0
-	
+
 	while (guards_with_code < 2):
 		var guard = $NPCs/Guards.get_child(randi() % $NPCs/Guards.get_child_count())
-		
+
 		if (guard.is_in_group("npc")):
 			if (guard.info != "safe_code"):
 				guard.info = "safe_code"
@@ -175,7 +175,7 @@ func randomize_safe_code():
 				guards_with_code += 1
 
 		if (guards_with_code == 2):
-			break	
+			break
 
 func randomize_note():
 	var num = randi() % $Objectives/Notes.get_child_count()
@@ -227,7 +227,7 @@ func set_difficulty_deferred():
 			var guard = get_node("NPCs/Guards/Guard" + str(x))
 			Game.remove_exception(guard.get_node("Interaction_hitbox"))
 			guard.queue_free()
-			
+
 func set_cops():
 	match Game.difficulty:
 		0:
@@ -268,7 +268,7 @@ func set_cops():
 					spawner.cop_health = 175
 					spawner.delay = 10
 				elif (spawner.cop_type == "heavy"):
-					spawner.cop_amount = 1	
+					spawner.cop_amount = 1
 					spawner.cop_health = 600
 					spawner.delay = 50
 		3:
@@ -326,15 +326,15 @@ func update_objective(objective: int):
 
 func bag_secured(type: String):
 	var bag_value = Global.bag_base_values[type] * (Game.difficulty + 1)
-	
+
 	Game.stolen_cash += bag_value
 	Game.stolen_cash_bags += bag_value
-	
+
 	Game.xp_earned += 1000
 	Game.xp_earned_bags += 1000
-		
+
 	Game.ui.update_popup("Bag secured: " + type.capitalize() + " (" + str(Global.format_str_commas(str(bag_value))) + "$)",4)
-	
+
 	if (type == "money"):
 		secured_bags += 1
 
@@ -455,21 +455,21 @@ func _on_SpawnTimer_timeout():
 		"BAIN: Show them what you got!",
 		"BAIN: Police has just arrived! You gotta fight'em!"
 	]
-	
+
 	Game.ui.update_subtitle(quotes[randi() % quotes.size()],2,7.5)
-	
+
 	is_wave_break = false
 	Game.can_spawn = true
-	
+
 	$WaveTimer.wait_time = $WaveTimer.wait_time + 10
 	if ($WaveTimer.wait_time > 300):
 		$WaveTimer.wait_time = 300
-	
+
 	$WaveTimer.start()
 
 func _on_WaveTimer_timeout():
 	is_wave_break = true
-	
+
 	if (Game.current_cops == 0):
 		var quotes = [
 			"BAIN: Nice job! You fought them back and bought yourself some time.",
@@ -478,13 +478,13 @@ func _on_WaveTimer_timeout():
 			"BAIN: Nice! You just bought yourself a break. Make the best of it.",
 			"BAIN: Cops are retreating and you get some free time for a moment. Use it."
 		]
-		
+
 		Game.ui.update_subtitle(quotes[randi() % quotes.size()],0,7.5)
-		
+
 		Game.can_spawn = false
-		
+
 		$SpawnTimer.wait_time = 30
-			
+
 		$SpawnTimer.start()
 
 func check_skills():
@@ -496,27 +496,27 @@ func check_skills():
 func start_spawn(object):
 	if (spawning_civs.has(object) || Game.is_game_loud):
 		return
-	
+
 	spawning_civs.append(object)
-	
+
 	var start = object.start_point
 	var end = object.end_point
 
 	yield(get_tree().create_timer(5),"timeout")
-	
+
 	if (Game.is_game_loud):
 		return
-	
+
 	var new_npc = civ_scene.instance()
 	new_npc.start_point_alt = get_node_or_null(get_path_to(start)) as Position2D
 	new_npc.end_point_alt = get_node_or_null(get_path_to(end)) as Position2D
-	
+
 	new_npc.connect("npc_dead",self,"start_spawn")
 	new_npc.connect("npc_hostaged",self,"start_spawn")
 	new_npc.connect("npc_knocked",self,"start_spawn")
-	
+
 	$NPCs/Civilians.call_deferred("add_child",new_npc)
 
 	new_npc.spawn_civ()
-	
+
 	spawning_civs.erase(object)

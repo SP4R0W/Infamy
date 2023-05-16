@@ -44,7 +44,10 @@ var current_objective: int = 0
 var are_cameras_alerted: bool = false
 
 func _ready():
-	Game.game_scene = $Objects
+	Game.game_scene = self
+
+	Game.map = self
+	Game.map_objects = $Objects
 
 	menu_track.stop()
 	restart_game()

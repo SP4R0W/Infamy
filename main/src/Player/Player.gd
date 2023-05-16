@@ -157,11 +157,11 @@ func switch_equipment() -> void:
 
 func use_medic_bag():
 	if (Game.get_skill("mastermind",3,1) == "basic"):
-		health = health + int(Game.player_max_health * 0.5)
+		health = clamp(health + int(Game.player_max_health * 0.5),0,Game.player_max_health)
 	elif (Game.get_skill("mastermind",3,1) == "upgraded"):
-		health = health + int(Game.player_max_health * 0.85)
+		health = clamp(health + int(Game.player_max_health * 0.85),0,Game.player_max_health)
 	else:
-		health = health + int(Game.player_max_health * 0.25)
+		health = clamp(health + int(Game.player_max_health * 0.25),0,Game.player_max_health)
 
 	if (Game.get_skill("mastermind",1,1) != "none"):
 		walkSpeed *= 1.25

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://src/Game/Maps/bank/bank.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/fonts/Panel_text_Medium.tres" type="DynamicFont" id=2]
@@ -35,50 +35,51 @@
 [ext_resource path="res://src/Tutorial/tutorial.ogg" type="AudioStream" id=33]
 [ext_resource path="res://src/Equipment/AmmoBag/AmmoBag.tscn" type="PackedScene" id=34]
 [ext_resource path="res://src/Equipment/AmmoBag/AmmoBagTutorial.gd" type="Script" id=35]
+[ext_resource path="res://src/Game/Inventory.gd" type="Script" id=36]
 
-[sub_resource type="DynamicFont" id=1]
+[sub_resource type="DynamicFont" id=12]
 size = 64
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=13]
 size = 64
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 7 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=14]
 size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 19 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=15]
 size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 19 )
 
-[sub_resource type="DynamicFont" id=5]
+[sub_resource type="DynamicFont" id=16]
 size = 84
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=17]
 size = 48
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=18]
 size = 64
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=19]
 size = 64
 use_mipmaps = true
 use_filter = true
@@ -219,6 +220,7 @@ margin_bottom = 40.0
 self_modulate = Color( 1, 1, 1, 0 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 1
 script = ExtResource( 18 )
 
 [node name="Timer" type="Timer" parent="Control/CanvasLayer/GameUI"]
@@ -229,6 +231,7 @@ margin_left = 64.0
 margin_top = 56.0
 margin_right = 78.0
 margin_bottom = 161.0
+mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="Control/CanvasLayer/GameUI/Objective"]
@@ -236,7 +239,7 @@ margin_left = 2.0
 margin_top = 12.0
 margin_right = 952.0
 margin_bottom = 93.0
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 12 )
 text = "Objective: Enter the bank"
 
 [node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Objective"]
@@ -252,6 +255,7 @@ margin_top = -280.0
 margin_right = 186.5
 margin_bottom = -175.0
 grow_horizontal = 2
+mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/CanvasLayer/GameUI/Popup_panel"]
@@ -266,11 +270,12 @@ grow_vertical = 2
 margin_top = 10.0
 margin_right = 1938.0
 margin_bottom = 91.0
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 13 )
 text = "Alarm sounded: Police reported suspicious activity."
 align = 1
 
 [node name="Timer" type="Timer" parent="Control/CanvasLayer/GameUI/Popup_panel"]
+one_shot = true
 
 [node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Popup_panel"]
 
@@ -282,6 +287,7 @@ margin_left = -192.0
 margin_top = 28.0
 margin_right = 192.0
 margin_bottom = 222.0
+mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Control/CanvasLayer/GameUI/Status"]
@@ -292,7 +298,7 @@ margin_bottom = -42.0
 [node name="Timer" type="Label" parent="Control/CanvasLayer/GameUI/Status/VBoxContainer"]
 margin_right = 384.0
 margin_bottom = 62.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 14 )
 text = "00:00"
 align = 1
 valign = 1
@@ -301,7 +307,7 @@ valign = 1
 margin_top = 66.0
 margin_right = 384.0
 margin_bottom = 128.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 14 )
 text = "Compromised"
 align = 1
 valign = 1
@@ -310,8 +316,33 @@ valign = 1
 margin_top = 132.0
 margin_right = 384.0
 margin_bottom = 194.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 15 )
 text = "Bag: Manager"
+align = 1
+valign = 1
+
+[node name="Money" type="PanelContainer" parent="Control/CanvasLayer/GameUI"]
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_left = 3317.0
+margin_top = 56.0
+margin_right = 3663.0
+margin_bottom = 157.0
+grow_horizontal = 0
+mouse_filter = 2
+custom_styles/panel = ExtResource( 6 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Control/CanvasLayer/GameUI/Money"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 344.0
+margin_bottom = 99.0
+
+[node name="Money" type="Label" parent="Control/CanvasLayer/GameUI/Money/CenterContainer"]
+margin_top = 8.0
+margin_right = 342.0
+margin_bottom = 89.0
+custom_fonts/font = ExtResource( 5 )
+text = "Money: 0$"
 align = 1
 valign = 1
 
@@ -320,9 +351,11 @@ modulate = Color( 1, 1, 1, 0.847059 )
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -440.0
-margin_top = 56.0
+margin_top = 200.0
 margin_right = -183.0
-margin_bottom = 161.0
+margin_bottom = 305.0
+grow_horizontal = 0
+mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
 
 [node name="CenterContainer" type="CenterContainer" parent="Control/CanvasLayer/GameUI/Counters"]
@@ -354,98 +387,106 @@ text = "K:0"
 align = 1
 valign = 1
 
-[node name="ECM" type="PanelContainer" parent="Control/CanvasLayer/GameUI"]
+[node name="CanvasLayer2" type="CanvasLayer" parent="Control/CanvasLayer/GameUI"]
+layer = 100
+
+[node name="Inventory" type="Panel" parent="Control/CanvasLayer/GameUI/CanvasLayer2"]
+visible = false
+margin_left = 2960.0
+margin_top = 1525.0
+margin_right = 3792.0
+margin_bottom = 1589.0
+mouse_filter = 2
+custom_styles/panel = ExtResource( 6 )
+script = ExtResource( 36 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -416.0
+margin_top = -32.0
+margin_right = 416.0
+margin_bottom = 32.0
+mouse_filter = 2
+custom_constants/separation = 5
+
+[node name="Timers" type="VBoxContainer" parent="Control/CanvasLayer/GameUI"]
+margin_left = 64.0
+margin_top = 200.0
+margin_right = 372.0
+margin_bottom = 285.0
+mouse_filter = 2
+custom_constants/separation = 50
+
+[node name="ECM" type="PanelContainer" parent="Control/CanvasLayer/GameUI/Timers"]
 visible = false
 modulate = Color( 1, 1, 1, 0.847059 )
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -3776.0
-margin_top = 186.0
-margin_right = -3539.0
-margin_bottom = 291.0
+margin_right = 650.0
+margin_bottom = 85.0
 custom_styles/panel = ExtResource( 6 )
 
-[node name="Time" type="Label" parent="Control/CanvasLayer/GameUI/ECM"]
+[node name="Time" type="Label" parent="Control/CanvasLayer/GameUI/Timers/ECM"]
 margin_left = 2.0
-margin_top = 12.0
-margin_right = 306.0
-margin_bottom = 93.0
+margin_top = 2.0
+margin_right = 648.0
+margin_bottom = 83.0
 custom_fonts/font = ExtResource( 5 )
 text = "ECM: 15s"
 align = 1
 valign = 1
 
-[node name="Inventory" type="Panel" parent="Control/CanvasLayer/GameUI"]
-margin_left = 2960.0
-margin_top = 1488.0
-margin_right = 3792.0
-margin_bottom = 1600.0
+[node name="Overdose" type="PanelContainer" parent="Control/CanvasLayer/GameUI/Timers"]
+visible = false
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_right = 650.0
+margin_bottom = 85.0
 custom_styles/panel = ExtResource( 6 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/Inventory"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -398.0
-margin_top = -48.0
-margin_right = 398.0
-margin_bottom = 48.0
+[node name="Time" type="Label" parent="Control/CanvasLayer/GameUI/Timers/Overdose"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 648.0
+margin_bottom = 83.0
+custom_fonts/font = ExtResource( 5 )
+text = "Overdose: 10s"
+align = 1
+valign = 1
 
-[node name="Item1" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_right = 96.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
+[node name="Bulletstorm" type="PanelContainer" parent="Control/CanvasLayer/GameUI/Timers"]
+visible = false
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_right = 650.0
+margin_bottom = 85.0
+custom_styles/panel = ExtResource( 6 )
 
-[node name="Item2" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 100.0
-margin_right = 196.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
+[node name="Time" type="Label" parent="Control/CanvasLayer/GameUI/Timers/Bulletstorm"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 648.0
+margin_bottom = 83.0
+custom_fonts/font = ExtResource( 5 )
+text = "Bulletstorm: 10s"
+align = 1
+valign = 1
 
-[node name="Item3" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 200.0
-margin_right = 296.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
+[node name="Golden" type="PanelContainer" parent="Control/CanvasLayer/GameUI/Timers"]
+visible = false
+modulate = Color( 1, 1, 1, 0.847059 )
+margin_right = 650.0
+margin_bottom = 85.0
+custom_styles/panel = ExtResource( 6 )
 
-[node name="Item4" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 300.0
-margin_right = 396.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
-
-[node name="Item5" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 400.0
-margin_right = 496.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
-
-[node name="Item6" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 500.0
-margin_right = 596.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
-
-[node name="Item7" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 600.0
-margin_right = 696.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
-
-[node name="Item8" type="TextureRect" parent="Control/CanvasLayer/GameUI/Inventory/HBoxContainer"]
-margin_left = 700.0
-margin_right = 796.0
-margin_bottom = 96.0
-rect_min_size = Vector2( 96, 96 )
-expand = true
+[node name="Time" type="Label" parent="Control/CanvasLayer/GameUI/Timers/Golden"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 648.0
+margin_bottom = 83.0
+custom_fonts/font = ExtResource( 5 )
+text = "Golden Scout: 10"
+align = 1
+valign = 1
 
 [node name="Player" type="Panel" parent="Control/CanvasLayer/GameUI"]
 modulate = Color( 1, 1, 1, 0.847059 )
@@ -453,12 +494,13 @@ margin_left = 2960.0
 margin_top = 1616.0
 margin_right = 3792.0
 margin_bottom = 2128.0
+mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
 
 [node name="Weapon1" type="Label" parent="Control/CanvasLayer/GameUI/Player"]
 margin_right = 416.0
 margin_bottom = 119.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 16 )
 text = "Minigun"
 align = 1
 valign = 1
@@ -467,7 +509,7 @@ valign = 1
 margin_top = 112.0
 margin_right = 416.0
 margin_bottom = 180.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "1000/1000"
 align = 1
 valign = 1
@@ -476,7 +518,7 @@ valign = 1
 margin_left = 416.0
 margin_right = 832.0
 margin_bottom = 119.0
-custom_fonts/font = SubResource( 5 )
+custom_fonts/font = SubResource( 16 )
 text = "Minigun"
 align = 1
 valign = 1
@@ -486,7 +528,7 @@ margin_left = 416.0
 margin_top = 112.0
 margin_right = 832.0
 margin_bottom = 180.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "1000/1000"
 align = 1
 valign = 1
@@ -496,7 +538,7 @@ margin_left = 40.0
 margin_top = 192.0
 margin_right = 91.0
 margin_bottom = 260.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "2x"
 
 [node name="Item1" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
@@ -512,7 +554,7 @@ margin_left = 232.0
 margin_top = 192.0
 margin_right = 283.0
 margin_bottom = 260.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "2x"
 
 [node name="Item2" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
@@ -528,7 +570,7 @@ margin_left = 456.0
 margin_top = 192.0
 margin_right = 507.0
 margin_bottom = 260.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "6x"
 
 [node name="Cable" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
@@ -544,7 +586,7 @@ margin_left = 648.0
 margin_top = 192.0
 margin_right = 699.0
 margin_bottom = 260.0
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 17 )
 text = "2x"
 
 [node name="Bags" type="TextureRect" parent="Control/CanvasLayer/GameUI/Player"]
@@ -560,7 +602,7 @@ margin_left = 25.0
 margin_top = 264.0
 margin_right = 85.0
 margin_bottom = 355.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 18 )
 text = "H:"
 
 [node name="Health_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
@@ -569,7 +611,7 @@ margin_top = 300.0
 margin_right = 234.0
 margin_bottom = 305.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 13 )
 
@@ -578,7 +620,7 @@ margin_left = 25.0
 margin_top = 336.0
 margin_right = 85.0
 margin_bottom = 427.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 18 )
 text = "A:"
 
 [node name="Armor_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
@@ -587,7 +629,7 @@ margin_top = 372.0
 margin_right = 234.0
 margin_bottom = 377.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 12 )
 
@@ -596,7 +638,7 @@ margin_left = 25.0
 margin_top = 408.0
 margin_right = 79.0
 margin_bottom = 499.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 18 )
 text = "S:"
 
 [node name="Stamina_bar" type="TextureProgress" parent="Control/CanvasLayer/GameUI/Player"]
@@ -605,7 +647,7 @@ margin_top = 444.0
 margin_right = 234.0
 margin_bottom = 449.0
 rect_scale = Vector2( 5.5, 5 )
-step = 0.1
+step = 0.01
 value = 100.0
 texture_progress = ExtResource( 10 )
 
@@ -618,13 +660,14 @@ margin_left = -1022.0
 margin_top = 536.0
 margin_right = 1022.0
 margin_bottom = 1048.0
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 19 )
 text = "Bain: Alright guys, this is it. A simple bank heist on a simple bank.
 Get inside first and scout the area."
 align = 1
 autowrap = true
 
 [node name="Timer" type="Timer" parent="Control/CanvasLayer/GameUI/Subtitle"]
+one_shot = true
 
 [node name="Tween" type="Tween" parent="Control/CanvasLayer/GameUI/Subtitle"]
 
@@ -1153,11 +1196,12 @@ margin_bottom = 172.0
 
 [node name="Manequin1" parent="NPCs" instance=ExtResource( 25 )]
 position = Vector2( 11144, 1016 )
-health = 1e+07
+health = 1e+11
 can_see = false
 can_detect = false
 can_escape = false
 can_knock = false
+can_bag = false
 has_weapon = false
 info = "code"
 is_static = true
@@ -1221,6 +1265,8 @@ stream = ExtResource( 33 )
 [connection signal="objective_entered" from="ObjectiveZones/Zone4" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="objective_entered" from="ObjectiveZones/Zone5" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="timeout" from="Control/CanvasLayer/GameUI/Timer" to="Control/CanvasLayer/GameUI" method="set_ui_timer"]
+[connection signal="mouse_entered" from="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory" to="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory" method="_on_Inventory_mouse_entered"]
+[connection signal="timeout" from="Control/CanvasLayer/GameUI/Subtitle/Timer" to="Control/CanvasLayer/GameUI" method="end_subtitles"]
 [connection signal="object_interaction_finished" from="Objectives/Wood_door" to="." method="_on_object_interaction_finished"]
 [connection signal="object_interaction_finished" from="Objectives/Wood_door2" to="." method="_on_object_interaction_finished"]
 [connection signal="object_interaction_finished" from="Objectives/MetalDoor" to="." method="_on_object_interaction_finished"]

@@ -23,6 +23,7 @@ export var can_see: bool = true
 export var can_detect: bool = true
 export var can_escape: bool = true
 export var can_knock: bool = true
+export var can_bag: bool = true
 export var what_can_see: Dictionary = {
 	"Player":{
 		"detection_value_normal":2.5,
@@ -155,13 +156,13 @@ func create_ray() -> RayCast2D:
 	ray.set_collision_mask_bit(15,true)
 
 	ray.add_exception($Interaction_hitbox)
-	
+
 	for exception in Game.exceptions:
 		if (is_instance_valid(exception)):
 			ray.add_exception(exception)
 		else:
 			Game.remove_exception(exception)
-	
+
 	rays.add_child(ray)
 
 	return ray
@@ -189,14 +190,14 @@ func _physics_process(delta):
 			if (Game.exceptions.has(t)):
 				if (targets[t] != null):
 					targets[t].queue_free()
-					
+
 				targets.erase(t)
 				deffered_targets.append(t)
 				continue
-			
+
 			if (targets[t] == null):
 				targets[t] = create_ray()
-				
+
 			var ray = targets[t]
 
 			ray.look_at(t.global_position)
@@ -219,9 +220,9 @@ func _physics_process(delta):
 			if (t.is_in_group("shootable")):
 				if (targets[t] == null):
 					targets[t] = create_ray()
-					
+
 				var ray = targets[t]
-				
+
 				ray.look_at(t.global_position)
 				ray.cast_to = Vector2($AnimatedSprite.global_position.distance_to(t.global_position),0)
 				ray.force_raycast_update()
@@ -241,7 +242,7 @@ func _physics_process(delta):
 	else:
 		targets = {}
 		deffered_targets = []
-	
+
 	if (targets.size() == 0):
 		is_detecting = false
 	else:
@@ -275,9 +276,9 @@ func _on_DefferedTimer_timeout():
 				deffered_targets.erase(target)
 				ray.queue_free()
 				continue
-			
+
 			ray.queue_free()
-			
+
 func _on_Detection_timer_timeout():
 	if (is_detecting && can_detect):
 		for target in targets.keys():
@@ -294,7 +295,7 @@ func _on_Detection_timer_timeout():
 									detection_value_disguised *= 0.65
 									if (detection_value_disguised < 1):
 										detection_value_disguised = 1
-								
+
 								detection_value += detection_value_disguised
 							else:
 								detection_value += values["detection_value_normal"] * (Game.difficulty + 1)
@@ -382,7 +383,7 @@ func _on_Detect_area_exited(area):
 	if (targets.has(area)):
 		if (targets[area] != null):
 			targets[area].queue_free()
-		
+
 		targets.erase(area)
 
 	if (deffered_targets.has(area)):
@@ -403,7 +404,7 @@ func _on_Detect_body_exited(body):
 	if (targets.has(body)):
 		if (targets[body] != null):
 			targets[body].queue_free()
-		
+
 		targets.erase(body)
 
 	if (deffered_targets.has(body)):
@@ -469,13 +470,13 @@ func take_damage(damage: float,type: String = "none"):
 	if (health <= 0):
 		kill(damage,type)
 		return
-		
+
 	$AnimatedSprite.modulate = Color.red
 
 	yield(get_tree().create_timer(0.1),"timeout")
-	
+
 	$AnimatedSprite.modulate = Color.white
-	
+
 
 func shoot(target, damage):
 	is_shooting = true
@@ -488,17 +489,17 @@ func shoot(target, damage):
 		bullet.target = target
 		bullet.global_position = $AnimatedSprite/BulletOrigin.global_position
 		bullet.damage = damage
-		
+
 		Game.game_scene.add_child(bullet)
 
 		var noise = Game.scene_objects["alert"].instance()
-	
+
 		noise.radius = 4000
 		noise.time = 0.1
 		noise.global_position = $AnimatedSprite.global_position
-		
+
 		Game.game_scene.call_deferred("add_child",noise)
-		
+
 		noise.start()
 
 		$shoot.play()
@@ -519,33 +520,33 @@ func kill(damage: float = 0,type: String = "none"):
 	if (!is_dead):
 		if (is_tied_hostage):
 			Game.hostages -= 1
-			
+
 			if (Game.get_skill("mastermind",4,2) != "none"):
 				if (Game.hostages == 0):
 					Game.game_scene.get_node("Timers/HostageTaker").stop()
 					Game.player_max_stamina -= 25
 					Game.player.stamina -= 25
-				
+
 			if (Game.get_skill("mastermind",3,2) == "upgraded"):
 				Game.player_damage_reduction -= 1.5
-				
+
 				if (Game.player_damage_reduction < 0):
 					Game.player_damage_reduction = 0
-			
-			
+
+
 		if (Game.get_skill("engineer",4,3) != "none" && !Game.push_it_cooldown && npc_name == "cop"):
 			Game.player.push_it()
-			
+
 		if (Game.get_skill("infiltrator",4,3) != "none" && Game.is_ecm_on):
 			Game.player.health += (Game.player_max_health * 0.035)
 			if (Game.player.health > Game.player_max_health):
 				Game.player.health = Game.player_max_health
-				
+
 		if (npc_name == "cop" || npc_name == "guard"):
 			var ammo_box_instance = Game.scene_objects["ammo"].instance()
 			ammo_box_instance.global_position = global_position
 			Game.game_scene.call_deferred("add_child",ammo_box_instance)
-			
+
 			if (Game.get_skill("commando",1,1) == "upgraded"):
 				Game.donor_kill_counter += 1
 				if (Game.donor_kill_counter >= 10):
@@ -560,7 +561,7 @@ func kill(damage: float = 0,type: String = "none"):
 			can_interact = true
 		else:
 			$Interaction_panel/VBoxContainer/Action3.text = ""
-		
+
 		emit_signal("npc_dead",self)
 		is_dead = true
 
@@ -583,9 +584,9 @@ func kill(damage: float = 0,type: String = "none"):
 
 		$detection.stop()
 		$detected.stop()
-		
+
 		Game.remove_exception($Interaction_hitbox)
-		
+
 		$AnimatedSprite/Hitbox/CollisionShape2D.set_deferred("disabled",true)
 
 		if (Game.is_game_loud):
@@ -593,7 +594,7 @@ func kill(damage: float = 0,type: String = "none"):
 				$Dissappear.start()
 			else:
 				_on_Dissappear_timeout()
-				
+
 		if (has_penalty):
 			Game.killed_civilians_penalty += 2500 * (Game.difficulty + 1)
 			var lines = [
@@ -603,7 +604,7 @@ func kill(damage: float = 0,type: String = "none"):
 				"BAIN: Do not kill civilians man! We're losing money!",
 				"BAIN: Look, you can knock out people, but do not kill civilians!",
 			]
-			
+
 			Game.ui.update_subtitle(lines[randi() % lines.size()],1,5)
 
 
@@ -615,13 +616,13 @@ func knockout():
 				Game.game_scene.get_node("Timers/HostageTaker").stop()
 				Game.player_max_stamina -= 25
 				Game.player.stamina -= 25
-				
+
 			if (Game.get_skill("mastermind",3,2) == "upgraded"):
 				Game.player_damage_reduction -= 1.5
-				
+
 				if (Game.player_damage_reduction < 0):
 					Game.player_damage_reduction = 0
-			
+
 			Game.hostages -= 1
 
 		if (!Game.is_game_loud):
@@ -648,7 +649,7 @@ func knockout():
 		$detected.stop()
 
 		$knockout.play()
-		
+
 		$AnimatedSprite/Hitbox/CollisionShape2D.set_deferred("disabled",true)
 
 		emit_signal("npc_knocked",self)
@@ -681,7 +682,7 @@ func hostage():
 			if (!Game.detection_sound_playing):
 				Game.detection_sound_playing = true
 				get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-				
+
 				$detected.play()
 
 		emit_signal("npc_hostaged",self)
@@ -695,14 +696,14 @@ func tie():
 			timer.start()
 			Game.player_max_stamina += 25
 			Game.player.stamina += 25
-			
+
 			if (!timer.is_connected("timeout",Game.player,"hostage_taker")):
 				timer.connect("timeout",Game.player,"hostage_taker")
-		
+
 		if (Game.get_skill("mastermind",3,2) == "upgraded"):
 			if (Game.player_damage_reduction < 15):
 				Game.player_damage_reduction += 1.5
-		
+
 		Game.handcuffs -= 1
 		Game.hostages += 1
 
@@ -727,11 +728,11 @@ func alarm_on():
 	if (is_dead || is_unconscious):
 		can_interact = false
 		$Interaction_panel/VBoxContainer/Action3.text = ""
-		
+
 	for target in targets.keys():
 		targets[target].queue_free()
 		targets.erase(target)
-	
+
 	if (!has_weapon):
 		deffered_targets = []
 
