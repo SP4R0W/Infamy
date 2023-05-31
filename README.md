@@ -3,11 +3,6 @@
 
 Play the game here: https://sp4r0w.itch.io/infamy
 
-# Infamy
-2D Top-down Bank Robbing game made in Godot
-
-Play the game here: https://sp4r0w.itch.io/infamy
-
 ### About
 -------------
 This is my biggest project currently made in Godot. It is a 2D Payday-like game, but with some new mechanics. I'm honestly surprised how good it looks and plays considering many difficulties I had making this. <br>
