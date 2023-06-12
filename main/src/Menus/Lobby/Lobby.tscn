@@ -107,6 +107,7 @@ margin_bottom = 540.0
 texture = ExtResource( 3 )
 
 [node name="Browser_panel" type="Panel" parent="Control/CanvasLayer"]
+visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 50.0
@@ -144,7 +145,6 @@ auto_height = true
 same_column_width = true
 
 [node name="Heist_panel" type="Panel" parent="Control/CanvasLayer"]
-visible = false
 anchor_top = 0.5
 anchor_bottom = 0.5
 margin_left = 50.0

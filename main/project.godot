@@ -65,7 +65,6 @@ gdscript/warnings/integer_division=false
 window/size/width=3840
 window/size/height=2160
 window/size/resizable=false
-window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="2d"

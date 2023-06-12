@@ -23,7 +23,7 @@ func _ready():
 	master_label.text = "Master Volume: " + str(Savedata.player_settings["master_volume"])
 	music_label.text = "Music Volume: " + str(Savedata.player_settings["music_volume"])
 	sfx_label.text = "SFX Volume: " + str(Savedata.player_settings["sfx_volume"])
-	
+
 	$Control/CanvasLayer/VBoxContainer/HBoxContainer2/Bodies/Body.text = "Dead Bodies: " + text_bools[Savedata.player_settings["dead_bodies"]]
 	$Control/CanvasLayer/VBoxContainer/HBoxContainer2/Subtitles/Subtitle.text = "Bain's lines: " + text_bools[Savedata.player_settings["subtitles"]]
 	$Control/CanvasLayer/VBoxContainer/HBoxContainer2/Reload/Reload.text = "Auto Reload: " + text_bools[Savedata.player_settings["auto_reload"]]
@@ -36,10 +36,10 @@ func _ready():
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/FPS/FPS.text = "Hide FPS"
 	else:
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/FPS/FPS.text = "Show FPS"
-		
+
 	if (!Savedata.player_settings.has("timers")):
 		Savedata.player_settings["timers"] = true
-		
+
 	if (Savedata.player_settings["timers"]):
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/Timers/Timers.text = "Hide Timers"
 	else:
@@ -48,19 +48,19 @@ func _ready():
 func _on_Back_btn_pressed():
 	if (!Savedata.has_cheat_on):
 		Savedata.save_data()
-		
+
 	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 
 func _on_MasterSlider_drag_ended(value_changed):
 	Savedata.player_settings["master_volume"] = master_slider.value
-	
+
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"),linear2db(Savedata.player_settings["master_volume"]/100))
 
 	master_label.text = "Master Volume: " + str(master_slider.value)
 
 func _on_MusicSlider_drag_ended(value_changed):
 	Savedata.player_settings["music_volume"] = music_slider.value
-	
+
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),linear2db(Savedata.player_settings["music_volume"]/100))
 
 	music_label.text = "Music Volume: " + str(music_slider.value)
@@ -68,7 +68,7 @@ func _on_MusicSlider_drag_ended(value_changed):
 
 func _on_SfxSlider_drag_ended(value_changed):
 	Savedata.player_settings["sfx_volume"] = sfx_slider.value
-	
+
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),linear2db(Savedata.player_settings["sfx_volume"]/100))
 
 	sfx_label.text = "SFX Volume: " + str(sfx_slider.value)
@@ -105,7 +105,7 @@ func _on_FPS_pressed():
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/FPS/FPS.text = "Hide FPS"
 	else:
 		$Control/CanvasLayer/VBoxContainer/HBoxContainer3/FPS/FPS.text = "Show FPS"
-	
+
 	Global.root.check_fps()
 
 func _on_Timers_pressed():
