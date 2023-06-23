@@ -82,7 +82,7 @@ func shoot():
 			fire_sound.play()
 		else:
 			silenced_sound.play()
-	elif (current_mag_size == 0 && !Game.player_is_reloading && firerate_timer.time_left <= 0):
+	elif (current_mag_size == 0 && !Game.player_is_reloading && firerate_timer.time_left <= 0 && !Game.player_is_running):
 		reload()
 
 

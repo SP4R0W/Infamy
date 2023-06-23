@@ -265,11 +265,19 @@ margin_bottom = 523.0
 custom_fonts/normal_font = SubResource( 5 )
 bbcode_enabled = true
 bbcode_text = "[center]Changelog:
-- Fixed small visual issues
-+ Added a new cheat which gives you max stats. The cheat automatically resets and goes back to your previous save when you close the game, so please don't use reset progress function to get rid of it."
+- Changed the stats of every weapon
+- Cops have been rebalanced
+- Stealth has been made harder
+- Tutorial now works as intended
+- Attempt to fix some weird police issues
+- Fixed Overdose skill[/center]"
 text = "Changelog:
-- Fixed small visual issues
-+ Added a new cheat which gives you max stats. The cheat automatically resets and goes back to your previous save when you close the game, so please don't use reset progress function to get rid of it."
+- Changed the stats of every weapon
+- Cops have been rebalanced
+- Stealth has been made harder
+- Tutorial now works as intended
+- Attempt to fix some weird police issues
+- Fixed Overdose skill"
 
 [node name="Version" type="PanelContainer" parent="Control/CanvasLayer"]
 anchor_top = 1.0

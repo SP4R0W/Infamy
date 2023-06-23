@@ -30,7 +30,7 @@ func _ready():
 	$Drill_panel.hide()
 	$Interaction_panel/VBoxContainer/Interaction_progress.hide()
 
-	Game.add_exception($Interaction_hitbox)	
+	Game.add_exception($Interaction_hitbox)
 
 func show_panel():
 	has_focus = true
@@ -48,7 +48,7 @@ func _process(delta):
 				Game.player_is_interacting = true
 
 				emit_signal("object_interaction_started",self,self.action)
-				
+
 				if (Game.get_skill("engineer",2,1) == "none"):
 					$Interaction_timer.wait_time = 5
 				else:
@@ -104,14 +104,14 @@ func start_drill():
 	noise_area.type = "drill"
 	noise_area.radius = 2000
 	noise_area.time = -1
-	
+
 	add_child(noise_area)
-	
+
 	if (Game.get_skill("engineer",1,1) == "basic"):
 		drill_duration *= 0.9
 	elif (Game.get_skill("engineer",1,1) == "upgraded"):
 		drill_duration *= 0.8
-	
+
 	can_interact = false
 	$Interaction_panel.hide()
 	$Drill_panel.show()
@@ -119,7 +119,7 @@ func start_drill():
 	$Drill_timer.start()
 
 	is_drilling = true
-	
+
 	if (Game.get_skill("engineer",3,1) != "upgraded"):
 		noise_area.unpause()
 
@@ -138,7 +138,7 @@ func jam_drill():
 
 	if (Game.get_skill("engineer",3,1) != "upgraded"):
 		noise_area.pause()
-	
+
 	if (Game.get_skill("engineer",2,1) == "upgraded"):
 		$Repair_timer.start()
 
@@ -158,7 +158,7 @@ func resume_drill():
 
 	is_drilling = true
 
-	if (Game.get_skill("engineer",3,1) != "upgraded"):	
+	if (Game.get_skill("engineer",3,1) != "upgraded"):
 		noise_area.unpause()
 
 	$drill.play()
@@ -171,9 +171,9 @@ func _on_Drill_timer_timeout():
 	noise_area.remove()
 
 	emit_signal("drill_finished")
-	
+
 	Game.remove_exception($Interaction_hitbox)
-	
+
 	queue_free()
 
 

@@ -72,7 +72,14 @@ func update_objective(objective: int):
 	elif (current_objective == 7):
 		$NPCs/Manequin1.can_knock = true
 	elif (current_objective == 8):
+		$NPCs/Manequin1.can_interact = false
 		$Objectives/LockedDoor2.can_interact = true
+
+		for camera in $Cameras.get_children():
+			camera.is_disabled = false
+			camera.is_alerted = false
+			camera.is_detecting = false
+			camera.get_node("Detection_timer").start()
 	elif (current_objective == 9):
 		$Objectives/Wood_door2.can_interact = true
 

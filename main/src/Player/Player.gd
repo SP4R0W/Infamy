@@ -64,6 +64,7 @@ func calculate_speed(speedType: String):
 	if (bag_speed_penalty <= 0):
 		bag_speed_penalty = 1
 
+	print(str(armor_speed_penalty), " ", str(bag_speed_penalty))
 	if (speedType == "walk"):
 		speed = walkSpeed * (armor_speed_penalty * bag_speed_penalty)
 	else:
@@ -201,8 +202,12 @@ func use_ammo_bag():
 func end_overdose_bonus():
 	Game.ui.hide_timer("Overdose")
 
-	walkSpeed = 500
-	runSpeed = 1000
+	if Game.get_skill("infiltrator",1,2) != "none":
+		walkSpeed = 500 * 1.25
+		runSpeed = 1000 * 1.25
+	else:
+		walkSpeed = 500
+		runSpeed = 1000
 
 	Game.player_damage_reduction -= 25
 
@@ -211,12 +216,9 @@ func end_overdose_bonus():
 
 func hostage_taker():
 	if (Game.get_skill("mastermind",4,2) == "basic"):
-		health += health * 0.025
+		health = clamp(health + health * 0.025,0,Game.player.max_health)
 	else:
-		health += health * 0.05
-
-	if (health > Game.player_max_health):
-		health = Game.player_max_health
+		health = clamp(health + health * 0.05,0,Game.player.max_health)
 
 func push_it():
 	var quarter_health = Game.player_max_health * 0.25
@@ -226,18 +228,12 @@ func push_it():
 	if (skill == "basic" && health < quarter_health):
 		health += (Game.player_max_health) * 0.015
 		if (Game.player_armor != "Suit"):
-			armor += 100 * 0.015
-
-			if (armor > 100):
-				armor = 100
+			armor = clamp(armor + 100 * 0.015,0,100)
 	elif (skill == "upgraded" && health < half_health):
 		health += (Game.player_max_health) * 0.025
 
 		if (Game.player_armor != "Suit"):
-			armor += 100 * 0.025
-
-			if (armor > 100):
-				armor = 100
+			armor = clamp(armor + 100 * 0.025,0,100)
 
 	Game.push_it_cooldown = true
 	Game.game_scene.get_node("Timers/PushIt").start()

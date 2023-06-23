@@ -151,6 +151,7 @@ collision_mask = 4
 shape = SubResource( 6 )
 
 [node name="Close" type="Timer" parent="."]
+one_shot = true
 
 [connection signal="screen_entered" from="Sprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
 [connection signal="screen_exited" from="Sprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

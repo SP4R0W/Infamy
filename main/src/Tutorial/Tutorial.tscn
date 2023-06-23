@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://src/Game/Maps/bank/bank.tres" type="TileSet" id=1]
 [ext_resource path="res://assets/fonts/Panel_text_Medium.tres" type="DynamicFont" id=2]
@@ -35,7 +35,8 @@
 [ext_resource path="res://src/Tutorial/tutorial.ogg" type="AudioStream" id=33]
 [ext_resource path="res://src/Equipment/AmmoBag/AmmoBag.tscn" type="PackedScene" id=34]
 [ext_resource path="res://src/Equipment/AmmoBag/AmmoBagTutorial.gd" type="Script" id=35]
-[ext_resource path="res://src/Game/Inventory.gd" type="Script" id=36]
+[ext_resource path="res://assets/sfx/detected.mp3" type="AudioStream" id=36]
+[ext_resource path="res://src/NPCs/Guard/Manequin.gd" type="Script" id=37]
 
 [sub_resource type="DynamicFont" id=12]
 size = 64
@@ -398,7 +399,6 @@ margin_right = 3792.0
 margin_bottom = 1589.0
 mouse_filter = 2
 custom_styles/panel = ExtResource( 6 )
-script = ExtResource( 36 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory"]
 anchor_left = 0.5
@@ -1196,21 +1196,21 @@ margin_bottom = 172.0
 
 [node name="Manequin1" parent="NPCs" instance=ExtResource( 25 )]
 position = Vector2( 11144, 1016 )
-health = 1e+11
+script = ExtResource( 37 )
+health = 9.22337e+18
+npc_name = ""
 can_see = false
 can_detect = false
 can_escape = false
 can_knock = false
 can_bag = false
 has_weapon = false
-info = "code"
 is_static = true
 
 [node name="Cameras" type="Node2D" parent="."]
 
 [node name="Camera_downright" parent="Cameras" instance=ExtResource( 26 )]
 position = Vector2( 11712, 712 )
-is_hidden = false
 can_interact = false
 what_can_see = {
 "Player": {
@@ -1222,7 +1222,6 @@ what_can_see = {
 
 [node name="Camera_upright" parent="Cameras" instance=ExtResource( 29 )]
 position = Vector2( 11720, 1344 )
-is_hidden = false
 can_interact = false
 what_can_see = {
 "Player": {
@@ -1234,7 +1233,6 @@ what_can_see = {
 
 [node name="Camera_down" parent="Cameras" instance=ExtResource( 28 )]
 position = Vector2( 12864, 704 )
-is_hidden = false
 can_interact = false
 what_can_see = {
 "Player": {
@@ -1246,7 +1244,6 @@ what_can_see = {
 
 [node name="Camera_up" parent="Cameras" instance=ExtResource( 27 )]
 position = Vector2( 13632, 1344 )
-is_hidden = false
 can_interact = false
 what_can_see = {
 "Player": {
@@ -1259,13 +1256,17 @@ what_can_see = {
 [node name="Tutorial" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 33 )
 
+[node name="detected" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 36 )
+volume_db = -10.0
+bus = "SFX"
+
 [connection signal="objective_entered" from="ObjectiveZones/Zone1" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="objective_entered" from="ObjectiveZones/Zone2" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="objective_entered" from="ObjectiveZones/Zone3" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="objective_entered" from="ObjectiveZones/Zone4" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="objective_entered" from="ObjectiveZones/Zone5" to="." method="_on_ObjectiveZone_entered"]
 [connection signal="timeout" from="Control/CanvasLayer/GameUI/Timer" to="Control/CanvasLayer/GameUI" method="set_ui_timer"]
-[connection signal="mouse_entered" from="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory" to="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory" method="_on_Inventory_mouse_entered"]
 [connection signal="timeout" from="Control/CanvasLayer/GameUI/Subtitle/Timer" to="Control/CanvasLayer/GameUI" method="end_subtitles"]
 [connection signal="object_interaction_finished" from="Objectives/Wood_door" to="." method="_on_object_interaction_finished"]
 [connection signal="object_interaction_finished" from="Objectives/Wood_door2" to="." method="_on_object_interaction_finished"]

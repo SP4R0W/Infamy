@@ -109,7 +109,7 @@ shape = SubResource( 1 )
 [node name="Drill" parent="." instance=ExtResource( 2 )]
 visible = false
 position = Vector2( 0, -112 )
-drill_duration = 300
+drill_duration = 180
 
 [node name="Interaction_hitbox" type="Area2D" parent="." groups=["interactable"]]
 collision_layer = 8

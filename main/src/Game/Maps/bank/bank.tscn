@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=2]
+[gd_scene load_steps=60 format=2]
 
 [ext_resource path="res://src/Game/Maps/bank/bank.gd" type="Script" id=1]
 [ext_resource path="res://src/Game/Maps/bank/bank.tres" type="TileSet" id=2]
@@ -44,9 +44,19 @@
 [ext_resource path="res://src/Game/assets/audio/alarm.mp3" type="AudioStream" id=42]
 
 [sub_resource type="NavigationPolygon" id=16]
-vertices = PoolVector2Array( 7296, 896, 7296, 448, 8512, 456, 9344, 896, 11008, 384, 12032, 384, 12024, 2864, 11648, 2864, 10240, 960, 10240, 6912, 10240, 5312, 10576, 5312, 12032, 6912, 12032, 3840, 10576, 4344, 11648, 3840, 10240, 4344, 9856, 960, 9856, 2048, 9344, 2048, 9664, -1024, 8640, -1024, 8512, 0, 7232, 0, 7232, -760, 8192, -1024, 6848, -760, 6848, 0, 6208, 0, 6208, -384, 3840, -1600, 5184, -384, 5184, 0, 3968, 0, 2752, -1600, 3968, 896, 1792, 896, 384, -576, 384, -1536, 1792, 1752, 2176, 1752, 2176, 4864, 512, 3840, 512, 2840, 3968, 4864, 3968, 5760, 0, 6912, 7168, 5760, 7168, 6912, 0, 3840, 0, 2840, 0, -576, 0, -1536, 0, -2048, 2752, -2048, 3840, -2048, 8192, -2048, 8640, -2048, 9216, -2048, 9224, -1024, 9664, -2048, 10048, -2048, 10048, -1024, 10496, -1024, 10496, -2048, 12032, -2048, 12032, 0, 11008, 0 )
-polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 4, 5, 6, 7, 8 ), PoolIntArray( 9, 10, 11, 12 ), PoolIntArray( 13, 12, 11, 14, 15 ), PoolIntArray( 15, 14, 16, 8, 7 ), PoolIntArray( 17, 18, 19, 3, 20 ), PoolIntArray( 21, 22, 23, 24, 25 ), PoolIntArray( 26, 27, 28, 29 ), PoolIntArray( 30, 31, 32, 33, 34 ), PoolIntArray( 34, 33, 35, 36, 37, 38 ), PoolIntArray( 39, 40, 41, 42, 43 ), PoolIntArray( 41, 44, 45, 46 ), PoolIntArray( 45, 47, 48, 46 ), PoolIntArray( 41, 46, 49, 42 ), PoolIntArray( 36, 39, 43, 50, 51, 37 ), PoolIntArray( 38, 52, 53, 54, 34 ), PoolIntArray( 30, 55, 56, 25, 24, 26 ), PoolIntArray( 21, 57, 58, 59 ), PoolIntArray( 20, 60, 61, 62, 17 ), PoolIntArray( 63, 64, 65, 66, 67 ), PoolIntArray( 62, 63, 67, 4, 8, 17 ), PoolIntArray( 20, 3, 2, 22, 59 ), PoolIntArray( 21, 59, 22 ), PoolIntArray( 31, 30, 26, 29 ) ]
-outlines = [ PoolVector2Array( 10240, 6912, 12032, 6912, 12032, 3840, 11648, 3840, 11648, 2864, 12024, 2864, 12032, 384, 11008, 384, 11008, 0, 12032, 0, 12032, -2048, 10496, -2048, 10496, -1024, 10048, -1024, 10048, -2048, 9664, -2048, 9664, -1024, 9224, -1024, 9216, -2048, 8640, -2048, 8640, -1024, 8192, -1024, 8192, -2048, 3840, -2048, 3840, -1600, 2752, -1600, 2752, -2048, 0, -2048, 0, -1536, 384, -1536, 384, -576, 0, -576, 0, 2840, 512, 2840, 512, 3840, 0, 3840, 0, 6912, 7168, 6912, 7168, 5760, 3968, 5760, 3968, 4864, 2176, 4864, 2176, 1752, 1792, 1752, 1792, 896, 3968, 896, 3968, 0, 5184, 0, 5184, -384, 6208, -384, 6208, 0, 6848, 0, 6848, -760, 7232, -760, 7232, 0, 8512, 0, 8512, 456, 7296, 448, 7296, 896, 9344, 896, 9344, 2048, 9856, 2048, 9856, 960, 10240, 960, 10240, 4344, 10576, 4344, 10576, 5312, 10240, 5312 ) ]
+vertices = PoolVector2Array( 2752, -2048, 3832, -1592, 3968, 896, 1792, 896, 384, -576, 384, -1536, 1792, 1752, 2176, 1752, 2176, 4864, 512, 3840, 512, 2840, 3968, 4864, 3968, 5760, 0, 6912, 7168, 5760, 7168, 6912, 0, 3840, 0, 2840, 0, -576, 0, -2048, 0, -1536 )
+polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5 ), PoolIntArray( 6, 7, 8, 9, 10 ), PoolIntArray( 8, 11, 12, 13 ), PoolIntArray( 12, 14, 15, 13 ), PoolIntArray( 8, 13, 16, 9 ), PoolIntArray( 3, 6, 10, 17, 18, 4 ), PoolIntArray( 19, 0, 5, 20 ) ]
+outlines = [ PoolVector2Array( 3832, -1592, 2752, -2048, 0, -2048, 0, -1536, 384, -1536, 384, -576, 0, -576, 0, 2840, 512, 2840, 512, 3840, 0, 3840, 0, 6912, 7168, 6912, 7168, 5760, 3968, 5760, 3968, 4864, 2176, 4864, 2176, 1752, 1792, 1752, 1792, 896, 3968, 896 ) ]
+
+[sub_resource type="NavigationPolygon" id=17]
+vertices = PoolVector2Array( 11008, 384, 12032, 384, 7296, 448, 3968, 0, 3968, 896, 3840, -1600, 8512, 0, 7232, 0, 7232, -760, 8192, -1024, 8640, -1024, 6848, -760, 6848, 0, 6208, 0, 6208, -384, 5184, -384, 5184, 0, 3840, -2048, 8192, -2048, 8640, -2048, 9216, -2048, 9224, -1024, 9664, -1024, 9664, -2048, 10048, -2048, 10048, -1024, 10496, -1024, 10496, -2048, 12032, -2048, 12032, 0, 11008, 0, 8512, 456 )
+polygons = [ PoolIntArray( 0, 1, 2 ), PoolIntArray( 3, 4, 5 ), PoolIntArray( 6, 7, 8, 9, 10 ), PoolIntArray( 11, 12, 13, 14 ), PoolIntArray( 15, 16, 3, 5 ), PoolIntArray( 14, 15, 5, 17, 18, 11 ), PoolIntArray( 8, 11, 18, 9 ), PoolIntArray( 10, 19, 20, 21 ), PoolIntArray( 22, 23, 24, 25 ), PoolIntArray( 26, 27, 28, 29, 30 ), PoolIntArray( 30, 0, 2 ), PoolIntArray( 6, 10, 21 ), PoolIntArray( 25, 26, 30, 31 ), PoolIntArray( 6, 21, 22, 31 ), PoolIntArray( 31, 22, 25 ), PoolIntArray( 30, 2, 31 ) ]
+outlines = [ PoolVector2Array( 12032, 384, 11008, 384, 11008, 0, 12032, 0, 12032, -2048, 10496, -2048, 10496, -1024, 10048, -1024, 10048, -2048, 9664, -2048, 9664, -1024, 9224, -1024, 9216, -2048, 8640, -2048, 8640, -1024, 8192, -1024, 8192, -2048, 3840, -2048, 3840, -1600, 3968, 896, 3968, 0, 5184, 0, 5184, -384, 6208, -384, 6208, 0, 6848, 0, 6848, -760, 7232, -760, 7232, 0, 8512, 0, 8512, 456, 7296, 448 ) ]
+
+[sub_resource type="NavigationPolygon" id=18]
+vertices = PoolVector2Array( 7296, 896, 7296, 448, 8512, 456, 9344, 896, 11008, 384, 10240, 960, 9856, 960, 12032, 384, 12024, 2864, 11648, 2864, 10240, 6912, 10240, 5312, 10576, 5312, 12032, 6912, 12032, 3840, 10576, 4344, 11648, 3840, 10240, 4344, 9344, 2048, 9856, 2048 )
+polygons = [ PoolIntArray( 0, 1, 2, 3 ), PoolIntArray( 3, 2, 4, 5, 6 ), PoolIntArray( 4, 7, 8, 9, 5 ), PoolIntArray( 10, 11, 12, 13 ), PoolIntArray( 14, 13, 12, 15, 16 ), PoolIntArray( 16, 15, 17, 5, 9 ), PoolIntArray( 18, 3, 6, 19 ) ]
+outlines = [ PoolVector2Array( 10240, 6912, 12032, 6912, 12032, 3840, 11648, 3840, 11648, 2864, 12024, 2864, 12032, 384, 11008, 384, 8512, 456, 7296, 448, 7296, 896, 9344, 896, 9344, 2048, 9856, 2048, 9856, 960, 10240, 960, 10240, 4344, 10576, 4344, 10576, 5312, 10240, 5312 ) ]
 
 [sub_resource type="NavigationPolygon" id=2]
 vertices = PoolVector2Array( 4376, 0, 4584, 0, 4584, 152, 4376, 152, 4840, 152, 4840, 408, 5016, 408, 5016, 280, 5784, 280, 5784, 152, 5888, 152, 5888, 408, 6552, 408, 6552, 152, 6632, 152, 6632, 280, 6808, 280, 6808, 152, 6888, 152, 6888, 280, 7064, 280, 7064, 152, 7144, 152, 7144, 616, 7024, 616, 7024, 752, 6672, 752, 6672, 616, 6376, 616, 6376, 872, 5760, 872, 5760, 768, 5128, 768, 5128, 872, 5016, 872, 5016, 616, 4840, 616, 4840, 872, 4584, 872, 4584, 1048, 4376, 1048, 4376, 872, 4120, 872, 4120, 152 )
@@ -146,65 +156,89 @@ format = 1
 tile_data = PoolIntArray( 20, 5, 393218, 23, -1073741819, 196610, 65554, 5, 393218, 65563, -1073741819, 196610, 65565, -1073741819, 196610, 65568, 5, 7, 65573, 5, 7, 65576, 5, 327687, 65577, 5, 327685, 65583, 5, 458753, 65584, 5, 458753, 65587, 5, 7, 65591, 5, 7, 131095, -1073741819, 196610, 131098, -1073741819, 196610, 131100, -1073741819, 196610, 131119, 5, 458753, 131120, 5, 458753, 196625, 5, 393218, 196627, -1073741819, 196613, 196629, -1073741819, 196613, 196636, -1073741819, 196610, 262162, 5, 393218, 262163, -1610612731, 196608, 262164, 1610612741, 196608, 262165, -1073741819, 65543, 262169, -1073741819, 196610, 327699, 5, 196608, 327700, -1073741819, 196608, 327704, -1073741819, 196613, 327707, -1073741819, 196610, 393234, 5, 393218, 393235, 5, 65543, 393237, -1073741819, 65543, 393248, 5, 7, 393253, 5, 7, 524306, 5, 7, 524353, 1610612742, 196617, 524354, 1610612742, 196617, 524355, 1610612741, 6, 524356, 1610612742, 196617, 524357, 1610612741, 6, 524358, 1610612742, 196617, 524359, 1610612742, 196617, 655385, 5, 7, 786478, 1610612742, 196617, 786480, 1610612742, 196617, 786488, 1610612742, 196617, 786490, 1610612742, 196617, 786503, -1073741818, 196616, 851990, 5, 7, 983105, -1073741819, 7, 983111, -1073741819, 7, 1048598, 5, 7, 1048622, 6, 196617, 1048624, 6, 196617, 1048632, 6, 196617, 1048634, 6, 196617, 1114146, 5, 7, 1114177, 5, 7, 1114190, 5, 7, 1245209, 5, 7, 1310771, 1610612742, 196617, 1310773, 1610612742, 196617, 1310787, 5, 458753, 1376322, 5, 458753, 1441827, 5, 7, 1507353, 5, 7, 1572915, 6, 196617, 1572917, 6, 196617, 1703958, 5, 7, 1769508, 5, 7, 1769537, 5, 7, 1835054, 1610612742, 196617, 1835056, 1610612742, 196617, 1835064, 1610612742, 196617, 1835066, 1610612742, 196617, 1900566, 5, 7, 1900609, 5, 7, 1900622, 5, 7, 1966098, 5, 7, 2097177, 5, 7, 2097198, 6, 196617, 2097200, 6, 196617, 2359314, 5, 7, 2359320, 5, 7, 2490400, 5, 7, 2490423, 5, 7, 2490431, -1610612731, 327685, 2555921, 5, 393218, 2555924, 5, 131072, 2555925, -1610612731, 131072, 2555929, 5, 65543, 2555967, -1610612731, 327687, 2621460, -1073741819, 131072, 2621461, 1610612741, 131072, 2621463, 5, 393218, 2621464, 5, 393218, 2621481, 5, 393216, 2621484, 5, 393216, 2621489, 5, 393216, 2686994, -1610612731, 65543, 2686996, 5, 196613, 2687004, -1610612731, 196610, 2752534, 5, 393218, 2752537, -1610612731, 196610, 2752540, 5, 65543, 2818066, 5, 262144, 2818068, -1610612731, 196610, 2818080, 5, 7, 2818103, 5, 7, 2818111, 5, 7, 2949143, -1610612731, 196610, 2949148, -1610612731, 196610, 2949169, -1610612731, 196610, 2949177, 5, 7, 2949183, 5, 7, 3014673, 5, 262144, 3014684, 5, 393218, 3014689, -1610612731, 196610, 3014708, 5, 393218, 3014709, -1610612731, 196610, 3080226, -1610612731, 196610, 3080230, -1610612731, 131074, 3080231, 5, 393218, 3080235, -1610612731, 196610, 3080238, -1610612731, 196610, 3080241, 5, 393218, 3145747, 5, 393218, 3145748, -1610612731, 65543, 3145753, -1610612731, 196610, 3145760, -1610612731, 65543, 3145769, -1610612731, 131074, 3145779, -1610612731, 196610, 3145782, -1610612731, 196610, 3145783, -1610612731, 196610, 3211290, -1610612731, 65543, 3211292, -1610612731, 196610, 3211296, 5, 393218, 3211308, -1610612731, 196610, 3276817, 5, 262144, 3276825, -1610612731, 196610, 3276827, -1610612731, 196610, 3276836, 5, 393218, 3276848, 5, 65543, 3276851, 5, 393218, 3342354, 5, 65543, 3342358, -1610612731, 65543, 3342375, -1610612731, 196610, 3342378, 5, 65543, 3342388, -1610612731, 196610, 3407889, 5, 393218, 3407891, 5, 393218, 3407893, -1610612731, 196610, 3407897, -1610612731, 196610, 3407898, -1610612731, 196610, 3407906, 5, 393218, 3407910, -1610612731, 196610, 3407920, 5, 393218, 3407929, 5, 7, 3407935, 5, 7, 3473439, -1610612731, 196610, 3473447, -1610612731, 131074 )
 
 [node name="Navigation2D" type="Navigation2D" parent="."]
-visible = false
 
 [node name="Outside" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 16 )
 travel_cost = 0.0
 
+[node name="Outside2" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
+navpoly = SubResource( 17 )
+travel_cost = 0.0
+
+[node name="Outside3" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
+navpoly = SubResource( 18 )
+travel_cost = 0.0
+
 [node name="Rest_area" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 2 )
 travel_cost = 0.0
 
 [node name="Lobby1" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 3 )
 travel_cost = 0.0
 
 [node name="Lobby2" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 4 )
 travel_cost = 0.0
 
 [node name="Meeting1" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 5 )
 travel_cost = 0.0
 
 [node name="Meeting2" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 6 )
 travel_cost = 0.0
 
 [node name="Kitchen" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 7 )
 travel_cost = 0.0
 
 [node name="Manager" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 8 )
 travel_cost = 0.0
 
 [node name="Tellers" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 9 )
 travel_cost = 0.0
 
 [node name="Office1" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 10 )
 travel_cost = 0.0
 
 [node name="Office2" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 11 )
 travel_cost = 0.0
 
 [node name="Office3" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 12 )
 travel_cost = 0.0
 
 [node name="Office4" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 13 )
 travel_cost = 0.0
 
 [node name="Back_area" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 14 )
 travel_cost = 0.0
 
 [node name="Vault" type="NavigationPolygonInstance" parent="Navigation2D"]
+visible = false
 navpoly = SubResource( 15 )
 travel_cost = 0.0
 
@@ -789,8 +823,7 @@ position = Vector2( 9216, 4544 )
 z_index = 5
 
 [node name="Van" parent="Objectives" instance=ExtResource( 18 )]
-visible = false
-position = Vector2( 11088, 6288 )
+position = Vector2( 11088, 5608 )
 can_secure = false
 can_escape = false
 
@@ -987,41 +1020,34 @@ position = Vector2( 6144, 448 )
 position = Vector2( 8768, 2880 )
 
 [node name="Employee" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 info = "phone"
 
 [node name="Employee3" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 4872, -80 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Employee2" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 4296, 2744 )
 initial_rotation = 180.0
 is_static = true
 
 [node name="Employee4" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 4296, 4032 )
 initial_rotation = 180.0
 is_static = true
 
 [node name="Employee5" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 7104, 3776 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Employee6" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 5824, 4032 )
 initial_rotation = 90.0
 is_static = true
 
 [node name="Employee7" parent="NPCs/Employees" instance=ExtResource( 35 )]
-visible = false
 position = Vector2( 6336, 1728 )
 initial_rotation = -90.0
 is_static = true
@@ -1092,52 +1118,41 @@ position = Vector2( 6720, 1120 )
 position = Vector2( 5056, 320 )
 
 [node name="Guard" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 8776, 1352 )
 initial_rotation = -90.0
 is_static = true
 is_camera_operator = true
 
 [node name="Guard2" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 9224, 4248 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Guard3" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 112, 248 )
 
 [node name="Guard4" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 536, 512 )
 
 [node name="Guard5" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 144, 480 )
 
 [node name="Guard6" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 136, 656 )
 
 [node name="Guard7" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 144, 920 )
 
 [node name="Guard8" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 144, 1104 )
 
 [node name="Guard9" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 424, 1088 )
 
 [node name="Guard10" parent="NPCs/Guards" instance=ExtResource( 31 )]
-visible = false
 position = Vector2( 752, 1088 )
 
 [node name="Manager" parent="NPCs" instance=ExtResource( 33 )]
-visible = false
 position = Vector2( 7640, 6016 )
 health = 1.0
 initial_rotation = 180.0
@@ -1159,65 +1174,54 @@ position = Vector2( 192, 7048 )
 position = Vector2( 1984, -2176 )
 
 [node name="Civilian" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 192, -1616 )
 start_point = NodePath("../Start1")
 end_point = NodePath("../End1")
 
 [node name="Civilian2" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 152, -480 )
 start_point = NodePath("../Start2")
 end_point = NodePath("../End2")
 
 [node name="Civilian3" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 3072, 1736 )
 initial_rotation = 90.0
 is_static = true
 
 [node name="Civilian4" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 2392, 2112 )
 is_static = true
 
 [node name="Civilian5" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 2872, 3968 )
 initial_rotation = 180.0
 is_static = true
 
 [node name="Civilian6" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 2688, 4664 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Civilian8" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 4032, 2744 )
 is_static = true
 
 [node name="Civilian9" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 5824, 4288 )
 initial_rotation = -90.0
 is_static = true
 
 [node name="Civilian11" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 7232, 3520 )
 initial_rotation = 90.0
 is_static = true
 
 [node name="Civilian10" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 6336, 1472 )
 initial_rotation = 90.0
 is_static = true
 
 [node name="Civilian7" parent="NPCs/Civilians" instance=ExtResource( 36 )]
-visible = false
 position = Vector2( 4032, 4032 )
 is_static = true
 

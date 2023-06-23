@@ -20,9 +20,9 @@ func _ready():
 	base_accuracy = Global.weapon_base_values[name]["accuracy"]
 	base_concealment = Global.weapon_base_values[name]["concealment"]
 	type = Global.weapon_base_values[name]["type"]
-	
+
 	$Melee/MeleeShape.disabled = true
-	
+
 	draw_attachments()
 
 func draw_attachments():
@@ -35,69 +35,69 @@ func draw_attachments():
 	ammo_count = base_ammo_count
 	accuracy = base_accuracy
 	concealment = base_concealment
-	
+
 	is_weapon_suppresed = false
-	
+
 	var attachments = Game.player_attachments[name]
-	
+
 	$Sprite/Barrel_attachment.texture = null
 	$Sprite/Stock_attachment.texture = null
-	
+
 	if (attachments["barrel"] != ""):
 		$Sprite/Barrel_attachment.texture = load(Global.weapon_attachment_paths[attachments["barrel"]])
 		$Sprite/Barrel_attachment.offset = modification_offsets[attachments["barrel"]]
-		
+
 		damage += Global.attachment_values[attachments["barrel"]]["damage"]
 		accuracy += Global.attachment_values[attachments["barrel"]]["accuracy"]
 		concealment += Global.attachment_values[attachments["barrel"]]["concealment"]
-		
+
 		if (attachments["barrel"].find("suppressor") != -1):
 			if (Game.get_skill("infiltrator",1,3) == "basic"):
 				accuracy *= 1.1
 			elif (Game.get_skill("infiltrator",1,3) == "upgraded"):
 				accuracy *= 1.2
-			
+
 			if (Game.get_skill("infiltrator",2,3) != "none"):
 				concealment += 1
 				if (Game.get_skill("infiltrator",2,3) == "upgraded"):
 					concealment += 2
-				
+
 			if (Game.get_skill("infiltrator",3,3) == "basic"):
 				damage *= 1.15
 			elif (Game.get_skill("infiltrator",3,3) == "upgraded"):
 				damage *= 1.3
-			
+
 			is_weapon_suppresed = true
 		else:
 			is_weapon_suppresed = false
-			
+
 	if (attachments["sight"] != ""):
 		accuracy += Global.attachment_values[attachments["sight"]]["accuracy"]
 		concealment += Global.attachment_values[attachments["sight"]]["concealment"]
-		
+
 	if (attachments["magazine"] != ""):
 		mag_size += Global.attachment_values[attachments["magazine"]]["mag_size"]
 		accuracy += Global.attachment_values[attachments["magazine"]]["accuracy"]
 		concealment += Global.attachment_values[attachments["magazine"]]["concealment"]
-			
+
 	if (attachments["stock"] != ""):
 		$Sprite/Stock_attachment.texture = load(Global.weapon_attachment_paths[attachments["stock"]])
 		$Sprite/Stock_attachment.offset = modification_offsets[attachments["stock"]]
-		
+
 		accuracy += Global.attachment_values[attachments["stock"]]["accuracy"]
 		concealment += Global.attachment_values[attachments["stock"]]["concealment"]
 	else:
 		$Sprite/Stock_attachment.texture = load(Global.weapon_attachment_paths["default_m4_stock"])
 		$Sprite/Stock_attachment.offset = modification_offsets["default_m4_stock"]
-		
+
 	if (Game.get_skill("commando",1,3) == "basic"):
 		damage *= 1.1
 	elif (Game.get_skill("commando",1,3) == "upgraded"):
 		damage *= 1.25
-	
+
 	if (Game.get_skill("commando",3,3) != "none"):
 		pellet_amount = 8
-		
+
 		if (Game.get_skill("commando",3,3) == "upgraded"):
 			damage *= 2
 
@@ -105,7 +105,7 @@ func draw_attachments():
 		accuracy = 100
 	elif (accuracy < 0):
 		accuracy = 0
-				
+
 	if (concealment > 10):
 		concealment = 10
 	elif (concealment < 0):
@@ -113,7 +113,7 @@ func draw_attachments():
 
 	if (Game.get_skill("commando",4,1) != "none"):
 		mag_size *= 1.25
-		if (Game.get_skill("commando",4,1) == "upgraded"):	
+		if (Game.get_skill("commando",4,1) == "upgraded"):
 			ammo_count *= 1.5
 
 	current_mag_size = mag_size
@@ -126,7 +126,7 @@ func draw_attachments():
 
 func shoot():
 	if (current_mag_size > 0 && firerate_timer.time_left <= 0 && !Game.player_is_reloading):
-		
+
 		if (!Game.is_bulletstorm_active):
 			current_mag_size -= 1
 
@@ -135,7 +135,7 @@ func shoot():
 
 		firerate_timer.wait_time = firerate
 		firerate_timer.start()
-		
+
 		for x in range(pellet_amount):
 			var pellet = Game.scene_objects["plr_bullet"].instance()
 			pellet.accuracy = self.accuracy
@@ -146,13 +146,13 @@ func shoot():
 
 		if (!is_weapon_suppresed):
 			var noise = Game.scene_objects["alert"].instance()
-			
+
 			noise.radius = 4000
 			noise.time = 0.1
 			noise.global_position = Game.player.global_position
-			
+
 			Game.game_scene.call_deferred("add_child",noise)
-			
+
 			noise.start()
 
 			fire_sound.play()

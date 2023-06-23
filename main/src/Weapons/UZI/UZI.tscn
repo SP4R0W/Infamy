@@ -81,9 +81,6 @@ anims/reload = SubResource( 4 )
 [node name="Fire" parent="." index="5"]
 stream = ExtResource( 5 )
 
-[node name="Silenced" parent="." index="6"]
-volume_db = 0.0
-
 [node name="Reload_sound" parent="." index="8"]
 stream = ExtResource( 7 )
 

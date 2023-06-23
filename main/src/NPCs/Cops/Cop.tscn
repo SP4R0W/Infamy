@@ -101,10 +101,7 @@ visible = false
 margin_top = 50.0
 margin_bottom = 73.0
 
-[node name="VisibilityNotifier2D" parent="." index="15"]
-visible = false
-
-[node name="shoot" parent="." index="21"]
+[node name="shoot" parent="." index="19"]
 volume_db = 0.0
 
 [connection signal="area_entered" from="AnimatedSprite/WhiteDeath" to="." method="_on_WhiteDeath_area_entered"]

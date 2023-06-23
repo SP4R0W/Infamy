@@ -48,10 +48,10 @@
 [ext_resource path="res://assets/DarkTheme/StyleBox/ButtonPressed.stylebox" type="StyleBox" id=46]
 [ext_resource path="res://assets/DarkTheme/StyleBox/ButtonHover.stylebox" type="StyleBox" id=47]
 [ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Bold.ttf" type="DynamicFontData" id=48]
-[ext_resource path="res://src/Game/Inventory.gd" type="Script" id=49]
 [ext_resource path="res://assets/DarkTheme/StyleBox/Panel.stylebox" type="StyleBox" id=50]
 [ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-MediumIt.ttf" type="DynamicFontData" id=51]
 [ext_resource path="res://assets/fonts/source-code-pro/source-code-pro-2.010R-ro-1.030R-it/TTF/SourceCodePro-Medium.ttf" type="DynamicFontData" id=52]
+[ext_resource path="res://assets/sfx/detected.mp3" type="AudioStream" id=53]
 
 [sub_resource type="DynamicFont" id=12]
 size = 132
@@ -498,7 +498,6 @@ stream = ExtResource( 3 )
 bus = "SFX"
 
 [node name="Gear" type="VBoxContainer" parent="Control/CanvasLayer/Preplanning"]
-visible = false
 anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
@@ -1019,7 +1018,6 @@ margin_right = 3792.0
 margin_bottom = 1589.0
 mouse_filter = 2
 custom_styles/panel = ExtResource( 50 )
-script = ExtResource( 49 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/CanvasLayer/GameUI/CanvasLayer2/Inventory"]
 anchor_left = 0.5
@@ -1625,6 +1623,11 @@ one_shot = true
 
 [node name="EcmSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 34 )
+bus = "SFX"
+
+[node name="detected" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 53 )
+volume_db = -10.0
 bus = "SFX"
 
 [connection signal="pressed" from="Control/CanvasLayer/Preplanning/Buttons/Plan" to="Control/CanvasLayer/Preplanning" method="_on_Plan_pressed"]

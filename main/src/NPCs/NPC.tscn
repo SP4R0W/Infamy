@@ -1,9 +1,8 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/NPCs/NPC.gd" type="Script" id=1]
 [ext_resource path="res://src/Objects/Detection_marker/Detection_marker.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/sfx/detected.mp3" type="AudioStream" id=4]
 [ext_resource path="res://assets/sfx/detection.mp3" type="AudioStream" id=5]
 [ext_resource path="res://src/Objects/Bags/bag.mp3" type="AudioStream" id=6]
 [ext_resource path="res://src/NPCs/tie.mp3" type="AudioStream" id=7]
@@ -183,17 +182,8 @@ custom_fonts/font = SubResource( 1 )
 step = 1.0
 rounded = true
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
-position = Vector2( -12, -3.8147e-06 )
-scale = Vector2( 6.8, 8 )
-
 [node name="detection" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
-volume_db = -10.0
-bus = "SFX"
-
-[node name="detected" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
 volume_db = -10.0
 bus = "SFX"
 
@@ -230,7 +220,5 @@ bus = "SFX"
 [connection signal="timeout" from="Escape_timer" to="." method="_on_Escape_timer_timeout"]
 [connection signal="timeout" from="Dissappear" to="." method="_on_Dissappear_timeout"]
 [connection signal="timeout" from="DefferedTimer" to="." method="_on_DefferedTimer_timeout"]
-[connection signal="screen_entered" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 
 [editable path="Marker"]

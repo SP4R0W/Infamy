@@ -1,10 +1,9 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/Objects/Camera/camera.png" type="Texture" id=1]
 [ext_resource path="res://src/Objects/Camera/Camera.gd" type="Script" id=2]
 [ext_resource path="res://assets/fonts/Poppins-Medium.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://src/Objects/Detection_marker/Detection_marker.tscn" type="PackedScene" id=4]
-[ext_resource path="res://assets/sfx/detected.mp3" type="AudioStream" id=5]
 [ext_resource path="res://assets/sfx/detection.mp3" type="AudioStream" id=6]
 
 [sub_resource type="DynamicFont" id=13]
@@ -142,9 +141,6 @@ collision_mask = 32777
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatedSprite/Detect"]
 polygon = PoolVector2Array( 80, -24, 2200, -1500, 2200, 1500, 80, 24 )
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="AnimatedSprite"]
-scale = Vector2( 8, 4.4 )
-
 [node name="Detection_timer" type="Timer" parent="."]
 wait_time = 0.1
 autostart = true
@@ -201,10 +197,7 @@ rounded = true
 
 [node name="detection" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-bus = "SFX"
-
-[node name="detected" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 5 )
+volume_db = -10.0
 bus = "SFX"
 
 [connection signal="area_entered" from="AnimatedSprite/Hitbox" to="." method="_on_Hitbox_area_entered"]
@@ -212,13 +205,10 @@ bus = "SFX"
 [connection signal="area_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_area_exited"]
 [connection signal="body_entered" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_entered"]
 [connection signal="body_exited" from="AnimatedSprite/Detect" to="." method="_on_Detect_body_exited"]
-[connection signal="screen_entered" from="AnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_entered"]
-[connection signal="screen_exited" from="AnimatedSprite/VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
 [connection signal="timeout" from="Detection_timer" to="." method="_on_Detection_timer_timeout"]
 [connection signal="timeout" from="Deffered_timer" to="." method="_on_Deffered_timer_timeout"]
 [connection signal="timeout" from="Alert_timer" to="." method="_on_Alert_timer_timeout"]
 [connection signal="timeout" from="Loop_timer" to="." method="_on_Loop_timer_timeout"]
 [connection signal="timeout" from="Interaction_timer" to="." method="_on_Interaction_timer_timeout"]
-[connection signal="finished" from="detected" to="." method="_on_detection_finished"]
 
 [editable path="Marker"]

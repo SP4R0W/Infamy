@@ -40,10 +40,7 @@ var objectives: Dictionary = {
 	"objective_subtitle":"BAIN: Well, you know what comes now. Watch for the drill, it can jam.",
 	"subtitle_priority":2,
 	"subtitle_length":7},
-	12:{"objective_name":"Secure one bag of cash",
-	"objective_subtitle":"BAIN: Vault's open! We need one bag of cash. You know where the van is.",
-	"subtitle_priority":2,
-	"subtitle_length":12},
+	12:{"objective_name":"Secure one bag of cash"},
 	13:{"objective_name":"Escape",
 	"objective_subtitle":"BAIN: Perfect. You can escape now, or hang around for more loot. I won't complain.",
 	"subtitle_priority":2,
@@ -196,18 +193,13 @@ func randomize_blue_keycard():
 	keycard.connect("object_interaction_finished",self,"interaction_finish")
 
 func randomize_cameras():
-	for camera in $Objects/Cameras.get_children():
-		camera.is_hidden = true
-		camera.is_disabled = true
-		camera.hide()
-
 	var active_camera = 0
 	while true:
 		var camera = $Objects/Cameras.get_child(randi() % $Objects/Cameras.get_child_count())
 
 		if (camera.is_disabled):
 			camera.activate_camera()
-
+			camera.show()
 			active_camera += 1
 
 		if (active_camera == camera_amount):
@@ -234,12 +226,12 @@ func set_cops():
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 1
 				if (spawner.cop_type == "normal"):
-					spawner.cop_health = 75
-					spawner.delay = 10
+					spawner.cop_health = 85
+					spawner.delay = rand_range(10,13)
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 0
 					spawner.cop_health = 65
-					spawner.delay = 11
+					spawner.delay = rand_range(13,16)
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 0
 					spawner.cop_health = 250
@@ -248,43 +240,43 @@ func set_cops():
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 2
 				if (spawner.cop_type == "normal"):
-					spawner.cop_health = 145
-					spawner.delay = 8.5
+					spawner.cop_health = 150
+					spawner.delay = rand_range(9,12)
 				elif (spawner.cop_type == "shield"):
-					spawner.cop_health = 125
-					spawner.delay = 15
+					spawner.cop_health = 225
+					spawner.delay = rand_range(15,18)
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 1
-					spawner.cop_health = 450
-					spawner.delay = 60
+					spawner.cop_health = 500
+					spawner.delay = rand_range(60,65)
 		2:
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 3
 				if (spawner.cop_type == "normal"):
-					spawner.cop_health = 205
-					spawner.delay = 7.5
+					spawner.cop_health = 325
+					spawner.delay = rand_range(8.5,11)
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 2
-					spawner.cop_health = 175
-					spawner.delay = 10
+					spawner.cop_health = 395
+					spawner.delay = rand_range(10,13.5)
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 1
-					spawner.cop_health = 600
-					spawner.delay = 50
+					spawner.cop_health = 900
+					spawner.delay = rand_range(50,55)
 		3:
 			for spawner in get_tree().get_nodes_in_group("spawner"):
 				spawner.cop_amount = 4
 				if (spawner.cop_type == "normal"):
-					spawner.cop_health = 275
-					spawner.delay = 7.5
+					spawner.cop_health = 450
+					spawner.delay = rand_range(7.5,10)
 				elif (spawner.cop_type == "shield"):
 					spawner.cop_amount = 3
-					spawner.cop_health = 250
-					spawner.delay = 10
+					spawner.cop_health = 500
+					spawner.delay = rand_range(10,12.5)
 				elif (spawner.cop_type == "heavy"):
 					spawner.cop_amount = 2
-					spawner.cop_health = 850
-					spawner.delay = 45
+					spawner.cop_health = 1250
+					spawner.delay = rand_range(45,50)
 
 func set_assets():
 	for asset in $Assets.get_children():
@@ -294,7 +286,7 @@ func set_assets():
 	if (Game.map_assets.has("van")):
 		$Objectives/Van.global_position = Vector2(11088,6288)
 	else:
-		$Objectives/Van.global_position = Vector2(1536,6064)
+		$Objectives/Van.global_position = Vector2(1704,4040)
 
 
 func update_objective(objective: int):
@@ -317,6 +309,12 @@ func update_objective(objective: int):
 	if (current_objective == 12):
 		$Objectives/Van/SecureZoneVisible.visible = true
 		van.can_secure = true
+
+		if Game.map_assets.has("van"):
+			Game.ui.update_subtitle("BAIN: Vault's open! We need one bag of cash. The van is in the back alley near the vault.",2,12)
+		else:
+			Game.ui.update_subtitle("BAIN: Vault's open! We need one bag of cash. The van is in the front of the bank.",2,12)
+
 		if (secured_bags > 0):
 			update_objective(13)
 
@@ -469,23 +467,23 @@ func _on_SpawnTimer_timeout():
 
 func _on_WaveTimer_timeout():
 	is_wave_break = true
+	Game.can_spawn = false
 
-	if (Game.current_cops == 0):
-		var quotes = [
-			"BAIN: Nice job! You fought them back and bought yourself some time.",
-			"BAIN: I think they're pulling out for now! But they'll be back soon, make the best of it.",
-			"BAIN: I bet they don't know what hit'em. Now focus on the plan, we have a job to do.",
-			"BAIN: Nice! You just bought yourself a break. Make the best of it.",
-			"BAIN: Cops are retreating and you get some free time for a moment. Use it."
-		]
+	yield(get_tree().create_timer(5),"timeout")
 
-		Game.ui.update_subtitle(quotes[randi() % quotes.size()],0,7.5)
+	var quotes = [
+		"BAIN: Nice job! You fought them back and bought yourself some time.",
+		"BAIN: I think they're pulling out for now! But they'll be back soon, make the best of it.",
+		"BAIN: I bet they don't know what hit'em. Now focus on the plan, we have a job to do.",
+		"BAIN: Nice! You just bought yourself a break. Make the best of it.",
+		"BAIN: Cops are retreating and you get some free time for a moment. Use it."
+	]
 
-		Game.can_spawn = false
+	Game.ui.update_subtitle(quotes[randi() % quotes.size()],0,7.5)
 
-		$SpawnTimer.wait_time = 30
+	$SpawnTimer.wait_time = 30
 
-		$SpawnTimer.start()
+	$SpawnTimer.start()
 
 func check_skills():
 	for asset in $Assets.get_children():

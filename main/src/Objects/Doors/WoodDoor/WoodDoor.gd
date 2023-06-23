@@ -139,7 +139,7 @@ func end_close():
 
 	$Sprite.rotation_degrees = original_rotation
 
-	set_collision_layer_bit(12,true)	
+	set_collision_layer_bit(12,true)
 
 func _on_Collision_hitbox_body_entered(body):
 	if (body.is_in_group("Player")):

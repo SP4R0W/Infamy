@@ -9,37 +9,36 @@ signal alerted(code)
 export(String, "armor","default") var camera_type = "default"
 export var disguises_needed = []
 
-export var is_hidden: bool = true
 export var can_interact: bool = true
-export var is_disabled: bool = false
+export var is_disabled: bool = true
 export var is_broken: bool = false
 
 export var what_can_see: Dictionary = {
 	"Player":{
-		"detection_value_normal":2.5,
-		"detection_value_disguised":1.2,
+		"detection_value_normal":4,
+		"detection_value_disguised":1.5,
 		"code": "camera_player"
 	},
 	"npc":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code_body": "camera_body",
 		"code_alarm": "camera_alert",
 		"code_hostage": "camera_hostage"
 	},
 	"bags":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "camera_bag"
 	},
 	"door":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "camera_door"
 	},
 	"glass":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "camera_glass"
 	},
 	"drill":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "camera_drill"
 	}
 }
@@ -85,7 +84,6 @@ func _ready():
 		camera_type = "default"
 
 func activate_camera():
-	is_hidden = false
 	is_disabled = false
 	can_interact = true
 
@@ -119,13 +117,13 @@ func create_ray() -> RayCast2D:
 	ray.set_collision_mask_bit(15,true)
 
 	ray.add_exception($Interaction_hitbox)
-	
+
 	for exception in Game.exceptions:
 		if (is_instance_valid(exception)):
 			ray.add_exception(exception)
 		else:
 			Game.remove_exception(exception)
-	
+
 	rays.add_child(ray)
 
 	return ray
@@ -143,20 +141,20 @@ func remove_exception(object):
 func _physics_process(delta):
 	if (!Game.game_process):
 		return
-	
+
 	if (!is_alerted && !is_disabled && !is_broken):
 		for t in targets.keys():
 			if (Game.exceptions.has(t)):
 				if (targets[t] != null):
 					targets[t].queue_free()
-					
+
 				targets.erase(t)
 				deffered_targets.append(t)
 				continue
-			
+
 			if (targets[t] == null):
 				targets[t] = create_ray()
-				
+
 			var ray = targets[t]
 
 			ray.look_at(t.global_position)
@@ -197,13 +195,11 @@ func _process(delta):
 	$AnimatedSprite.play()
 
 	if (detection_value > 0 && detection_value < 100):
-		show()
 		$Marker.show()
 		$Marker/AnimatedSprite.animation = "question"
 		$Detection_bar.show()
 		$Detection_bar.value = detection_value
 	elif (detection_value >= 100):
-		show()
 		if (Game.difficulty <= 3):
 			can_interact = false
 			$Marker.show()
@@ -219,9 +215,9 @@ func _process(delta):
 			for target in targets.keys():
 				targets[target].queue_free()
 				targets.erase(target)
-				
+
 			deffered_targets = []
-			
+
 			Game.map.on_Camera_alerted()
 	else:
 		$Marker.hide()
@@ -264,7 +260,7 @@ func _on_Hitbox_area_entered(area):
 			detection_value = 0
 			$Detection_timer.stop()
 			$Alert_timer.stop()
-			
+
 			Game.remove_exception($Interaction_hitbox)
 
 func _on_Interaction_timer_timeout():
@@ -280,12 +276,12 @@ func _on_Interaction_timer_timeout():
 
 		can_interact = false
 		is_disabled = true
-		
+
 		if (Game.get_skill("infiltrator",3,1) == "basic"):
 			$Loop_timer.wait_time = 10
 		else:
 			$Loop_timer.wait_time = 25
-		
+
 		$Loop_timer.start()
 
 func _on_Deffered_timer_timeout():
@@ -348,7 +344,7 @@ func _on_Detect_area_exited(area):
 	if (targets.has(area)):
 		if (targets[area] != null):
 			targets[area].queue_free()
-		
+
 		targets.erase(area)
 
 	if (deffered_targets.has(area)):
@@ -366,7 +362,7 @@ func _on_Detect_body_exited(body):
 	if (targets.has(body)):
 		if (targets[body] != null):
 			targets[body].queue_free()
-		
+
 		targets.erase(body)
 
 	if (deffered_targets.has(body)):
@@ -393,7 +389,7 @@ func _on_Detection_timer_timeout():
 									detection_value_disguised *= 0.65
 									if (detection_value_disguised < 1):
 										detection_value_disguised = 1
-								
+
 								detection_value += detection_value_disguised
 							else:
 								detection_value += values["detection_value_normal"] * (Game.difficulty + 1)
@@ -426,18 +422,12 @@ func _on_Detection_timer_timeout():
 						detection_code = values["code"]
 						detection_value += values["detection_value_normal"] * (Game.difficulty + 1)
 
-					if (!$detection.playing && !Game.detection_sound_playing):
-						get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-						Game.detection_sound_playing = true
+					if (!$detection.playing):
 						$detection.play()
 
 					if (detection_value >= 100):
-						show()
 						$detection.stop()
-						if (!Game.detection_sound_playing):
-							get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-							Game.detection_sound_playing = true
-							$detected.play()
+						Game.game_scene.get_node("detected").play()
 						$Detection_timer.stop()
 						return
 	else:
@@ -455,9 +445,9 @@ func alarm_on():
 	for target in targets.keys():
 		targets[target].queue_free()
 		targets.erase(target)
-		
+
 	deffered_targets = []
-	
+
 	can_interact = false
 	$Loop_timer.stop()
 
@@ -477,14 +467,3 @@ func deffer_call():
 		deffer_call()
 	else:
 		$Alert_timer.start()
-
-func _on_VisibilityNotifier2D_screen_entered():
-	if ($AnimatedSprite/Hitbox/CollisionShape2D.disabled == false):
-		show()
-
-func _on_VisibilityNotifier2D_screen_exited():
-	if (!is_broken):
-		hide()
-
-func _on_detection_finished():
-	Game.detection_sound_playing = false

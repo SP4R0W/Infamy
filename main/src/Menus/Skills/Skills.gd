@@ -32,7 +32,7 @@ var skill_descriptions = [
 	[
 		"'Deep Pockets'\n\nBASIC:\n4 Skill points\nYou can now carry two equipments, however the second one only has 50% of its capacity.\n\nUPGRADED:\n8 Skill Points\nThe capacity penalty is now removed.",
 		"'Maniac'\n\nBASIC:\n4 Skill points\nYou can penetrate shields with automatic weapons.\n\nUPGRADED:\n8 Skill Points\nYou can penetrate shields with any weapon. You gain extra 25% damage reduction",
-		"'Push It'\n\nBASIC:\n4 Skill points\nIf your health is below 25%, you will start regenerating 1.5% armor and health with each enemy that you kill till you reach 25% again. This has a delay of 2s.\n\nUPGRADED:\n8 Skill Points\nThe effect now starts at below 50% health and you gain 2.5% of health and armor.",
+		"'Push It'\n\nBASIC:\n4 Skill points\nIf your health is below 25%, you will regenerate 1.5% armor and health with each kill untill you reach 25% health again. This has a delay of 2s.\n\nUPGRADED:\n8 Skill Points\nThe effect now starts at below 50% health and you gain 2.5% of health and armor.",
 		"'Good Tools'\n\nBASIC:\n3 Skill points\nYour drills are 50% less noisy.\n\nUPGRADED:\n6 Skill Points\nYour drills are now fully silent.",
 		"'Breacher'\n\nBASIC:\n3 Skill points\nYou can use C4 on safes now.\n\nUPGRADED:\n6 Skill Points\nYour C4 will emit 85% less noise when used on objects.",
 		"'Lock'n Load\n\nBASIC:\n3 Skill points\nKilling 2 cops in 2s with an automatic weapon grants you 50% faster next reload.\n\nUPGRADED:\n6 Skill Points\nYou can reload while sprinting.",
@@ -133,17 +133,17 @@ onready var skill_tab_names = [
 
 func _ready():
 	Global.skillMenu = self
-	
+
 	redraw_skills()
-	
+
 func _on_Skill_panel_tab_changed(tab):
 	current_tab = tab
 	redraw_skills()
-	
+
 func set_tiers():
 	var skill_tab = skill_tab_names[current_tab]
 	skills_spent[skill_tab] = 0
-	
+
 	var skill_set = Savedata.skill_loadouts[current_loadout][skill_tab]
 	for j in range(11,-1,-1):
 		var skill = skill_set[j]
@@ -151,25 +151,25 @@ func set_tiers():
 			skills_spent[skill_tab] += skill_prices[j][skill]
 			if (skill == "upgraded"):
 				skills_spent[skill_tab] += skill_prices[j]["basic"]
-		
+
 		if (skills_spent[skill_tab] >= tier2SkillsNeeded):
 			tiers_unlocked[skill_tab][2] = true
 		else:
 			tiers_unlocked[skill_tab][2] = false
-				
+
 		if (skills_spent[skill_tab] >= tier3SkillsNeeded):
 			tiers_unlocked[skill_tab][3] = true
 		else:
 			tiers_unlocked[skill_tab][3] = false
-				
+
 		if (skills_spent[skill_tab] >= tier4SkillsNeeded):
 			tiers_unlocked[skill_tab][4] = true
 		else:
 			tiers_unlocked[skill_tab][4] = false
-	
+
 func redraw_skills():
-	set_tiers()	
-	
+	set_tiers()
+
 	$Control/CanvasLayer/VBoxContainer/Title.text = "Skill loadout (" + str(current_loadout) + "):"
 	$Control/CanvasLayer/Panel/CenterContainer/Points.text = "Skill points: " + str(Savedata.skill_loadouts[current_loadout]["skill_points"])
 
@@ -193,13 +193,13 @@ func redraw_skills():
 			skill_btn.add_color_override("font_color_disabled",color_upgrade)
 			skill_btn.add_color_override("font_color_focus",color_upgrade)
 			skill_btn.add_color_override("font_color",color_upgrade)
-	
+
 func show_desc(index):
 	var skill_tab = skill_tab_names[current_tab]
-	
+
 	var desc = skill_descriptions[current_tab][index-1]
 	$Control/CanvasLayer/Skill_desc/VBoxContainer/Desc.text = desc
-	
+
 	if (index <= 3):
 		if (!tiers_unlocked[skill_tab][4]):
 			var needed = tier4SkillsNeeded - skills_spent[skill_tab]
@@ -209,7 +209,7 @@ func show_desc(index):
 	elif (index > 3 && index <= 6):
 		if (!tiers_unlocked[skill_tab][3]):
 			var needed = tier3SkillsNeeded - skills_spent[skill_tab]
-			$Control/CanvasLayer/Skill_desc/VBoxContainer/Locked.text = "Tier 3 skills are locked. You need to spend another {left} skill points to unlock Tier 3.".format({"left":needed})	
+			$Control/CanvasLayer/Skill_desc/VBoxContainer/Locked.text = "Tier 3 skills are locked. You need to spend another {left} skill points to unlock Tier 3.".format({"left":needed})
 		else:
 			$Control/CanvasLayer/Skill_desc/VBoxContainer/Locked.text = ""
 	elif (index > 6 && index <= 9):
@@ -225,8 +225,8 @@ func buy_skill(index):
 	var skill_tab = skill_tab_names[current_tab]
 	var skill = Savedata.skill_loadouts[current_loadout][skill_tab][index - 1]
 	var skill_points = Savedata.skill_loadouts[current_loadout]["skill_points"]
-	var price 
-	
+	var price
+
 	if (skill == "none"):
 		price = skill_prices[index-1]["basic"]
 	elif (skill == "basic"):
@@ -234,7 +234,7 @@ func buy_skill(index):
 	else:
 		$Wrong.play()
 		return
-	
+
 	if (index <= 3):
 		if (!tiers_unlocked[skill_tab][4]):
 			$Wrong.play()
@@ -247,42 +247,42 @@ func buy_skill(index):
 		if (!tiers_unlocked[skill_tab][2]):
 			$Wrong.play()
 			return
-	
+
 	if (skill_points >= price && skill != "upgraded"):
 		$Buy.play()
 		Savedata.skill_loadouts[current_loadout]["skill_points"] -= price
-		
+
 		if (skill == "none"):
 			Savedata.skill_loadouts[current_loadout][skill_tab][index - 1] = "basic"
 		elif (skill == "basic"):
 			Savedata.skill_loadouts[current_loadout][skill_tab][index - 1] = "upgraded"
 	else:
 		$Wrong.play()
-		
+
 	redraw_skills()
-	
+
 func refund_skill(index):
 	var skill_tab = skill_tab_names[current_tab]
-	
+
 	var skills = Savedata.skill_loadouts[current_loadout][skill_tab]
 	var skill = Savedata.skill_loadouts[current_loadout][skill_tab][index - 1]
-	var price 
-	
+	var price
+
 	if (skill != "none"):
 		price = skill_prices[index-1][skill]
 	else:
 		$Wrong.play()
 		return
-		
+
 	var temp_skillpoints
 	var real_index = index - 1
-	
+
 	# Check for tier 3 skills if you own tier 4 skills
 	if (real_index == 3 || real_index == 4 || real_index == 5):
 		temp_skillpoints = (skills_spent[skill_tab]) - price
-		
+
 		temp_skillpoints -= subtract_skill_points(0,3)
-		
+
 		if (tiers_unlocked[skill_tab][4] && temp_skillpoints < tier4SkillsNeeded):
 			if (skills[0] != "none" || skills[1] != "none" || skills[2] != "none"):
 				$Wrong.play()
@@ -290,16 +290,16 @@ func refund_skill(index):
 	# Check for tier 2 skills if you own tier 3 & tier 4 skills
 	elif (real_index == 6 || real_index == 7 || real_index == 8):
 		temp_skillpoints = (skills_spent[skill_tab]) - price
-		
+
 		temp_skillpoints -= subtract_skill_points(0,3)
-		
+
 		if (tiers_unlocked[skill_tab][4] && temp_skillpoints < tier4SkillsNeeded):
 			if (skills[0] != "none" || skills[1] != "none" || skills[2] != "none"):
 				$Wrong.play()
 				return
-				
+
 		temp_skillpoints -= subtract_skill_points(3,6)
-		
+
 		if (tiers_unlocked[skill_tab][3] && temp_skillpoints < tier3SkillsNeeded):
 			if (skills[3] != "none" || skills[4] != "none" || skills[5] != "none"):
 				$Wrong.play()
@@ -307,23 +307,23 @@ func refund_skill(index):
 	# Check for tier 1 skills if you own tier 2,3 & 4 skills
 	elif (real_index == 9 || real_index == 10 || real_index == 11):
 		temp_skillpoints = (skills_spent[skill_tab]) - price
-		
+
 		temp_skillpoints -= subtract_skill_points(0,3)
 
 		if (tiers_unlocked[skill_tab][4] && temp_skillpoints < tier4SkillsNeeded):
 			if (skills[0] != "none" || skills[1] != "none" || skills[2] != "none"):
 				$Wrong.play()
 				return
-				
+
 		temp_skillpoints -= subtract_skill_points(3,6)
-		
+
 		if (tiers_unlocked[skill_tab][3] && temp_skillpoints < tier3SkillsNeeded):
 			if (skills[3] != "none" || skills[4] != "none" || skills[5] != "none"):
 				$Wrong.play()
 				return
-				
+
 		temp_skillpoints -= subtract_skill_points(6,9)
-		
+
 		if (tiers_unlocked[skill_tab][2] && temp_skillpoints < tier2SkillsNeeded):
 			if (skills[6] != "none" || skills[7] != "none" || skills[8] != "none"):
 				$Wrong.play()
@@ -337,14 +337,14 @@ func refund_skill(index):
 			Savedata.skill_loadouts[current_loadout][skill_tab][index - 1] = "none"
 	else:
 		$Wrong.play()
-		
+
 	redraw_skills()
-	
+
 func subtract_skill_points(start: int, end: int) -> int:
 	var skill_points = 0
 	var skill_tab = skill_tab_names[current_tab]
 	var skills = Savedata.skill_loadouts[current_loadout][skill_tab]
-	
+
 	for x in range(start,end):
 		if (skills[x] == "basic"):
 			skill_points += skill_prices[x]["basic"]
@@ -353,32 +353,32 @@ func subtract_skill_points(start: int, end: int) -> int:
 			skill_points += skill_prices[x]["upgraded"]
 		else:
 			continue
-				
+
 	return skill_points
 
 func _on_Menu_btn_pressed():
 	Game.check_skills()
-	
+
 	if (!Savedata.has_cheat_on):
 		Savedata.save_data()
-		
+
 	Composer.goto_scene(Global.scene_paths["mainmenu"],true,true,0.5,0.5,menu_track)
 
 
 func _on_1_btn_pressed():
 	current_loadout = "1"
 	redraw_skills()
-	
+
 	Game.player_skills = Savedata.skill_loadouts[str(current_loadout)]
 
 func _on_2_btn_pressed():
 	current_loadout = "2"
 	redraw_skills()
-	
+
 	Game.player_skills = Savedata.skill_loadouts[str(current_loadout)]
 
 func _on_3_btn_pressed():
 	current_loadout = "3"
 	redraw_skills()
-	
+
 	Game.player_skills = Savedata.skill_loadouts[str(current_loadout)]

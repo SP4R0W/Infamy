@@ -97,7 +97,6 @@ custom_styles/panel = ExtResource( 7 )
 tab_align = 0
 
 [node name="Mastermind" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0
@@ -703,6 +702,7 @@ Right clicking will refund a skill."
 align = 1
 
 [node name="Infiltrator" type="Panel" parent="Control/CanvasLayer/Skill_panel"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 2.0

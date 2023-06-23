@@ -107,8 +107,6 @@ var xp_earned_stealth: int = 0
 
 var is_ecm_on: bool = false
 
-var detection_sound_playing: bool = false
-
 # a player reference and all of its properties
 var player
 
@@ -387,8 +385,6 @@ func get_skill(prof,tier,skill) -> String:
 			index -= 2
 		2:
 			index -= 1
-		3:
-			index -= 0
 
 	return player_skills[prof][index]
 

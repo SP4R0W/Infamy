@@ -26,34 +26,34 @@ export var can_knock: bool = true
 export var can_bag: bool = true
 export var what_can_see: Dictionary = {
 	"Player":{
-		"detection_value_normal":2.5,
-		"detection_value_disguised":1.2,
+		"detection_value_normal":4,
+		"detection_value_disguised":1.5,
 		"code": "_player"
 	},
 	"npc":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code_body": "_body",
 		"code_alarm": "_alert",
 		"code_hostage": "_hostage"
 	},
 	"bags":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "_bag"
 	},
 	"door":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "_door"
 	},
 	"glass":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "_glass"
 	},
 	"Camera":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "_camera"
 	},
 	"drill":{
-		"detection_value_normal":3,
+		"detection_value_normal":5,
 		"code": "_drill"
 	}
 }
@@ -293,8 +293,7 @@ func _on_Detection_timer_timeout():
 								var detection_value_disguised = values["detection_value_disguised"] * ceil((float(Game.difficulty) + 1) / 2)
 								if (Game.get_skill("infiltrator",2,2) == "upgraded"):
 									detection_value_disguised *= 0.65
-									if (detection_value_disguised < 1):
-										detection_value_disguised = 1
+									detection_value_disguised = ceil(detection_value_disguised)
 
 								detection_value += detection_value_disguised
 							else:
@@ -340,13 +339,9 @@ func _on_Detection_timer_timeout():
 						$detection.play()
 
 					if (detection_value >= 100):
-						show()
 						$detection.stop()
 						$Detection_timer.stop()
-						if (!Game.detection_sound_playing):
-							get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-							Game.detection_sound_playing = true
-							$detected.play()
+						Game.game_scene.get_node("detected").play()
 						return
 	else:
 		if (detection_value > 0):
@@ -425,13 +420,11 @@ func _process(delta):
 		return
 
 	if (detection_value > 0 && detection_value < 100 && !is_dead && !is_unconscious && !is_hostaged && !is_escaping && can_detect):
-		show()
 		$Marker.show()
 		$Marker/AnimatedSprite.animation = "question"
 		$Detection_bar.show()
 		$Detection_bar.value = detection_value
 	elif (detection_value >= 100 && !is_dead && !is_unconscious && !is_hostaged && !is_escaping && can_detect):
-		show()
 		$Marker.show()
 		$Marker/AnimatedSprite.animation = "alert"
 		$Detection_bar.hide()
@@ -583,7 +576,6 @@ func kill(damage: float = 0,type: String = "none"):
 		$DefferedTimer.stop()
 
 		$detection.stop()
-		$detected.stop()
 
 		Game.remove_exception($Interaction_hitbox)
 
@@ -646,7 +638,6 @@ func knockout():
 		$DefferedTimer.stop()
 
 		$detection.stop()
-		$detected.stop()
 
 		$knockout.play()
 
@@ -679,11 +670,7 @@ func hostage():
 		$detection.stop()
 
 		if (!is_alerted):
-			if (!Game.detection_sound_playing):
-				Game.detection_sound_playing = true
-				get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-
-				$detected.play()
+			Game.game_scene.get_node("detected").play()
 
 		emit_signal("npc_hostaged",self)
 
@@ -755,10 +742,7 @@ func _on_Shoot_timer_timeout():
 	is_shooting = false
 
 func noise_heard():
-	if (!Game.detection_sound_playing):
-		get_tree().create_timer(1).connect("timeout",self,"_on_detection_finished")
-		Game.detection_sound_playing = true
-		$detected.play()
+	Game.game_scene.get_node("detected").play()
 
 	detection_value = 100
 	$Detection_timer.stop()
@@ -808,18 +792,7 @@ func deffer_call():
 		if (!is_dead && !is_unconscious && !is_hostaged):
 			$Alert_timer.start()
 
-func _on_VisibilityNotifier2D_screen_entered():
-	show()
-
-func _on_VisibilityNotifier2D_screen_exited():
-	if (!is_dead && !is_unconscious && !is_hostaged && !is_escaping && !is_alerted && !is_detecting):
-		hide()
-
-
 func _on_Dissappear_timeout():
 	Game.remove_exception($Interaction_hitbox)
 
 	queue_free()
-
-func _on_detection_finished():
-	Game.detection_sound_playing = false
