@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/lockpicking.mp3-de9c266ff1109d8e81c83a5848bb95fc.mp3str"
+
+[deps]
+
+source_file="res://src/Objects/Doors/lockpicking.mp3"
+dest_files=[ "res://.import/lockpicking.mp3-de9c266ff1109d8e81c83a5848bb95fc.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

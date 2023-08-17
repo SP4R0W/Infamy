@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/reload.mp3-77c5bb90282b1d82b46ef9691f0e03f9.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/Reinfeld/assets/reload.mp3"
+dest_files=[ "res://.import/reload.mp3-77c5bb90282b1d82b46ef9691f0e03f9.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

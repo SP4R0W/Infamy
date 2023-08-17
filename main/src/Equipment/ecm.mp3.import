@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ecm.mp3-7aebe65932b153f7c6eeef77949fc0c4.mp3str"
+
+[deps]
+
+source_file="res://src/Equipment/ecm.mp3"
+dest_files=[ "res://.import/ecm.mp3-7aebe65932b153f7c6eeef77949fc0c4.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

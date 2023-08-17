@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/reload_empty.mp3-588a3b2e89744c839ed0526ae7386734.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/M4/assets/reload_empty.mp3"
+dest_files=[ "res://.import/reload_empty.mp3-588a3b2e89744c839ed0526ae7386734.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

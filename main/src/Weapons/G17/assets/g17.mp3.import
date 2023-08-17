@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/g17.mp3-169b37b93beedd7d58184859da1b6b9f.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/G17/assets/g17.mp3"
+dest_files=[ "res://.import/g17.mp3-169b37b93beedd7d58184859da1b6b9f.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

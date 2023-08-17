@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/shoot.mp3-12127463d3cb87ac51a12256c3d66cc6.mp3str"
+
+[deps]
+
+source_file="res://src/Weapons/AWP/assets/shoot.mp3"
+dest_files=[ "res://.import/shoot.mp3-12127463d3cb87ac51a12256c3d66cc6.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
